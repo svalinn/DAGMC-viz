@@ -1,0 +1,10 @@
+*.bmp
+visitlog.py
+*~
+/Data/*.vtk
+/Data/*.stl
+/Data/*.h5m
+/Data/meshtal
+/Sessions
+/Images
+*.pyc
