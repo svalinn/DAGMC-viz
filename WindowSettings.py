@@ -1,5 +1,6 @@
 from visit import *
 
+
 def WindowSettings():
 	"""Modify window settings."""
 
