@@ -1,4 +1,6 @@
-import visit
+from visit import *
+
+LaunchNowin()
 
 import PathCreator
 import DataLoading
@@ -13,7 +15,6 @@ Files = {
     "fng_zip.stl": ["Mesh"]+["STL_mesh"],
     }
 
-visit.LaunchNowin()
 PathCreator.PathCreator()
 DataLoading.DataLoading(Files)
 PlotSettings.PlotSettings()
