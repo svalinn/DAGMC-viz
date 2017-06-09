@@ -1,3 +1,6 @@
+import os
+
+
 def PathCreator():
     """Form folders to contain Data, Sessions, and Images.
 
@@ -7,8 +10,6 @@ def PathCreator():
     ./Sessions/Python -- python session files
     ./Sessions/XML -- XML session files
     """
-
-    import os
 
     if not os.path.exists("./Images"):
         os.makedirs("./Images")

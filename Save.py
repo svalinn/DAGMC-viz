@@ -1,7 +1,7 @@
 from visit import *
 
 
-def Saving():
+def Save():
     """Displays plots on windows and saves sessions and images."""
 
     DrawPlots()

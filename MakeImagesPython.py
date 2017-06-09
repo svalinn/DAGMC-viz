@@ -1,3 +1,5 @@
+import argparse
+
 import visit as Vi
 
 Vi.LaunchNowin()  # Here to allow import of other modules.
@@ -6,7 +8,7 @@ import PathCreator as Pa
 import PlotSettings as Pl
 import OperatorSettings as Op
 import WindowSettings as Wi
-import Saving as Sa
+import Save as Sa
 
 
 class MakeImages:
@@ -21,28 +23,20 @@ class MakeImages:
         self.plot = plot
         self.vari = vari
 
-    def Load(self):
+    def Plot(self):
         """Loads the data into VisIt."""
 
         Vi.OpenDatabase("./Data/"+self.file)
-        Vi.AddPlot(self.plot, self.vari)
-
-    def Plot(self):
-        """Add desired plot settings."""
-
         Pl.PlotSettings()
+        Vi.AddPlot(self.plot, self.vari)
 
     def Operator(self):
         """Add operator and it's settings."""
 
         Op.OperatorSettings()
 
-    def Window(self):
-        """Add window settings."""
-
-        Wi.WindowSettings()
-
-    def Saving(self):
+    def Save(self):
         """Saves window image, python session, and HML session."""
 
-        Sa.Saving()
+        Wi.WindowSettings()
+        Sa.Save()
