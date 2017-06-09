@@ -64,24 +64,24 @@ def PlotSettings():
 
     SetPlotOptions(Attribute)
 
-    # Mesh plot attributes.
-    Attribute = MeshAttributes()
+    # # Mesh plot attributes.
+    # Attribute = MeshAttributes()
 
-    Attribute.legendFlag = 1
-    Attribute.lineStyle = Attribute.SOLID  # SOLID DASH DOT DOTDASH
-    Attribute.lineWidth = 0
-    Attribute.meshColor = (0, 0, 0, 255)
-    Attribute.meshColorSource = Attribute.Foreground  # Foreground MeshCustom
-    Attribute.opaqueColorSource = Attribute.Background  # Background OpaqueCustom
-    Attribute.opaqueMode = Attribute.Auto  # Auto On Off
-    Attribute.pointSize = 0.05
-    Attribute.opaqueColor = (255, 255, 255, 255)
-    Attribute.smoothingLevel = Attribute.None  # None Fast High
-    Attribute.pointSizeVarEnabled = 0
-    Attribute.pointSizeVar = "default"
-    Attribute.pointType = Attribute.Point  # Point Box Axis Icosahedron Octahedron Tetrahedron SphereGeometry Point Sphere
-    Attribute.showInternal = 0
-    Attribute.pointSizePixels = 2
-    Attribute.opacity = 1
+    # Attribute.legendFlag = 1
+    # Attribute.lineStyle = Attribute.SOLID  # SOLID DASH DOT DOTDASH
+    # Attribute.lineWidth = 0
+    # Attribute.meshColor = (0, 0, 0, 255)
+    # Attribute.meshColorSource = Attribute.Foreground  # Foreground MeshCustom
+    # Attribute.opaqueColorSource = Attribute.Background  # Background OpaqueCustom
+    # Attribute.opaqueMode = Attribute.Auto  # Auto On Off
+    # Attribute.pointSize = 0.05
+    # Attribute.opaqueColor = (255, 255, 255, 255)
+    # Attribute.smoothingLevel = Attribute.None  # None Fast High
+    # Attribute.pointSizeVarEnabled = 0
+    # Attribute.pointSizeVar = "default"
+    # Attribute.pointType = Attribute.Point  # Point Box Axis Icosahedron Octahedron Tetrahedron SphereGeometry Point Sphere
+    # Attribute.showInternal = 0
+    # Attribute.pointSizePixels = 2
+    # Attribute.opacity = 1
 
-    SetPlotOptions(Attribute)
+    # SetPlotOptions(Attribute)
