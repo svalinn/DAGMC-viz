@@ -1,8 +1,10 @@
 import argparse
+import timeit
 
 import MakeImagesPython
 import Inputs
 
+tic = timeit.default_timer()
 
 parser = argparse.ArgumentParser(
     description='Terminal execution of tool.',
@@ -42,3 +44,8 @@ if args.Plot:
 
     if args.Save:
         Image.Save()
+
+toc = timeit.default_timer()
+ElapsedTime = toc - tic
+
+print("Elapsed time is "+str(ElapsedTime)+" Seconds")

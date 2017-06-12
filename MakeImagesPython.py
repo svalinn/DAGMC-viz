@@ -11,7 +11,6 @@ import WindowSettings as Wi
 
 Pa.PathCreator()  # Creates necessary folders.
 
-
 class MakeImages(object):
     """Create images in visit."""
 
@@ -57,13 +56,16 @@ class MakeImages(object):
 
         Pl.PlotSettings()
 
+        #Coordinates = Vi.GetQueryOutputValue()
+        #print(Coordinates)
+
         # Applies the operator to all plots.
         # If the tuple in documentation worked, then the following:
         #   SetActivePlots((tuple(range(0,len(Files)))))
-        Number=0
+        Number = 0
         for file in self.file:
             Vi.SetActivePlots(Number)
-            Number=Number+1
+            Number = Number+1
             Op.OperatorSettings()
 
     def Save(self):
