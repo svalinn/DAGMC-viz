@@ -41,10 +41,15 @@ def PlotSettings():
     Attribute.lineStyle = Attribute.SOLID
     Attribute.lineWidth = 0
     # The following does not work: Attribute.tubeDisplayDensity = 10
+
+
+    # The following three do not work without an operator:
     # FractionOfBBox Absolute
-    Attribute.tubeRadiusSizeType = Attribute.FractionOfBBox
-    Attribute.tubeRadiusAbsolute = 0.125
-    Attribute.tubeRadiusBBox = 0.005
+    # Attribute.tubeRadiusSizeType = Attribute.FractionOfBBox
+    # Attribute.tubeRadiusAbsolute = 0.125
+    # Attribute.tubeRadiusBBox = 0.005
+
+
     # The following does not work: Attribute.varyTubeRadius = 0
     # The following does not work: Attribute.varyTubeRadiusVarible = ""
     # The following does not work: Attribute.varyTubeRadiusFactor = 10

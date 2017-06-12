@@ -4,8 +4,6 @@ from visit import *
 def OperatorSettings():
     """Add operator and it's settings."""
 
-    AddOperator("Slice", 1)
-
     Attribute = SliceAttributes()
 
     # Intercept Point Intercept Percent Zone Node
