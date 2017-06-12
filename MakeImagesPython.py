@@ -8,7 +8,6 @@ import PathCreator as Pa
 import PlotSettings as Pl
 import OperatorSettings as Op
 import WindowSettings as Wi
-import Save as Sa
 
 Pa.PathCreator()  # Creates necessary folders.
 
@@ -16,23 +15,42 @@ Pa.PathCreator()  # Creates necessary folders.
 class MakeImages(object):
     """Create images in visit."""
 
-    def __init__(self, file, plot, vari):
-        """Initializes MakeImages with default directory creation."""
+    def __init__(self, file, oper):
+        """Initializes MakeImages with default directory creation.
+
+
+        A python script with the name Inputs.py was used to specify the
+        data, plot, and variable used. Operators were also defined. Within
+        Inputs.py, is code similar to the dictionaries listed below:
+
+        The following is an example of a valid input type for self.file:
+           Files = {
+                "Plot_1" : ["meshtal.vtk"]+["Pseudocolor"]+["TALLY_TAG"],
+                "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
+               "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
+              }
+
+            The following is an example of a valid input type for self.oper:
+            Operators = {
+                "Operator_1" : ["Slice"]+["1"],
+               }
+        """
 
         self.file = file
-        self.plot = plot
-        self.vari = vari
+        self.oper = oper
 
     def Plot(self):
         """Loads the data into VisIt."""
 
-        Vi.OpenDatabase("./Data/"+self.file)
-        Vi.AddPlot(self.plot, self.vari)
+        for key in self.file:
+            Vi.OpenDatabase("./Data/"+self.file[key][0])
+            Vi.AddPlot(self.file[key][1], self.file[key][2])
 
     def Operator(self):
         """Add operator and it's settings."""
 
-        Vi.AddOperator("Slice", 1)
+        for key in self.oper:
+            Vi.AddOperator(self.oper[key][0], int(self.oper[key][1]))
 
     def Settings(self):
         """Set the settings for plots and operators."""
@@ -45,4 +63,4 @@ class MakeImages(object):
 
         Vi.DrawPlots()
         Wi.WindowSettings()
-        Sa.Save()
+        Vi.SaveWindow()
