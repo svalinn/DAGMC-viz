@@ -7,9 +7,9 @@ def WindowSettings():
     Attribute = SaveWindowAttributes()
 
     Attribute.format = Attribute.BMP
-    Attribute.fileName = "./Images/example"
+    Attribute.fileName = "./Images/sample"
     Attribute.width = 500
-    Attribute.height = 500
+    Attribute.height = 2000
     Attribute.screenCapture = 0
 
     SetSaveWindowAttributes(Attribute)

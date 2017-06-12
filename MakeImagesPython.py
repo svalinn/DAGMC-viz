@@ -27,7 +27,7 @@ class MakeImages(object):
            Files = {
                 "Plot_1" : ["meshtal.vtk"]+["Pseudocolor"]+["TALLY_TAG"],
                 "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
-               "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
+                "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
               }
 
             The following is an example of a valid input type for self.oper:
@@ -56,11 +56,22 @@ class MakeImages(object):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
-        Op.OperatorSettings()
+
+        # Applies the operator to all plots.
+        # If the tuple in documentation worked, then the following:
+        #   SetActivePlots((tuple(range(0,len(Files)))))
+        Number=0
+        for file in self.file:
+            Vi.SetActivePlots(Number)
+            Number=Number+1
+            Op.OperatorSettings()
 
     def Save(self):
         """Saves window image, python session, and HML session."""
 
         Vi.DrawPlots()
         Wi.WindowSettings()
+        Vi.SaveSession("./Sessions/XML/sample.session")
+        # VisIt 2.12.2 documentation says that the python session is not completed.
+        Vi.WriteScript(open("./Sessions/Python/sample.py", "wt"))
         Vi.SaveWindow()
