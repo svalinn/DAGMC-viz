@@ -1,5 +1,3 @@
-import argparse
-
 import visit as Vi
 
 Vi.LaunchNowin()  # Here to allow import of other modules.
@@ -8,6 +6,7 @@ import PathCreator as Pa
 import PlotSettings as Pl
 import OperatorSettings as Op
 import WindowSettings as Wi
+import SaveSessions as Sa
 
 Pa.PathCreator()  # Creates necessary folders.
 
@@ -62,11 +61,11 @@ class MakeImages(object):
 
         # Applies the operator to all plots.
         # If the tuple in documentation worked, then the following:
-        # SetActivePlots((tuple(range(0,len(Files)))))
+        # Vi.SetActivePlots((tuple(range(0,len(Files)))))
         Number = 0
         for file in self.file:
             Vi.SetActivePlots(Number)
-            Number = Number+1
+            Number += 1
             Op.OperatorSettings()
 
     def Save(self):
@@ -74,8 +73,5 @@ class MakeImages(object):
 
         Vi.DrawPlots()
         Wi.WindowSettings()
-        Vi.SaveSession("./Sessions/XML/sample.session")
-        # VisIt 2.12.2 documentation says that the python session
-        # is not completed.
-        Vi.WriteScript(open("./Sessions/Python/sample.py", "wt"))
+        Sa.SaveSessions()
         Vi.SaveWindow()

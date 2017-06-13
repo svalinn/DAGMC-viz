@@ -6,6 +6,6 @@ def OperatorSettings():
 
     Attribute = SliceAttributes()
 
-    Attribute.axisType = Attribute.YAxis
+    Attribute.axisType = Attribute.XAxis
 
     SetOperatorOptions(Attribute)

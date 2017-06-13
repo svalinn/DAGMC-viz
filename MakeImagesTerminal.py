@@ -11,19 +11,19 @@ parser = argparse.ArgumentParser(
     usage='Create plots to save with or without operators and settings.',
     )
 
-parser.add_argument("--Plot",
+parser.add_argument("-pl", "--Plot",
                     help="add plots of data",
                     action="store_true",
                     )
-parser.add_argument("--Operator",
+parser.add_argument("-op", "--Operator",
                     help="add operators",
                     action="store_true",
                     )
-parser.add_argument("--Settings",
+parser.add_argument("-se", "--Settings",
                     help="settings for plots and operators",
                     action="store_true",
                     )
-parser.add_argument("--Save",
+parser.add_argument("-sa", "--Save",
                     help="save display",
                     action="store_true",
                     )
