@@ -13,5 +13,4 @@ Files = {
 #	2) Apply to all (1) or not (0)
 Operators = {
     "Operator_1": ["Slice"]+["1"],
-    "Operator_2": ["Box"]+["1"],
     }
