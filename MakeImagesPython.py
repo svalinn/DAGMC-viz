@@ -11,6 +11,7 @@ import WindowSettings as Wi
 
 Pa.PathCreator()  # Creates necessary folders.
 
+
 class MakeImages(object):
     """Create images in visit."""
 
@@ -56,12 +57,12 @@ class MakeImages(object):
 
         Pl.PlotSettings()
 
-        #Coordinates = Vi.GetQueryOutputValue()
-        #print(Coordinates)
+        # Coordinates = Vi.GetQueryOutputValue()
+        # print(Coordinates)
 
         # Applies the operator to all plots.
         # If the tuple in documentation worked, then the following:
-        #   SetActivePlots((tuple(range(0,len(Files)))))
+        # SetActivePlots((tuple(range(0,len(Files)))))
         Number = 0
         for file in self.file:
             Vi.SetActivePlots(Number)
@@ -74,6 +75,7 @@ class MakeImages(object):
         Vi.DrawPlots()
         Wi.WindowSettings()
         Vi.SaveSession("./Sessions/XML/sample.session")
-        # VisIt 2.12.2 documentation says that the python session is not completed.
+        # VisIt 2.12.2 documentation says that the python session
+        # is not completed.
         Vi.WriteScript(open("./Sessions/Python/sample.py", "wt"))
         Vi.SaveWindow()

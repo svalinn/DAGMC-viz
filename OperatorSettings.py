@@ -1,5 +1,6 @@
 from visit import *
 
+
 def OperatorSettings():
     """Add operator and it's settings."""
 
