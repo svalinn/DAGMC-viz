@@ -7,9 +7,9 @@ import Inputs
 tic = timeit.default_timer()
 
 parser = argparse.ArgumentParser(
-    description='Terminal execution of tool.',
-    usage='Create plots to save with or without operators and settings.',
-    )
+                                description='Terminal execution of tool.',
+                                usage='Create plots to save with or without operators and settings.',
+                                )
 
 parser.add_argument("-pl", "--Plot",
                     help="add plots of data",
@@ -48,4 +48,4 @@ if args.Plot:
 toc = timeit.default_timer()
 ElapsedTime = toc - tic
 
-print("Elapsed time is "+str(ElapsedTime)+" Seconds")
+print("Elapsed time was "+str(ElapsedTime)+" Seconds")
