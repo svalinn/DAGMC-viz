@@ -7,8 +7,8 @@ import Inputs
 tic = timeit.default_timer()
 
 parser = argparse.ArgumentParser(
-                                description='Terminal execution of tool.',
-                                usage='Create plots to save with or without operators and settings.',
+                                description="Terminal execution of tool.",
+                                usage="Create plots to save with or without operators and settings.",
                                 )
 
 parser.add_argument("-pl", "--Plot",

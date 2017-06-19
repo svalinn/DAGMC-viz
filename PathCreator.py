@@ -17,5 +17,8 @@ def PathCreator():
     if not os.path.exists("./Sessions/Python"):
         os.makedirs("./Sessions/Python")
 
-    if not os.path.exists("./Sessions/XML"):
-        os.makedirs("./Sessions/XML")
+    if not os.path.exists("./Sessions/XML/Edited"):
+        os.makedirs("./Sessions/XML/Edited")
+
+    if not os.path.exists("./Sessions/XML/Original"):
+        os.makedirs("./Sessions/XML/Original")
