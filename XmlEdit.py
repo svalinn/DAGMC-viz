@@ -60,7 +60,7 @@ def XmlEdit(Original, NewSTL, NewVTK):
 
     
     i = 0
-    while os.path.exists("Sessions/XML/Editedoutput%s.session" % i):
+    while os.path.exists("Sessions/XML/Edited/output%s.session" % i):
         i += 1
 
     tree.write("Sessions/XML/Edited/output%s.session" % i, encoding="utf-8", xml_declaration=True)
