@@ -10,16 +10,6 @@ def OperatorSettings():
 
     SetOperatorOptions(Attribute)
 
-    Attribute = TransformAttributes()
-
-    Attribute.doRotate = 1
-    Attribute.rotateOrigin = (0, 0, 0)
-    Attribute.rotateAxis = (0, 1, 0)
-    Attribute.rotateAmount = 30
-    Attribute.rotateType = Attribute.Deg
-
-    SetOperatorOptions(Attribute)
-
     Attribute = ClipAttributes()
 
     Attribute.quality = Attribute.Accurate

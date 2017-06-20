@@ -4,6 +4,10 @@ from visit import *
 def WindowSettings():
     """Modify window settings."""
 
+    v = GetView3D()
+    v.RotateAxis(0, 30.0)
+    SetView3D(v)
+
     Attribute = SaveWindowAttributes()
 
     Attribute.format = Attribute.BMP
