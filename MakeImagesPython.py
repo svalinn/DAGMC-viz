@@ -1,5 +1,6 @@
 import visit as Vi
 
+# The next line can be commented to import and use in the VisIt GUI.
 Vi.LaunchNowin()  # Here to allow import of other modules.
 
 import PathCreator as Pa
@@ -55,9 +56,6 @@ class MakeImages(object):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
-
-        # Coordinates = Vi.GetQueryOutputValue()
-        # print(Coordinates)
 
         # Applies the operator to all plots.
         # If the tuple in documentation worked, then the following:

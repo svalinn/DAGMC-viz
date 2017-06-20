@@ -8,7 +8,8 @@ def PathCreator():
     Folders created:
     ./Images -- windows images saved
     ./Sessions/Python -- python session files
-    ./Sessions/XML -- XML session files
+    ./Sessions/XML/Original -- XML session files
+    ./Sessions/XML/Edited -- XML session files that were edited
     """
 
     if not os.path.exists("./Images"):
