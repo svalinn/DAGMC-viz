@@ -28,7 +28,7 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.axisType = Attribute.XAxis
+        Attribute.axisType = Attribute.ZAxis
         Attribute.project2d = 0
 
         SetOperatorOptions(Attribute)

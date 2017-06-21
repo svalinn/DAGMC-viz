@@ -54,7 +54,7 @@ class MakeImages(object):
 
         if OperatorSet:
 
-            Vi.SetActivePlots((tuple(range(0,len(self.file)))))
+            Vi.SetActivePlots((tuple(range(0, len(self.file)))))
             OpSe.OperatorSettings(OperatorSet)
 
     def Save(self, Coordinates):

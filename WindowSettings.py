@@ -3,7 +3,7 @@ import os
 from visit import *
 
 
-def WindowSettings(Coordinates = (0, 0, 0)):
+def WindowSettings(Coordinates=(0.0, 0.0, 0.0)):
     """Modify window settings."""
 
     x = 0

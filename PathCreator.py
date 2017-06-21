@@ -7,16 +7,15 @@ def PathCreator():
 
     Folders created:
     ./Images -- windows images saved
-    ./Sessions/Python -- python session files
-    ./Sessions/XML/Original -- XML session files
-    ./Sessions/XML/Edited -- XML session files that were edited
+    ./Sessions/XML_Original -- XML session files
+    ./Sessions/XML_Edited -- XML session files that were edited
     """
 
     if not os.path.exists("./Images"):
         os.makedirs("./Images")
 
-    if not os.path.exists("./Sessions/XML/Edited"):
+    if not os.path.exists("./Sessions/XML_Edited"):
         os.makedirs("./Sessions/XML_Edited")
 
-    if not os.path.exists("./Sessions/XML/Original"):
+    if not os.path.exists("./Sessions/XML_Original"):
         os.makedirs("./Sessions/XML_Original")

@@ -4,7 +4,7 @@ from visit import *
 
 
 def SaveSessions():
-    """This saves Python and XML session files in an incremental way."""
+    """This saves XML session files in an incremental way."""
 
     i = 0
     while os.path.exists("./Sessions/XML_Original/sample%s.session" % i):
