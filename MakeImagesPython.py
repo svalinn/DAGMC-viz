@@ -59,10 +59,10 @@ class MakeImages(object):
             Number = 0
             for file in self.file:
                 Vi.SetActivePlots(Number)
-                Number += 1
                 OpSe.OperatorSettings(OperatorSet)
+                Number += 1
 
-    def Save(self, Coordinates = (30.0, 30.0, 30.0)):
+    def Save(self, Coordinates):
         """Saves window image, python session, and HML session."""
 
         Vi.DrawPlots()

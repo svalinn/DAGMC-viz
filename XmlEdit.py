@@ -7,10 +7,6 @@ parser = argparse.ArgumentParser(description="Replaces files in session.",
                                  usage="Old session file to new session file.",
                                  )
 
-parser.add_argument("-cr", "--Create",
-                    help="add plots of data",
-                    action="store_true",
-                    )
 parser.add_argument("Original",
                     help="The path of the original session file.",
                     )
@@ -70,8 +66,7 @@ def XmlEdit(Original, NewSTL, NewVTK):
                xml_declaration=True,
                )
 
-if args.Create:
-    Original = "Sessions/XML/Original/"+str(args.Original)
-    NewSTL = "/./Data/"+str(args.NewSTL)
-    NewVTK = "/./Data/"+str(args.NewVTK)
-    XmlEdit(Original, NewSTL, NewVTK)
+Original = "Sessions/XML/Original/"+str(args.Original)
+NewSTL = "/./Data/"+str(args.NewSTL)
+NewVTK = "/./Data/"+str(args.NewVTK)
+XmlEdit(Original, NewSTL, NewVTK)
