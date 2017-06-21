@@ -1,7 +1,10 @@
+Outdated Documentation
+
+
 DAGMC-viz Documentation
 =======================
 
-(Note: Python 2.7 is required.)
+(Note: Python 2.7 and visit are required.)
 
 There are three primary methods of use for this tool.
 

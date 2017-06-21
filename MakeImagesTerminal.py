@@ -19,8 +19,15 @@ parser.add_argument("-op", "--Operator",
                     action="store_true",
                     )
 parser.add_argument("-se", "--Settings",
+                    nargs="?",
+                    const="NoOperator",
+                    type=str,
                     help="settings for plots and operators",
-                    action="store_true",
+                    )
+parser.add_argument("-vi", "--View",
+                    nargs="+",
+                    type=float,
+                    help="change view (x,y,z) in degrees",
                     )
 parser.add_argument("-sa", "--Save",
                     help="save display",
@@ -29,20 +36,22 @@ parser.add_argument("-sa", "--Save",
 
 args = parser.parse_args()
 
-Image = MakeImagesPython.MakeImages(Inputs.Files, Inputs.Operators)
+Image = MakeImagesPython.MakeImages(Inputs.Files)
 
+OperatorSet = args.Settings
+Coordinates = tuple(args.View)
 
 if args.Plot:
     Image.Plot()
 
     if args.Operator:
-        Image.Operator()
+        Image.Operator(OperatorSet)
 
     if args.Settings:
-        Image.Settings()
+        Image.Settings(OperatorSet)
 
     if args.Save:
-        Image.Save()
+        Image.Save(Coordinates)
 
 toc = timeit.default_timer()
 ElapsedTime = toc - tic

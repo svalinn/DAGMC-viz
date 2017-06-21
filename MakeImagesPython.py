@@ -5,7 +5,8 @@ Vi.LaunchNowin()  # Here to allow import of other modules.
 
 import PathCreator as Pa
 import PlotSettings as Pl
-import OperatorSettings as Op
+import Operators as Oper
+import OperatorSettings as OpSe
 import WindowSettings as Wi
 import SaveSessions as Sa
 
@@ -15,7 +16,7 @@ Pa.PathCreator()  # Creates necessary folders.
 class MakeImages(object):
     """Create images in visit."""
 
-    def __init__(self, file, oper):
+    def __init__(self, file):
         """Initializes MakeImages with default directory creation.
 
 
@@ -29,15 +30,9 @@ class MakeImages(object):
                 "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
                 "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
               }
-
-            The following is an example of a valid input type for self.oper:
-            Operators = {
-                "Operator_1" : ["Slice"]+["1"],
-               }
         """
 
         self.file = file
-        self.oper = oper
 
     def Plot(self):
         """Loads the data into VisIt."""
@@ -46,30 +41,31 @@ class MakeImages(object):
             Vi.OpenDatabase("./Data/"+self.file[key][0])
             Vi.AddPlot(self.file[key][1], self.file[key][2])
 
-    def Operator(self):
+    def Operator(self, OperatorSet):
         """Add operator and it's settings."""
 
-        for key in self.oper:
-            Vi.AddOperator(self.oper[key][0], int(self.oper[key][1]))
+        Oper.Operators(OperatorSet)
 
-    def Settings(self):
+    def Settings(self, OperatorSet):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
 
-        # Applies the operator to all plots.
-        # If the tuple in documentation worked, then the following:
-        # Vi.SetActivePlots((tuple(range(0,len(Files)))))
-        Number = 0
-        for file in self.file:
-            Vi.SetActivePlots(Number)
-            Number += 1
-            Op.OperatorSettings()
+        if OperatorSet:
 
-    def Save(self):
+            # Applies the operator to all plots.
+            # If the tuple in documentation worked, then the following:
+            # Vi.SetActivePlots((tuple(range(0,len(Files)))))
+            Number = 0
+            for file in self.file:
+                Vi.SetActivePlots(Number)
+                Number += 1
+                OpSe.OperatorSettings(OperatorSet)
+
+    def Save(self, Coordinates = (30.0, 30.0, 30.0)):
         """Saves window image, python session, and HML session."""
 
         Vi.DrawPlots()
-        Wi.WindowSettings()
+        Wi.WindowSettings(Coordinates)
         Sa.SaveSessions()
         Vi.SaveWindow()
