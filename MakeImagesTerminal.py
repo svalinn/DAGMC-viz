@@ -61,4 +61,4 @@ if args.Plot:
 toc = timeit.default_timer()
 ElapsedTime = toc - tic
 
-print("Elapsed time was "+str(ElapsedTime)+" Seconds")
+print("Elapsed time was "+str(ElapsedTime)+" Seconds.")

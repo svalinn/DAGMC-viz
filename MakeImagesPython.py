@@ -44,6 +44,7 @@ class MakeImages(object):
     def Operator(self, OperatorSet):
         """Add operator and it's settings."""
 
+        Vi.RemoveAllOperators()
         Oper.Operators(OperatorSet)
 
     def Settings(self, OperatorSet):
@@ -53,14 +54,8 @@ class MakeImages(object):
 
         if OperatorSet:
 
-            # Applies the operator to all plots.
-            # If the tuple in documentation worked, then the following:
-            # Vi.SetActivePlots((tuple(range(0,len(Files)))))
-            Number = 0
-            for file in self.file:
-                Vi.SetActivePlots(Number)
-                OpSe.OperatorSettings(OperatorSet)
-                Number += 1
+            Vi.SetActivePlots((tuple(range(0,len(self.file)))))
+            OpSe.OperatorSettings(OperatorSet)
 
     def Save(self, Coordinates):
         """Saves window image, python session, and HML session."""

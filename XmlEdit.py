@@ -58,15 +58,15 @@ def XmlEdit(Original, NewSTL, NewVTK):
             Field.text = "localhost:"+str(os.getcwd())+NewVTK
 
     i = 0
-    while os.path.exists("Sessions/XML/Edited/output%s.session" % i):
+    while os.path.exists("Sessions/XML_Edited/output%s.session" % i):
         i += 1
 
-    tree.write("Sessions/XML/Edited/output%s.session" % i,
+    tree.write("Sessions/XML_Edited/output%s.session" % i,
                encoding="utf-8",
                xml_declaration=True,
                )
 
-Original = "Sessions/XML/Original/"+str(args.Original)
+Original = "Sessions/XML_Original/"+str(args.Original)
 NewSTL = "/./Data/"+str(args.NewSTL)
 NewVTK = "/./Data/"+str(args.NewVTK)
 XmlEdit(Original, NewSTL, NewVTK)
