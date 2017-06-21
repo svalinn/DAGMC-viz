@@ -24,7 +24,7 @@ def OperatorSettings(OperatorSet):
 
         SetOperatorOptions(Attribute)
 
-    if OperatorSet == "Slice":
+    if OperatorSet == "Slice0":
 
         Attribute = SliceAttributes()
 
@@ -32,3 +32,13 @@ def OperatorSettings(OperatorSet):
         Attribute.project2d = 0
 
         SetOperatorOptions(Attribute)
+
+    if OperatorSet == "Slice1":
+
+        Attribute = SliceAttributes()
+
+        Attribute.axisType = Attribute.XAxis
+        Attribute.project2d = 0
+
+        SetOperatorOptions(Attribute)
+

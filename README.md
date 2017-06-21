@@ -20,6 +20,6 @@ There are three primary methods of use for this tool.
 
 If the same plotting settings are to be used on another data set containing similar spatial dimensions, XmlEdit.py can be used to replace loaded data in generated session files. This allows for application of exact operators, plots, and settings to another data set. The following is an example of use:
 
-		python XmlEdit.py -cr sample0.session rmgrave.stl meshtal.vtk
+		python XmlEdit.py sample0.session rmgrave.stl meshtal.vtk
 
 For this to work, the original stl and vtk files need to be called dummy.stl and dummy.vtk respectively. This example replaces dummy files in sample0.session with rmgrave.stl and meshtal.vtk.

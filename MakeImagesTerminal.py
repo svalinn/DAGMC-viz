@@ -22,8 +22,10 @@ parser.add_argument("-op", "--Operator",
                     help="settings for plots and operators",
                     )
 parser.add_argument("-se", "--Settings",
+                    nargs="?",
+                    const="NoOperator",
+                    type=str,
                     help="add operators",
-                    action="store_true",
                     )
 parser.add_argument("-vi", "--View",
                     nargs="+",
@@ -40,6 +42,7 @@ args = parser.parse_args()
 Image = MakeImagesPython.MakeImages(Inputs.Files)
 
 OperatorSet = args.Operator
+OperSet = args.Settings
 
 if args.Plot:
     Image.Plot()
@@ -48,7 +51,7 @@ if args.Plot:
         Image.Operator(OperatorSet)
 
     if args.Settings:
-        Image.Settings(OperatorSet)
+        Image.Settings(OperSet)
 
     if args.View:
         Coordinates = tuple(args.View)

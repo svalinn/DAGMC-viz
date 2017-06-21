@@ -5,8 +5,7 @@ Vi.LaunchNowin()  # Here to allow import of other modules.
 
 import PathCreator as Pa
 import PlotSettings as Pl
-import Operators as Oper
-import OperatorSettings as OpSe
+import OperatorSettings as Op
 import WindowSettings as Wi
 import SaveSessions as Sa
 
@@ -45,17 +44,17 @@ class MakeImages(object):
         """Add operator and it's settings."""
 
         Vi.RemoveAllOperators()
-        Oper.Operators(OperatorSet)
+        Vi.AddOperator(str(OperatorSet), 1)
 
-    def Settings(self, OperatorSet):
+    def Settings(self, OperSet):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
 
-        if OperatorSet:
+        if OperSet:
 
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-            OpSe.OperatorSettings(OperatorSet)
+            Op.OperatorSettings(OperSet)
 
     def Save(self, Coordinates):
         """Saves window image, python session, and HML session."""
