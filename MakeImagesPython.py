@@ -44,7 +44,7 @@ class MakeImages(object):
         """Add operator and it's settings."""
 
         Vi.RemoveAllOperators()
-        
+
         if not OperatorSet == "None":
             Vi.AddOperator(str(OperatorSet), 1)
 
@@ -58,7 +58,7 @@ class MakeImages(object):
             Op.OperatorSettings(OperSet)
 
     def Save(self, Coordinates):
-        """Saves window image, python session, and HML session."""
+        """Saves window image and XML session."""
 
         Vi.DrawPlots()
         Wi.WindowSettings(Coordinates)

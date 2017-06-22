@@ -28,7 +28,10 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.axisType = Attribute.ZAxis
+        Attribute.originType = Attribute.Percent
+        Attribute.originPercent = 40
+
+        Attribute.axisType = Attribute.YAxis
         Attribute.project2d = 0
 
         SetOperatorOptions(Attribute)
@@ -37,8 +40,22 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.axisType = Attribute.XAxis
+        Attribute.originType = Attribute.Percent
+        Attribute.originPercent = 50
+
+        Attribute.axisType = Attribute.YAxis
         Attribute.project2d = 0
 
         SetOperatorOptions(Attribute)
 
+    if OperatorSet == "Slice2":
+
+        Attribute = SliceAttributes()
+
+        Attribute.originType = Attribute.Percent
+        Attribute.originPercent = 60
+
+        Attribute.axisType = Attribute.YAxis
+        Attribute.project2d = 0
+
+        SetOperatorOptions(Attribute)

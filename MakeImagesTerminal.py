@@ -30,14 +30,14 @@ parser.add_argument("-v", "--view",
 args = parser.parse_args()
 
 if args.iterations:
-    Number=args.iterations
+    Number = args.iterations
 
 if args.operator:
-    OperatorSet=args.operator
+    OperatorSet = args.operator
 
 if args.view:
     Coordinates = tuple(args.view)
-    Coordinates=Coordinates
+    Coordinates = Coordinates
 else:
     Coordinates = tuple((0.0, 0.0, 0.0))
 

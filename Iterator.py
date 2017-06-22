@@ -15,7 +15,7 @@ def Iterator(Number=1, OperatorSet=None, Coordinates=None):
 
     for item in range(0, Number):
 
-        if not OperatorSet == None:
+        if cond is not None:
             Image.Operator(OperatorSet)
             Image.Settings(OperatorSet+str(item))
 
