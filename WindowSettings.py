@@ -14,6 +14,8 @@ def WindowSettings(Coordinates=(0.0, 0.0, 0.0)):
     ydeg = Coordinates[1]
     zdeg = Coordinates[2]
 
+    ResetView()
+
     # Set view
     v = GetView3D()
     v.RotateAxis(x, xdeg)

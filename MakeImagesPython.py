@@ -9,11 +9,11 @@ import OperatorSettings as Op
 import WindowSettings as Wi
 import SaveSessions as Sa
 
-Pa.PathCreator()  # Creates necessary folders.
-
 
 class MakeImages(object):
     """Create images in visit."""
+
+    Pa.PathCreator()  # Creates necessary folders.
 
     def __init__(self, file):
         """Initializes MakeImages with default directory creation.
@@ -44,7 +44,9 @@ class MakeImages(object):
         """Add operator and it's settings."""
 
         Vi.RemoveAllOperators()
-        Vi.AddOperator(str(OperatorSet), 1)
+        
+        if not OperatorSet == "None":
+            Vi.AddOperator(str(OperatorSet), 1)
 
     def Settings(self, OperSet):
         """Set the settings for plots and operators."""
@@ -52,7 +54,6 @@ class MakeImages(object):
         Pl.PlotSettings()
 
         if OperSet:
-
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
             Op.OperatorSettings(OperSet)
 

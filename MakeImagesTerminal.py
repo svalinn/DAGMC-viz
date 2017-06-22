@@ -1,8 +1,7 @@
 import argparse
 import timeit
 
-import MakeImagesPython
-import Inputs
+import Iterator as It
 
 tic = timeit.default_timer()
 
@@ -10,58 +9,40 @@ parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
-parser.add_argument("-pl", "--Plot",
-                    help="add plots of data",
-                    action="store_true",
-                    )
-
-parser.add_argument("-op", "--Operator",
+parser.add_argument("-i", "--iterations",
                     nargs="?",
-                    const="NoOperator",
+                    default=1,
+                    type=int,
+                    help="add plots of data",
+                    )
+parser.add_argument("-o", "--operator",
+                    nargs="?",
+                    default="None",
                     type=str,
                     help="settings for plots and operators",
                     )
-parser.add_argument("-se", "--Settings",
-                    nargs="?",
-                    const="NoOperator",
-                    type=str,
-                    help="add operators",
-                    )
-parser.add_argument("-vi", "--View",
+parser.add_argument("-v", "--view",
                     nargs="+",
                     type=float,
                     help="change view (x,y,z) in degrees",
                     )
-parser.add_argument("-sa", "--Save",
-                    help="save display",
-                    action="store_true",
-                    )
 
 args = parser.parse_args()
 
-Image = MakeImagesPython.MakeImages(Inputs.Files)
+if args.iterations:
+    Number=args.iterations
 
-OperatorSet = args.Operator
-OperSet = args.Settings
+if args.operator:
+    OperatorSet=args.operator
 
-if args.Plot:
-    Image.Plot()
+if args.view:
+    Coordinates = tuple(args.view)
+    Coordinates=Coordinates
+else:
+    Coordinates = tuple((0.0, 0.0, 0.0))
 
-    if args.Operator:
-        Image.Operator(OperatorSet)
-
-    if args.Settings:
-        Image.Settings(OperSet)
-
-    if args.View:
-        Coordinates = tuple(args.View)
-    else:
-        Coordinates = (0.0, 0.0, 0.0)
-
-    if args.Save:
-        Image.Save(Coordinates)
+It.Iterator(Number, OperatorSet, Coordinates)
 
 toc = timeit.default_timer()
 ElapsedTime = toc - tic
-
-print("Elapsed time was "+str(ElapsedTime)+" Seconds.")
+print("Elapsed time was "+str(ElapsedTime)+" seconds.")

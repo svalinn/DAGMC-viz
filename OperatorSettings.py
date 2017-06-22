@@ -4,7 +4,7 @@ from visit import *
 def OperatorSettings(OperatorSet):
     """Add operator and its settings."""
 
-    if OperatorSet == "Clip":
+    if OperatorSet == "Clip0":
 
         Attribute = ClipAttributes()
 
