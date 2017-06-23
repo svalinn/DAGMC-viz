@@ -11,16 +11,52 @@ def OperatorSettings(OperatorSet):
         Attribute.quality = Attribute.Accurate
 
         Attribute.plane1Status = 1
+        Attribute.plane2Status = 0
+        Attribute.plane3Status = 0
+
+        Attribute.plane1Origin = (0, 0, 0)
+        Attribute.plane2Origin = (0, 0, 0)
+        Attribute.plane3Origin = (0, 0, 0)
+
+        Attribute.plane1Normal = (1, 0, 1)
+        Attribute.plane2Normal = (0, 1, 0)
+        Attribute.plane3Normal = (0, 0, 1)
+
+    if OperatorSet == "Clip1":
+
+        Attribute = ClipAttributes()
+
+        Attribute.quality = Attribute.Accurate
+
+        Attribute.plane1Status = 0
         Attribute.plane2Status = 1
+        Attribute.plane3Status = 0
+
+        Attribute.plane1Origin = (0, 0, 0)
+        Attribute.plane2Origin = (0, 0, 0)
+        Attribute.plane3Origin = (0, 0, 0)
+
+        Attribute.plane1Normal = (1, 0, 0)
+        Attribute.plane2Normal = (0, 1, 0)
+        Attribute.plane3Normal = (0, 0, 1)
+
+    if OperatorSet == "Clip2":
+
+        Attribute = ClipAttributes()
+
+        Attribute.quality = Attribute.Accurate
+
+        Attribute.plane1Status = 0
+        Attribute.plane2Status = 0
         Attribute.plane3Status = 1
 
-        Attribute.plane1Origin = (0, 0, 1)
-        Attribute.plane2Origin = (1, 0, 0)
-        Attribute.plane3Origin = (0, 1, 0)
+        Attribute.plane1Origin = (0, 0, 0)
+        Attribute.plane2Origin = (0, 0, 0)
+        Attribute.plane3Origin = (0, 0, 0)
 
-        Attribute.plane1Normal = (0, 0, 1)
-        Attribute.plane2Normal = (1, 0, 0)
-        Attribute.plane3Normal = (0, 1, 0)
+        Attribute.plane1Normal = (1, 0, 0)
+        Attribute.plane2Normal = (0, 1, 0)
+        Attribute.plane3Normal = (0, 0, 1)
 
         SetOperatorOptions(Attribute)
 
@@ -28,8 +64,8 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Percent
-        Attribute.originPercent = 40
+        Attribute.originType = Attribute.Point
+        Attribute.originPoint = (0, -5, 0)
 
         Attribute.axisType = Attribute.YAxis
         Attribute.project2d = 0
@@ -40,8 +76,8 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Percent
-        Attribute.originPercent = 50
+        Attribute.originType = Attribute.Point
+        Attribute.originPoint = (0, 10, 0)
 
         Attribute.axisType = Attribute.YAxis
         Attribute.project2d = 0
@@ -52,8 +88,8 @@ def OperatorSettings(OperatorSet):
 
         Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Percent
-        Attribute.originPercent = 60
+        Attribute.originType = Attribute.Point
+        Attribute.originPoint = (0, 20, 0)
 
         Attribute.axisType = Attribute.YAxis
         Attribute.project2d = 0
