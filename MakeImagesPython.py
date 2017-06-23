@@ -48,19 +48,19 @@ class MakeImages(object):
         if not OperatorSet == "None":
             Vi.AddOperator(str(OperatorSet), 1)
 
-    def Settings(self, OperSet):
+    def Settings(self, OperSet, myList):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
 
         if OperSet:
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-            Op.OperatorSettings(str(OperSet))
+            Op.OperatorSettings(str(OperSet), myList)
 
-    def Save(self, Coordinates):
+    def Save(self):
         """Saves window image and XML session."""
 
         Vi.DrawPlots()
-        Wi.WindowSettings(Coordinates)
+        Wi.WindowSettings()
         Sa.SaveSessions()
         Vi.SaveWindow()

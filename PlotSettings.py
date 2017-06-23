@@ -8,7 +8,7 @@ def PlotSettings():
     Attribute = PseudocolorAttributes()
 
     Attribute.lineStyle = Attribute.DASH
-    Attribute.scaling = Attribute.Linear
+    Attribute.scaling = Attribute.Log
     Attribute.centering = Attribute.Nodal
 
     SetPlotOptions(Attribute)

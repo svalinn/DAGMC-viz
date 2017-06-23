@@ -1,101 +1,69 @@
 from visit import *
 
 
-def OperatorSettings(OperatorSet):
+def OperatorSettings(OperatorSet, myList):
     """Add operator and its settings."""
 
-    if OperatorSet == "Clip0":
+    myList = list(myList)
+
+    if OperatorSet == "Clip":
+        """
+        with no args - default octant, rotation and midpoint
+        [{loc:(x,y,z),octant:(+/-1,+/-1,+/-1),rot:(alpha,beta,gamma)},...]
+        produces one image for each dictionary
+        """
 
         Attribute = ClipAttributes()
 
-        Attribute.quality = Attribute.Accurate
-
-        Attribute.plane1Status = 1
-        Attribute.plane2Status = 1
-        Attribute.plane3Status = 1
-
-        Attribute.plane1Origin = (0, 0, 0)
-        Attribute.plane2Origin = (0, 0, 0)
-        Attribute.plane3Origin = (0, 0, 0)
-
-        Attribute.plane1Normal = (1, 0, 1)
-        Attribute.plane2Normal = (0, 1, 0)
-        Attribute.plane3Normal = (0, 0, 1)
-
-        SetOperatorOptions(Attribute)
-
-    if OperatorSet == "Clip1":
-
-        Attribute = ClipAttributes()
+        x = myList[loc][0]
+        y = myList[loc][1]
+        z = myList[loc][2]
 
         Attribute.quality = Attribute.Accurate
 
-        Attribute.plane1Status = 1
-        Attribute.plane2Status = 1
-        Attribute.plane3Status = 0
+        Attribute.plane1Status = 1  # yz-plane
+        Attribute.plane2Status = 1  # xz-plane
+        Attribute.plane3Status = 1  # xy-plane
 
-        Attribute.plane1Origin = (0, 0, 0)
-        Attribute.plane2Origin = (0, 0, 0)
-        Attribute.plane3Origin = (0, 0, 0)
+        Attribute.plane1Normal = (myList[octant][0], 0, 0)
+        Attribute.plane2Normal = (0, myList[octant][1], 0)
+        Attribute.plane3Normal = (0, 0, myList[octant][2])
 
-        Attribute.plane1Normal = (1, 0, 1)
-        Attribute.plane2Normal = (0, 1, 0)
-        Attribute.plane3Normal = (0, 0, 1)
+        alpha = myList[rot][0]
+        beta = myList[rot][1]
+        gamma = myList[rot][2]
 
-        SetOperatorOptions(Attribute)
+        # Convert the cartesian coordinates to polar coordinates
 
-    if OperatorSet == "Clip2":
+        ResetView()
 
-        Attribute = ClipAttributes()
+        # Set view
+        v = GetView3D()
 
-        Attribute.quality = Attribute.Accurate
+        v.RotateAxis(0, xdeg)  # x-axis
+        v.RotateAxis(1, ydeg)  # y-axis
+        v.RotateAxis(2, zdeg)  # z-axis
 
-        Attribute.plane1Status = 1
-        Attribute.plane2Status = 0
-        Attribute.plane3Status = 0
-
-        Attribute.plane1Origin = (30, 30, 30)
-        Attribute.plane2Origin = (0, 0, 0)
-        Attribute.plane3Origin = (0, 0, 0)
-
-        Attribute.plane1Normal = (-1, 0, 0)
-        Attribute.plane2Normal = (0, 1, 0)
-        Attribute.plane3Normal = (0, 0, 1)
+        SetView3D(v)
 
         SetOperatorOptions(Attribute)
 
-    if OperatorSet == "Slice0":
+    if OperatorSet == "Slice":
+        """
+        with no args - default direction and location
+        [(<x,y,z>,val),(<x,y,z>,val),....]
+        produces one image for each tuple with slice at plane <x,y,z>=val
+        """
 
         Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Point
-        Attribute.originPoint = (0, -5, 0)
-
-        Attribute.axisType = Attribute.YAxis
-        Attribute.project2d = 0
-
-        SetOperatorOptions(Attribute)
-
-    if OperatorSet == "Slice1":
-
-        Attribute = SliceAttributes()
+        x = myList[0][0]
+        y = myList[0][1]
+        z = myList[0][2]
 
         Attribute.originType = Attribute.Point
-        Attribute.originPoint = (0, 10, 0)
+        Attribute.originPoint = (x, y, z)
 
-        Attribute.axisType = Attribute.YAxis
-        Attribute.project2d = 0
-
-        SetOperatorOptions(Attribute)
-
-    if OperatorSet == "Slice2":
-
-        Attribute = SliceAttributes()
-
-        Attribute.originType = Attribute.Point
-        Attribute.originPoint = (0, 20, 0)
-
-        Attribute.axisType = Attribute.YAxis
-        Attribute.project2d = 0
+        Attribute.axisType = eval("Attribute."+str(myList[1]).upper()+"Axis")
 
         SetOperatorOptions(Attribute)
