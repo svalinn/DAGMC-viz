@@ -55,7 +55,7 @@ class MakeImages(object):
 
         if OperSet:
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-            Op.OperatorSettings(OperSet)
+            Op.OperatorSettings(str(OperSet))
 
     def Save(self, Coordinates):
         """Saves window image and XML session."""

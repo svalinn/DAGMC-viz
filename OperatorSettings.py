@@ -11,7 +11,27 @@ def OperatorSettings(OperatorSet):
         Attribute.quality = Attribute.Accurate
 
         Attribute.plane1Status = 1
-        Attribute.plane2Status = 0
+        Attribute.plane2Status = 1
+        Attribute.plane3Status = 1
+
+        Attribute.plane1Origin = (0, 0, 0)
+        Attribute.plane2Origin = (0, 0, 0)
+        Attribute.plane3Origin = (0, 0, 0)
+
+        Attribute.plane1Normal = (1, 0, 1)
+        Attribute.plane2Normal = (0, 1, 0)
+        Attribute.plane3Normal = (0, 0, 1)
+
+        SetOperatorOptions(Attribute)
+
+    if OperatorSet == "Clip1":
+
+        Attribute = ClipAttributes()
+
+        Attribute.quality = Attribute.Accurate
+
+        Attribute.plane1Status = 1
+        Attribute.plane2Status = 1
         Attribute.plane3Status = 0
 
         Attribute.plane1Origin = (0, 0, 0)
@@ -22,23 +42,7 @@ def OperatorSettings(OperatorSet):
         Attribute.plane2Normal = (0, 1, 0)
         Attribute.plane3Normal = (0, 0, 1)
 
-    if OperatorSet == "Clip1":
-
-        Attribute = ClipAttributes()
-
-        Attribute.quality = Attribute.Accurate
-
-        Attribute.plane1Status = 0
-        Attribute.plane2Status = 1
-        Attribute.plane3Status = 0
-
-        Attribute.plane1Origin = (0, 0, 0)
-        Attribute.plane2Origin = (0, 0, 0)
-        Attribute.plane3Origin = (0, 0, 0)
-
-        Attribute.plane1Normal = (1, 0, 0)
-        Attribute.plane2Normal = (0, 1, 0)
-        Attribute.plane3Normal = (0, 0, 1)
+        SetOperatorOptions(Attribute)
 
     if OperatorSet == "Clip2":
 
@@ -46,15 +50,15 @@ def OperatorSettings(OperatorSet):
 
         Attribute.quality = Attribute.Accurate
 
-        Attribute.plane1Status = 0
+        Attribute.plane1Status = 1
         Attribute.plane2Status = 0
-        Attribute.plane3Status = 1
+        Attribute.plane3Status = 0
 
-        Attribute.plane1Origin = (0, 0, 0)
+        Attribute.plane1Origin = (30, 30, 30)
         Attribute.plane2Origin = (0, 0, 0)
         Attribute.plane3Origin = (0, 0, 0)
 
-        Attribute.plane1Normal = (1, 0, 0)
+        Attribute.plane1Normal = (-1, 0, 0)
         Attribute.plane2Normal = (0, 1, 0)
         Attribute.plane3Normal = (0, 0, 1)
 
