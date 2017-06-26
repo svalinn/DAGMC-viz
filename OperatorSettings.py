@@ -1,23 +1,21 @@
+import numpy
+
 from visit import *
 
 
 def OperatorSettings(OperatorSet, myList):
     """Add operator and its settings."""
 
-    myList = list(myList)
-
     if OperatorSet == "Clip":
         """
         with no args - default octant, rotation and midpoint
-        [{loc:(x,y,z),octant:(+/-1,+/-1,+/-1),rot:(alpha,beta,gamma)},...]
+        [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(xdeg,ydeg,zdeg)},...]
         produces one image for each dictionary
         """
 
-        Attribute = ClipAttributes()
+        myList = dict(myList)
 
-        x = myList[loc][0]
-        y = myList[loc][1]
-        z = myList[loc][2]
+        Attribute = ClipAttributes()
 
         Attribute.quality = Attribute.Accurate
 
@@ -25,26 +23,51 @@ def OperatorSettings(OperatorSet, myList):
         Attribute.plane2Status = 1  # xz-plane
         Attribute.plane3Status = 1  # xy-plane
 
-        Attribute.plane1Normal = (myList[octant][0], 0, 0)
-        Attribute.plane2Normal = (0, myList[octant][1], 0)
-        Attribute.plane3Normal = (0, 0, myList[octant][2])
+        xpos = myList['loc'][0]
+        ypos = myList['loc'][1]
+        zpos = myList['loc'][2]
 
-        alpha = myList[rot][0]
-        beta = myList[rot][1]
-        gamma = myList[rot][2]
+        Attribute.plane1Origin = (xpos, 0, 0)
+        Attribute.plane2Origin = (0, ypos, 0)
+        Attribute.plane3Origin = (0, 0, zpos)
 
-        # Convert the cartesian coordinates to polar coordinates
+        Attribute.plane1Normal = (myList['oct'][0], 0, 0)
+        Attribute.plane2Normal = (0, myList['oct'][1], 0)
+        Attribute.plane3Normal = (0, 0, myList['oct'][2])
 
-        ResetView()
+        if myList['rot']:
+            xdeg = myList['rot'][0]
+            ydeg = myList['rot'][1]
+            zdeg = myList['rot'][2]
 
-        # Set view
-        v = GetView3D()
+            ResetView()
 
-        v.RotateAxis(0, xdeg)  # x-axis
-        v.RotateAxis(1, ydeg)  # y-axis
-        v.RotateAxis(2, zdeg)  # z-axis
+            # Set view
+            v = GetView3D()
 
-        SetView3D(v)
+            v.RotateAxis(0, float(xdeg))  # rotate around x-axis
+            v.RotateAxis(1, float(ydeg))  # rotate around y-axis
+            v.RotateAxis(2, float(zdeg))  # rotate around z-axis
+
+            SetView3D(v)
+
+        else:
+            xdeg = myList['rot'][0]
+            ydeg = myList['rot'][1]
+            zdeg = myList['rot'][2]
+
+            ResetView()
+
+            # Set view
+            v = GetView3D()
+
+            v.RotateAxis(0, float(xdeg))  # rotate around x-axis
+            v.RotateAxis(1, float(ydeg))  # rotate around y-axis
+            v.RotateAxis(2, float(zdeg))  # rotate around z-axis
+
+            SetView3D(v)
+
+
 
         SetOperatorOptions(Attribute)
 
@@ -55,15 +78,21 @@ def OperatorSettings(OperatorSet, myList):
         produces one image for each tuple with slice at plane <x,y,z>=val
         """
 
+        myList = list(myList)
+
         Attribute = SliceAttributes()
 
-        x = myList[0][0]
-        y = myList[0][1]
-        z = myList[0][2]
-
         Attribute.originType = Attribute.Point
-        Attribute.originPoint = (x, y, z)
 
-        Attribute.axisType = eval("Attribute."+str(myList[1]).upper()+"Axis")
+        if myList[0] == 'x':
+            Attribute.originPoint = (myList[1], 0, 0)
+
+        if myList[0] == 'y':
+            Attribute.originPoint = (0, myList[1], 0)
+
+        if myList[0] == 'z':
+            Attribute.originPoint = (0, 0, myList[1])
+
+        Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
 
         SetOperatorOptions(Attribute)
