@@ -3,13 +3,13 @@ import numpy
 from visit import *
 
 
-def OperatorSettings(OperatorSet, myList):
+def OperatorSettings(OperatorSet, myList, Centroids=None):
     """Add operator and its settings."""
 
     if OperatorSet == "Clip":
         """
         with no args - default octant, rotation and midpoint
-        [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(xdeg,ydeg,zdeg)},...]
+        [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(alpha,beta,gamma)},...]
         produces one image for each dictionary
         """
 
@@ -23,22 +23,29 @@ def OperatorSettings(OperatorSet, myList):
         Attribute.plane2Status = 1  # xz-plane
         Attribute.plane3Status = 1  # xy-plane
 
-        xpos = myList['loc'][0]
-        ypos = myList['loc'][1]
-        zpos = myList['loc'][2]
+        if "loc" in myList:
+            xpos = myList["loc"][0]
+            ypos = myList["loc"][1]
+            zpos = myList["loc"][2]
 
-        Attribute.plane1Origin = (xpos, 0, 0)
-        Attribute.plane2Origin = (0, ypos, 0)
-        Attribute.plane3Origin = (0, 0, zpos)
+            Attribute.plane1Origin = (xpos, 0, 0)
+            Attribute.plane2Origin = (0, ypos, 0)
+            Attribute.plane3Origin = (0, 0, zpos)
 
-        Attribute.plane1Normal = (myList['oct'][0], 0, 0)
-        Attribute.plane2Normal = (0, myList['oct'][1], 0)
-        Attribute.plane3Normal = (0, 0, myList['oct'][2])
+        else:
+            Attribute.plane1Origin = (min(Centroids)[0], 0, 0)
+            Attribute.plane2Origin = (0, min(Centroids)[1], 0)
+            Attribute.plane3Origin = (0, 0, min(Centroids)[2])
+            print min(Centroids)
 
-        if myList['rot']:
-            xdeg = myList['rot'][0]
-            ydeg = myList['rot'][1]
-            zdeg = myList['rot'][2]
+        Attribute.plane1Normal = (myList["oct"][0], 0, 0)
+        Attribute.plane2Normal = (0, myList["oct"][1], 0)
+        Attribute.plane3Normal = (0, 0, myList["oct"][2])
+
+        if "rot" in myList:
+            xdeg = myList["rot"][0]
+            ydeg = myList["rot"][1]
+            zdeg = myList["rot"][2]
 
             ResetView()
 
@@ -52,22 +59,14 @@ def OperatorSettings(OperatorSet, myList):
             SetView3D(v)
 
         else:
-            xdeg = myList['rot'][0]
-            ydeg = myList['rot'][1]
-            zdeg = myList['rot'][2]
-
             ResetView()
 
             # Set view
             v = GetView3D()
 
-            v.RotateAxis(0, float(xdeg))  # rotate around x-axis
-            v.RotateAxis(1, float(ydeg))  # rotate around y-axis
-            v.RotateAxis(2, float(zdeg))  # rotate around z-axis
+            v.viewNormal = (myList["oct"][0], myList["oct"][1], myList["oct"][2])
 
             SetView3D(v)
-
-
 
         SetOperatorOptions(Attribute)
 

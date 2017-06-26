@@ -55,7 +55,16 @@ class MakeImages(object):
 
         if OperSet:
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-            Op.OperatorSettings(str(OperSet), myList)
+
+            Vi.DrawPlots()
+
+            Centroids = []
+            for key in self.file:
+                # Get centroids of data.
+                Vi.Query("Centroid")
+                Centroids.append(Vi.GetQueryOutputValue())
+
+            Op.OperatorSettings(str(OperSet), myList, Centroids)
 
     def Save(self):
         """Saves window image and XML session."""
