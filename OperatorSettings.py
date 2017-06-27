@@ -3,7 +3,7 @@ import numpy
 from visit import *
 
 
-def OperatorSettings(OperatorSet, myList, Centroids):
+def OperatorSettings(OperatorSet, myList, Centroids=None, tags=None):
     """Add operator and its settings."""
 
     if OperatorSet == "Clip":
@@ -34,9 +34,11 @@ def OperatorSettings(OperatorSet, myList, Centroids):
                 Attribute.plane3Origin = (0, 0, zpos)
 
             else:
-                Attribute.plane1Origin = (Centroids[0], 0, 0)
-                Attribute.plane2Origin = (0, Centroids[1], 0)
-                Attribute.plane3Origin = (0, 0, Centroids[2])
+                Centroids = dict(Centroids)
+
+                Attribute.plane1Origin = (Centroids["Pseudocolor"][0], 0, 0)
+                Attribute.plane2Origin = (0, Centroids["Pseudocolor"][1], 0)
+                Attribute.plane3Origin = (0, 0, Centroids["Pseudocolor"][2])
 
             Attribute.plane1Normal = (myList["oct"][0], 0, 0)
             Attribute.plane2Normal = (0, myList["oct"][1], 0)
@@ -64,7 +66,11 @@ def OperatorSettings(OperatorSet, myList, Centroids):
                 # Set view
                 v = GetView3D()
 
-                v.viewNormal = (myList["oct"][0], myList["oct"][1], myList["oct"][2])
+                v.viewNormal = (
+                                myList["oct"][0],
+                                myList["oct"][1],
+                                myList["oct"][2],
+                                )
 
                 SetView3D(v)
 
@@ -93,7 +99,11 @@ def OperatorSettings(OperatorSet, myList, Centroids):
             if myList[0] == 'z':
                 Attribute.originPoint = (0, 0, myList[1])
 
-            Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
+            Attribute.axisType = eval(
+                                      "Attribute." +
+                                      str(myList[0]).upper() +
+                                      "Axis"
+                                      )
 
             SetOperatorOptions(Attribute)
 

@@ -37,30 +37,31 @@ class MakeImages(object):
         """Loads the data into VisIt."""
 
         count = 0
-        tagname = []
+        PlotType = []
+        Centroids = []
         plotnumber = []
+
         for key in self.file:
             Vi.OpenDatabase("./Data/"+self.file[key][0])
             Vi.AddPlot(self.file[key][1], self.file[key][2])
 
-            tagname.append(self.file[key][2])
-            plotnumber.append(count)
-            
-            # Get the centroid of Pseudocolor data not mesh.
+            PlotType.append(self.file[key][1])
+            plotnumber.append(count)  # Loading order
+
+            Vi.SetActivePlots(count)
+            Vi.DrawPlots()
+
+            Vi.Query("Centroid")  # Centroid of selected plot.
+            Centroids.append(Vi.GetQueryOutputValue())
+            self.Centroids = Centroids
+
             count += 1
 
-            if self.file[key][1] == "Pseudocolor":
-                Vi.DrawPlots()
-                Vi.SetActivePlots(count)
-                Vi.Query("Centroid")
-                Centroids = Vi.GetQueryOutputValue()
-                self.Centroids = Centroids
+        PlottingSequence = dict(zip(PlotType, plotnumber))
+        PlottingCentroids = dict(zip(PlotType, Centroids))
 
-            else:
-                self.Centroids = (0, 0, 0)
-
-        Positions = dict(zip(tagname,plotnumber))
-        print Positions
+        self.PlottingSequence = PlottingSequence
+        self.PlottingCentroids = PlottingCentroids
 
     def Operator(self, OperatorSet):
         """Add operator and it's settings."""
@@ -77,7 +78,13 @@ class MakeImages(object):
 
         if OperSet:
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-            Op.OperatorSettings(str(OperSet), myList, self.Centroids)
+
+            Op.OperatorSettings(
+                                str(OperSet),
+                                myList,
+                                self.PlottingCentroids,
+                                self.PlottingSequence,
+                                )
 
     def Save(self):
         """Saves window image and XML session."""
