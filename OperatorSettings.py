@@ -4,14 +4,20 @@ from OperatorSlice import OperatorSlice
 from OperatorThreshold import OperatorThreshold
 
 
-def OperatorSettings(OperSet, myList, Centroids, tags):
+class OperatorSettings(object):
     """Add operator and its settings."""
 
-    if OperSet == "Slice":
-        OperatorSlice(myList)
+    def __init__(self, myList, Centroids, tags):
 
-    if OperSet == "Clip":
-        OperatorClip(myList, Centroids)
+        self.tags = tags
+        self.myList = myList
+        self.Centroids = Centroids
 
-    if OperSet == "Threshold":
-        OperatorThreshold(myList, tags)
+    def Slice(self):
+        OperatorSlice(self.myList)
+
+    def Clip(self):
+        OperatorClip(self.myList, self.Centroids)
+
+    def Threshold(self):
+        OperatorThreshold(self.myList, self.tags)

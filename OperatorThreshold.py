@@ -6,8 +6,6 @@ def OperatorThreshold(myList, tags):
     expr = tagname > val | tagname < val | tagname = (min,max)
     """
 
-    print tags, myList
-
     if myList is not None:
         myList = list(myList)
 
