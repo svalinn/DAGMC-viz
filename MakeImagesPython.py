@@ -15,7 +15,7 @@ class MakeImages(object):
 
     Pa.PathCreator()  # Creates necessary folders.
 
-    def __init__(self, file):
+    def __init__(self, File):
         """Initializes MakeImages with default directory creation.
 
 
@@ -23,7 +23,7 @@ class MakeImages(object):
         data, plot, and variable used. Operators were also defined. Within
         Inputs.py, is code similar to the dictionaries listed below:
 
-        The following is an example of a valid input type for self.file:
+        The following is an example of a valid input type for self.File:
            Files = {
                 "Plot_1" : ["meshtal.vtk"]+["Pseudocolor"]+["TALLY_TAG"],
                 "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
@@ -31,7 +31,7 @@ class MakeImages(object):
                     }
         """
 
-        self.file = file
+        self.File = File
 
     def Plot(self):
         """Loads the data into VisIt."""
@@ -41,11 +41,11 @@ class MakeImages(object):
         Centroids = []
         plotnumber = []
 
-        for key in self.file:
-            Vi.OpenDatabase("./Data/"+self.file[key][0])
-            Vi.AddPlot(self.file[key][1], self.file[key][2])
+        for key in self.File:
+            Vi.OpenDatabase("./Data/"+self.File[key][0])
+            Vi.AddPlot(self.File[key][1], self.File[key][2])
 
-            PlotType.append(self.file[key][1])
+            PlotType.append(self.File[key][1])
             plotnumber.append(count)  # Loading order
 
             Vi.SetActivePlots(count)
@@ -63,28 +63,26 @@ class MakeImages(object):
         self.PlottingSequence = PlottingSequence
         self.PlottingCentroids = PlottingCentroids
 
-    def Operator(self, OperatorSet):
-        """Add operator and it's settings."""
-
-        Vi.RemoveAllOperators()
-
-        if not OperatorSet == "None":
-            Vi.AddOperator(str(OperatorSet), 1)
-
     def Settings(self, OperSet, myList=None):
         """Set the settings for plots and operators."""
 
+        Vi.RemoveAllOperators()
+
+        if OperSet == "Threshold":
+            Vi.AddOperator(OperSet, 0)
+        else:
+            Vi.AddOperator(OperSet, 1)
+
         Pl.PlotSettings()
 
-        if OperSet:
-            Vi.SetActivePlots((tuple(range(0, len(self.file)))))
+        Vi.SetActivePlots((tuple(range(0, len(self.File)))))
 
-            Op.OperatorSettings(
-                                str(OperSet),
-                                myList,
-                                self.PlottingCentroids,
-                                self.PlottingSequence,
-                                )
+        Op.OperatorSettings(
+                            OperSet,
+                            myList,
+                            self.PlottingCentroids,
+                            self.PlottingSequence,
+                            )
 
     def Save(self):
         """Saves window image and XML session."""
