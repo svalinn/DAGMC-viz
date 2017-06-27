@@ -36,9 +36,31 @@ class MakeImages(object):
     def Plot(self):
         """Loads the data into VisIt."""
 
+        count = 0
+        tagname = []
+        plotnumber = []
         for key in self.file:
             Vi.OpenDatabase("./Data/"+self.file[key][0])
             Vi.AddPlot(self.file[key][1], self.file[key][2])
+
+            tagname.append(self.file[key][2])
+            plotnumber.append(count)
+            
+            # Get the centroid of Pseudocolor data not mesh.
+            count += 1
+
+            if self.file[key][1] == "Pseudocolor":
+                Vi.DrawPlots()
+                Vi.SetActivePlots(count)
+                Vi.Query("Centroid")
+                Centroids = Vi.GetQueryOutputValue()
+                self.Centroids = Centroids
+
+            else:
+                self.Centroids = (0, 0, 0)
+
+        Positions = dict(zip(tagname,plotnumber))
+        print Positions
 
     def Operator(self, OperatorSet):
         """Add operator and it's settings."""
@@ -48,23 +70,14 @@ class MakeImages(object):
         if not OperatorSet == "None":
             Vi.AddOperator(str(OperatorSet), 1)
 
-    def Settings(self, OperSet, myList):
+    def Settings(self, OperSet, myList=None):
         """Set the settings for plots and operators."""
 
         Pl.PlotSettings()
 
         if OperSet:
             Vi.SetActivePlots((tuple(range(0, len(self.file)))))
-
-            Vi.DrawPlots()
-
-            Centroids = []
-            for key in self.file:
-                # Get centroids of data.
-                Vi.Query("Centroid")
-                Centroids.append(Vi.GetQueryOutputValue())
-
-            Op.OperatorSettings(str(OperSet), myList, Centroids)
+            Op.OperatorSettings(str(OperSet), myList, self.Centroids)
 
     def Save(self):
         """Saves window image and XML session."""

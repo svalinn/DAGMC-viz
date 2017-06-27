@@ -3,7 +3,7 @@ import numpy
 from visit import *
 
 
-def OperatorSettings(OperatorSet, myList, Centroids=None):
+def OperatorSettings(OperatorSet, myList, Centroids):
     """Add operator and its settings."""
 
     if OperatorSet == "Clip":
@@ -13,62 +13,62 @@ def OperatorSettings(OperatorSet, myList, Centroids=None):
         produces one image for each dictionary
         """
 
-        myList = dict(myList)
+        if myList is not None:
+            myList = dict(myList)
 
-        Attribute = ClipAttributes()
+            Attribute = ClipAttributes()
 
-        Attribute.quality = Attribute.Accurate
+            Attribute.quality = Attribute.Accurate
 
-        Attribute.plane1Status = 1  # yz-plane
-        Attribute.plane2Status = 1  # xz-plane
-        Attribute.plane3Status = 1  # xy-plane
+            Attribute.plane1Status = 1  # yz-plane
+            Attribute.plane2Status = 1  # xz-plane
+            Attribute.plane3Status = 1  # xy-plane
 
-        if "loc" in myList:
-            xpos = myList["loc"][0]
-            ypos = myList["loc"][1]
-            zpos = myList["loc"][2]
+            if "loc" in myList:
+                xpos = myList["loc"][0]
+                ypos = myList["loc"][1]
+                zpos = myList["loc"][2]
 
-            Attribute.plane1Origin = (xpos, 0, 0)
-            Attribute.plane2Origin = (0, ypos, 0)
-            Attribute.plane3Origin = (0, 0, zpos)
+                Attribute.plane1Origin = (xpos, 0, 0)
+                Attribute.plane2Origin = (0, ypos, 0)
+                Attribute.plane3Origin = (0, 0, zpos)
 
-        else:
-            Attribute.plane1Origin = (min(Centroids)[0], 0, 0)
-            Attribute.plane2Origin = (0, min(Centroids)[1], 0)
-            Attribute.plane3Origin = (0, 0, min(Centroids)[2])
-            print min(Centroids)
+            else:
+                Attribute.plane1Origin = (Centroids[0], 0, 0)
+                Attribute.plane2Origin = (0, Centroids[1], 0)
+                Attribute.plane3Origin = (0, 0, Centroids[2])
 
-        Attribute.plane1Normal = (myList["oct"][0], 0, 0)
-        Attribute.plane2Normal = (0, myList["oct"][1], 0)
-        Attribute.plane3Normal = (0, 0, myList["oct"][2])
+            Attribute.plane1Normal = (myList["oct"][0], 0, 0)
+            Attribute.plane2Normal = (0, myList["oct"][1], 0)
+            Attribute.plane3Normal = (0, 0, myList["oct"][2])
 
-        if "rot" in myList:
-            xdeg = myList["rot"][0]
-            ydeg = myList["rot"][1]
-            zdeg = myList["rot"][2]
+            if "rot" in myList:
+                xdeg = myList["rot"][0]
+                ydeg = myList["rot"][1]
+                zdeg = myList["rot"][2]
 
-            ResetView()
+                ResetView()
 
-            # Set view
-            v = GetView3D()
+                # Set view
+                v = GetView3D()
 
-            v.RotateAxis(0, float(xdeg))  # rotate around x-axis
-            v.RotateAxis(1, float(ydeg))  # rotate around y-axis
-            v.RotateAxis(2, float(zdeg))  # rotate around z-axis
+                v.RotateAxis(0, float(xdeg))  # rotate around x-axis
+                v.RotateAxis(1, float(ydeg))  # rotate around y-axis
+                v.RotateAxis(2, float(zdeg))  # rotate around z-axis
 
-            SetView3D(v)
+                SetView3D(v)
 
-        else:
-            ResetView()
+            else:
+                ResetView()
 
-            # Set view
-            v = GetView3D()
+                # Set view
+                v = GetView3D()
 
-            v.viewNormal = (myList["oct"][0], myList["oct"][1], myList["oct"][2])
+                v.viewNormal = (myList["oct"][0], myList["oct"][1], myList["oct"][2])
 
-            SetView3D(v)
+                SetView3D(v)
 
-        SetOperatorOptions(Attribute)
+            SetOperatorOptions(Attribute)
 
     if OperatorSet == "Slice":
         """
@@ -77,21 +77,38 @@ def OperatorSettings(OperatorSet, myList, Centroids=None):
         produces one image for each tuple with slice at plane <x,y,z>=val
         """
 
-        myList = list(myList)
+        if myList is not None:
+            myList = list(myList)
 
-        Attribute = SliceAttributes()
+            Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Point
+            Attribute.originType = Attribute.Point
 
-        if myList[0] == 'x':
-            Attribute.originPoint = (myList[1], 0, 0)
+            if myList[0] == 'x':
+                Attribute.originPoint = (myList[1], 0, 0)
 
-        if myList[0] == 'y':
-            Attribute.originPoint = (0, myList[1], 0)
+            if myList[0] == 'y':
+                Attribute.originPoint = (0, myList[1], 0)
 
-        if myList[0] == 'z':
-            Attribute.originPoint = (0, 0, myList[1])
+            if myList[0] == 'z':
+                Attribute.originPoint = (0, 0, myList[1])
 
-        Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
+            Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
 
-        SetOperatorOptions(Attribute)
+            SetOperatorOptions(Attribute)
+
+    # if OperatorSet == "Threshold":
+    #     """
+    #     expr = tagname > val | tagname < val | tagname = (min,max)
+    #     """
+
+    #     if myList is not None:
+    #         myList = tuple(myList)
+
+    #         Attribute = Threshold.Attributes()
+
+    #         Attribute.lowerBounds = (0)
+    #         Attribute.upperbounds = (.0005)
+
+    #         SetOperatorOptions(Attribute)
+
