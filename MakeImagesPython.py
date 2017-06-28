@@ -8,6 +8,7 @@ import PlotSettings as Pl
 import SaveSessions as Sa
 import WindowSettings as Wi
 import OperatorSettings as Op
+import PlotAndInformation as Qu
 
 
 class MakeImages(object):
@@ -36,38 +37,16 @@ class MakeImages(object):
     def Plot(self):
         """Loads the data into VisIt."""
 
-        Count = 0
-        PlotType = []
-        Centroids = []
-        plotnumber = []
+        # Get plot and get information from each plot type.
+        PlotAndGetInfo = Qu.PlotAndInformation(self.File)
+        self.PlottingSequence = PlotAndGetInfo[0]
+        self.PlottingCentroids = PlotAndGetInfo[1]
+
+        # Apply plot settings
+        Apply = Pl.PlotSettings(self.File)
 
         for key in self.File:
-            Vi.OpenDatabase("./Data/"+self.File[key][0])
-            Vi.AddPlot(self.File[key][1], self.File[key][2])
-
-            PlotType.append(self.File[key][1])
-            plotnumber.append(Count)  # Loading order.
-
-            Vi.SetActivePlots(Count)
-            Vi.DrawPlots()
-
-            Vi.Query("Centroid")  # Centroid of selected plot.
-            Centroids.append(Vi.GetQueryOutputValue())
-            self.Centroids = Centroids
-
-            Count += 1
-
-        # Create dictionaries of plot information.
-        PlottingSequence = dict(zip(PlotType, plotnumber))
-        PlottingCentroids = dict(zip(PlotType, Centroids))
-
-        self.PlottingSequence = PlottingSequence
-        self.PlottingCentroids = PlottingCentroids
-
-        Apply = Pl.PlotSettings(self.File)
-        Apply.Pseudocolor()
-        Apply.Contour()
-        Apply.Mesh()
+            eval("Apply."+str(self.File[key][1])+"()")
 
     def Operator(self, OperSet, myList=None):
         """Set the settings for plots and operators."""
