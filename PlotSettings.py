@@ -7,14 +7,14 @@ from PlotPseudocolor import PlotPseudocolor
 class PlotSettings(object):
     """Visual settings for plots."""
 
-    def __init__(self, File):
-        self.File = File
+    def __init__(self, myList):
+        self.myList = myList
 
     def Pseudocolor(self):
-        PlotPseudocolor()
+        PlotPseudocolor(self.myList)
 
     def Contour(self):
-        PlotContour()
+        PlotContour(self.myList)
 
     def Mesh(self):
-        PlotMesh()
+        PlotMesh(self.myList)

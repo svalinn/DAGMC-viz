@@ -11,9 +11,9 @@ def PlotAndInformation(File):
 
     for key in File:
         OpenDatabase("./Data/"+File[key][0])
-        AddPlot(File[key][1], File[key][2])
+        AddPlot(File[key][1].title(), File[key][2])
 
-        PlotType.append(File[key][1])
+        PlotType.append(File[key][1].title())
         plotnumber.append(Count)  # Loading order.
 
         SetActivePlots(Count)

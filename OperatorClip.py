@@ -8,7 +8,7 @@ def OperatorClip(File, OperSet, myList, Centroids):
     produces one image for each dictionary
     """
 
-    AddOperator(OperSet, 1)
+    AddOperator(OperSet.title(), 1)
     SetActivePlots((tuple(range(0, len(File)))))
 
     if myList is not None:

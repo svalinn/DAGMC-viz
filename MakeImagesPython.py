@@ -34,7 +34,7 @@ class MakeImages(object):
 
         self.File = File
 
-    def Plot(self):
+    def Plot(self, myList=None):
         """Loads the data into VisIt."""
 
         # Get plot and get information from each plot type.
@@ -43,7 +43,9 @@ class MakeImages(object):
         self.PlottingCentroids = PlotAndGetInfo[1]
 
         # Apply plot settings
-        Apply = Pl.PlotSettings(self.File)
+        Apply = Pl.PlotSettings(
+                                myList,
+                                )
 
         for key in self.File:
             eval("Apply."+str(self.File[key][1])+"()")
@@ -59,7 +61,7 @@ class MakeImages(object):
                                     self.PlottingSequence,
                                     )
 
-        eval("Apply."+str(OperSet)+"()")
+        eval("Apply."+str(OperSet).title()+"()")
 
     def Save(self):
         """Saves window image and XML session."""

@@ -1,8 +1,9 @@
 from visit import *
 
 
-def PlotContour():
+def PlotContour(myList):
     # Contour plot attributes.
+
     Attribute = ContourAttributes()
 
     Attribute.lineStyle = Attribute.DASH

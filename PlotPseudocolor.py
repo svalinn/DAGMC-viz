@@ -1,13 +1,15 @@
 from visit import *
 
 
-def PlotPseudocolor():
+def PlotPseudocolor(myList):
     # Pseudocolor plot attributes.
 
-    Attribute = PseudocolorAttributes()
+    if myList is not None:
+        myList = list(myList)
 
-    Attribute.lineStyle = Attribute.DASH
-    Attribute.scaling = Attribute.Log
-    Attribute.centering = Attribute.Nodal
+        Attribute = PseudocolorAttributes()
 
-    SetPlotOptions(Attribute)
+        Attribute.scaling = eval("Attribute."+str(myList[0]).title())
+
+        SetPlotOptions(Attribute)
+

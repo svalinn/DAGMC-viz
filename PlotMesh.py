@@ -1,8 +1,9 @@
 from visit import *
 
 
-def PlotMesh():
+def PlotMesh(myList):
     # Mesh plot attributes.
+
     Attribute = MeshAttributes()
 
     Attribute.lineStyle = Attribute.DASH

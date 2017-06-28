@@ -6,8 +6,8 @@ def OperatorThreshold(OperSet, myList, tags):
     expr = tagname > val | tagname < val | tagname = (min,max)
     """
 
-    SetActivePlots(tags[myList[0]])
-    AddOperator(OperSet, 0)
+    SetActivePlots(tags[myList[0].title()])
+    AddOperator(OperSet.title(), 0)
 
     if myList is not None:
         myList = list(myList)

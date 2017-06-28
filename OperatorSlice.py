@@ -8,7 +8,7 @@ def OperatorSlice(File, OperSet, myList):
     produces one image for each tuple with slice at plane <x,y,z>=val
     """
 
-    AddOperator(OperSet, 1)
+    AddOperator(OperSet.title(), 1)
     SetActivePlots((tuple(range(0, len(File)))))
 
     if myList is not None:
