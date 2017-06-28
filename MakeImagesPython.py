@@ -17,24 +17,11 @@ class MakeImages(object):
     Pa.PathCreator()  # Creates necessary folders.
 
     def __init__(self, File):
-        """Initializes MakeImages with default directory creation.
-
-
-        A python script with the name Inputs.py was used to specify the
-        data, plot, and variable used. Operators were also defined. Within
-        Inputs.py, is code similar to the dictionaries listed below:
-
-        The following is an example of a valid input type for self.File:
-           Files = {
-                "Plot_1" : ["meshtal.vtk"]+["Pseudocolor"]+["TALLY_TAG"],
-                "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
-                "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
-                    }
-        """
+        """Initializes MakeImages with default directory creation."""
 
         self.File = File
 
-    def Plot(self, myList=None):
+    def Plot(self):
         """Loads the data into VisIt."""
 
         # Get plot and get information from each plot type.
@@ -43,9 +30,7 @@ class MakeImages(object):
         self.PlottingCentroids = PlotAndGetInfo[1]
 
         # Apply plot settings
-        Apply = Pl.PlotSettings(
-                                myList,
-                                )
+        Apply = Pl.PlotSettings(self.File)
 
         for key in self.File:
             eval("Apply."+str(self.File[key][1])+"()")

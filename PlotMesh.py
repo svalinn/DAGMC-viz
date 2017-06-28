@@ -1,11 +1,22 @@
 from visit import *
 
 
-def PlotMesh(myList):
+def PlotMesh(File):
     # Mesh plot attributes.
 
-    Attribute = MeshAttributes()
+    if File is not None:
+        File = dict(File)
 
-    Attribute.lineStyle = Attribute.DASH
+        Attribute = MeshAttributes()
 
-    SetPlotOptions(Attribute)
+        for key in File:
+            if File[key][1].title() == "Mesh":
+                try:
+                    Attribute.lineStyle = eval(
+                                               "Attribute." +
+                                               str(File[key][3]).upper()
+                                               )
+                except Exception:
+                    pass
+
+        SetPlotOptions(Attribute)

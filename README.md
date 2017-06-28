@@ -16,6 +16,17 @@ There are three primary methods of use for this tool.
 
 3. MakeImagesPython.py can have the Vi.LaunchNowin() line commented. This allows for the script to be launched within the visit GUI using Controls -> Launch Cli. This combines Part 2 and the interactivity of the VisIt GUI.
 
+        A python script with the name Inputs.py was used to specify the
+        data, plot, and variable used. Operators were also defined. Within
+        Inputs.py, is code similar to the dictionaries listed below:
+
+        The following is an example of a valid input type for self.File:
+           Files = {
+                    "Plot_1" : ["meshtal.vtk"]+["Pseudocolor"]+["TALLY_TAG"],
+                    "Plot_2" : ["meshtal.vtk"]+["Contour"]+["ERROR_TAG"],
+                    "Plot_3" : ["fng_zip.stl"]+["Mesh"]+["STL_mesh"],
+                    }
+
 ----------------------------------------
 
 If the same plotting settings are to be used on another data set containing similar spatial dimensions, XmlEdit.py can be used to replace loaded data in generated session files. This allows for application of exact operators, plots, and settings to another data set. The following is an example of use:

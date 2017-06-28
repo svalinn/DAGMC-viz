@@ -1,11 +1,22 @@
 from visit import *
 
 
-def PlotContour(myList):
+def PlotContour(File):
     # Contour plot attributes.
 
-    Attribute = ContourAttributes()
+    if File is not None:
+        File = dict(File)
 
-    Attribute.lineStyle = Attribute.DASH
+        Attribute = ContourAttributes()
 
-    SetPlotOptions(Attribute)
+        for key in File:
+            if File[key][1].title() == "Contour":
+                try:
+                    Attribute.lineStyle = eval(
+                                               "Attribute." +
+                                               str(File[key][3]).upper()
+                                               )
+                except Exception:
+                    pass
+
+        SetPlotOptions(Attribute)
