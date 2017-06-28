@@ -1,15 +1,16 @@
 from visit import *
 
 
-def OperatorThreshold(myList, tags):
+def OperatorThreshold(OperSet, myList, tags):
     """
     expr = tagname > val | tagname < val | tagname = (min,max)
     """
 
+    SetActivePlots(tags[myList[0]])
+    AddOperator(OperSet, 0)
+
     if myList is not None:
         myList = list(myList)
-
-        SetActivePlots(tags[myList[0]])
 
         Attribute = ThresholdAttributes()
 

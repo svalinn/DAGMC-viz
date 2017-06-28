@@ -7,17 +7,18 @@ from OperatorThreshold import OperatorThreshold
 class OperatorSettings(object):
     """Add operator and its settings."""
 
-    def __init__(self, myList, Centroids, tags):
-
+    def __init__(self, File, OperSet, myList, Centroids, tags):
+        self.File = File
         self.tags = tags
         self.myList = myList
+        self.OperSet = OperSet
         self.Centroids = Centroids
 
     def Slice(self):
-        OperatorSlice(self.myList)
+        OperatorSlice(self.File, self.OperSet, self.myList)
 
     def Clip(self):
-        OperatorClip(self.myList, self.Centroids)
+        OperatorClip(self.File, self.OperSet, self.myList, self.Centroids)
 
     def Threshold(self):
-        OperatorThreshold(self.myList, self.tags)
+        OperatorThreshold(self.OperSet, self.myList, self.tags)

@@ -66,17 +66,11 @@ class MakeImages(object):
     def Settings(self, OperSet, myList=None):
         """Set the settings for plots and operators."""
 
-        #Vi.RemoveAllOperators()
-
-        if OperSet == "Threshold":
-            Vi.AddOperator(OperSet, 0)
-        else:
-            Vi.AddOperator(OperSet, 1)
-
         Pl.PlotSettings()
-        Vi.SetActivePlots((tuple(range(0, len(self.File)))))
 
         Apply = Op.OperatorSettings(
+                                    self.File,
+                                    OperSet,
                                     myList,
                                     self.PlottingCentroids,
                                     self.PlottingSequence,

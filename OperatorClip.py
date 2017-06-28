@@ -1,12 +1,15 @@
 from visit import *
 
 
-def OperatorClip(myList, Centroids):
+def OperatorClip(File, OperSet, myList, Centroids):
     """
     with no args - default octant, rotation and midpoint
     [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(alpha,beta,gamma)},...]
     produces one image for each dictionary
     """
+
+    AddOperator(OperSet, 1)
+    SetActivePlots((tuple(range(0, len(File)))))
 
     if myList is not None:
         myList = dict(myList)
