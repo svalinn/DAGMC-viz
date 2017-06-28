@@ -1,13 +1,13 @@
 import visit as Vi
 
 # The next line can be commented to import and use in the VisIt GUI.
-Vi.LaunchNowin()  # Here to allow import of other modules.
+Vi.Launch()  # Here to allow import of other modules.
 
 import PathCreator as Pa
 import PlotSettings as Pl
-import OperatorSettings as Op
-import WindowSettings as Wi
 import SaveSessions as Sa
+import WindowSettings as Wi
+import OperatorSettings as Op
 
 
 class MakeImages(object):
@@ -36,7 +36,7 @@ class MakeImages(object):
     def Plot(self):
         """Loads the data into VisIt."""
 
-        count = 0
+        Count = 0
         PlotType = []
         Centroids = []
         plotnumber = []
@@ -46,27 +46,31 @@ class MakeImages(object):
             Vi.AddPlot(self.File[key][1], self.File[key][2])
 
             PlotType.append(self.File[key][1])
-            plotnumber.append(count)  # Loading order
+            plotnumber.append(Count)  # Loading order.
 
-            Vi.SetActivePlots(count)
+            Vi.SetActivePlots(Count)
             Vi.DrawPlots()
 
             Vi.Query("Centroid")  # Centroid of selected plot.
             Centroids.append(Vi.GetQueryOutputValue())
             self.Centroids = Centroids
 
-            count += 1
+            Count += 1
 
+        # Create dictionaries of plot information.
         PlottingSequence = dict(zip(PlotType, plotnumber))
         PlottingCentroids = dict(zip(PlotType, Centroids))
 
         self.PlottingSequence = PlottingSequence
         self.PlottingCentroids = PlottingCentroids
 
-    def Settings(self, OperSet, myList=None):
-        """Set the settings for plots and operators."""
+        Apply = Pl.PlotSettings(self.File)
+        Apply.Pseudocolor()
+        Apply.Contour()
+        Apply.Mesh()
 
-        Pl.PlotSettings()
+    def Operator(self, OperSet, myList=None):
+        """Set the settings for plots and operators."""
 
         Apply = Op.OperatorSettings(
                                     self.File,

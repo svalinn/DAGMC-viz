@@ -1,28 +1,20 @@
 from visit import *
+from PlotMesh import PlotMesh
+from PlotContour import PlotContour
+from PlotPseudocolor import PlotPseudocolor
 
 
-def PlotSettings():
+class PlotSettings(object):
     """Visual settings for plots."""
 
-    # Pseudocolor plot attributes.
-    Attribute = PseudocolorAttributes()
+    def __init__(self, File):
+        self.File = File
 
-    Attribute.lineStyle = Attribute.DASH
-    Attribute.scaling = Attribute.Log
-    Attribute.centering = Attribute.Nodal
+    def Pseudocolor(self):
+        PlotPseudocolor()
 
-    SetPlotOptions(Attribute)
+    def Contour(self):
+        PlotContour()
 
-    # Mesh plot attributes.
-    Attribute = MeshAttributes()
-
-    Attribute.lineStyle = Attribute.DASH
-
-    SetPlotOptions(Attribute)
-
-    # Contour plot attributes.
-    Attribute = ContourAttributes()
-
-    Attribute.lineStyle = Attribute.DASH
-
-    SetPlotOptions(Attribute)
+    def Mesh(self):
+        PlotMesh()
