@@ -1,8 +1,5 @@
 import visit as Vi
 
-# The next line can be commented to import and use in the VisIt GUI.
-Vi.Launch()  # Here to allow import of other modules.
-
 import PathCreator as Pa
 import PlotSettings as Pl
 import SaveSessions as Sa
