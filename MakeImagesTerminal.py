@@ -41,7 +41,7 @@ if args.view:
 else:
     myList = tuple((0.0, 0.0, 0.0))
 
-It.Iterator(OperatorSet, myList)
+It.Iterator(OperatorSet)
 
 toc = timeit.default_timer()
 ElapsedTime = toc - tic
