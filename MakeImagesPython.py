@@ -1,6 +1,5 @@
 import visit as Vi
 
-import PathCreator as Pa
 import PlotSettings as Pl
 import SaveSessions as Sa
 import WindowSettings as Wi
@@ -10,8 +9,6 @@ import PlotAndInformation as Qu
 
 class MakeImages(object):
     """Create images in visit."""
-
-    Pa.PathCreator()  # Creates necessary folders.
 
     def __init__(self, File):
         """Initializes MakeImages with default directory creation."""
@@ -29,8 +26,8 @@ class MakeImages(object):
         # Apply plot settings
         Apply = Pl.PlotSettings(self.File)
 
-        for key in self.File:
-            eval("Apply."+str(self.File[key][1])+"()")
+        for item in self.File:
+            eval("Apply."+str(item[1])+"()")
 
     def Operator(self, OperSet, myList=None):
         """Set the settings for plots and operators."""

@@ -9,11 +9,11 @@ def PlotAndInformation(File):
     Centroids = []
     plotnumber = []
 
-    for key in File:
-        OpenDatabase("./Data/"+File[key][0])
-        AddPlot(File[key][1].title(), File[key][2])
+    for item in File:
+        OpenDatabase("./Data/"+item[0])
+        AddPlot(item[1].title(), item[2])
 
-        PlotType.append(File[key][1].title())
+        PlotType.append(item[1].title())
         plotnumber.append(Count)  # Loading order.
 
         SetActivePlots(Count)
