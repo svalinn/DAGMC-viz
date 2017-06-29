@@ -11,6 +11,7 @@ def PlotMesh(File):
 
         for key in File:
             if File[key][1].title() == "Mesh":
+                # Check for optional inputs in Dictionary input.
                 try:
                     Attribute.lineStyle = eval(
                                                "Attribute." +

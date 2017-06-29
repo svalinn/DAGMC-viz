@@ -36,12 +36,12 @@ if args.operator:
     OperatorSet = args.operator
 
 if args.view:
-    Coordinates = tuple(args.view)
-    Coordinates = Coordinates
+    myList = tuple(args.view)
+    myList = myList
 else:
-    Coordinates = tuple((0.0, 0.0, 0.0))
+    myList = tuple((0.0, 0.0, 0.0))
 
-It.Iterator(Number, OperatorSet, Coordinates)
+It.Iterator(OperatorSet, myList)
 
 toc = timeit.default_timer()
 ElapsedTime = toc - tic

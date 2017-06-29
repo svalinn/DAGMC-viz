@@ -11,6 +11,8 @@ def PlotPseudocolor(File):
 
         for key in File:
             if File[key][1].title() == "Pseudocolor":
+
+                # Check for optional inputs in Dictionary input.
                 try:
                     Attribute.scaling = eval(
                                              "Attribute." +
