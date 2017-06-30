@@ -3,8 +3,6 @@ import timeit
 
 import Iterator as It
 
-from Inputs import *
-
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
@@ -29,12 +27,12 @@ if args.operator:
 tic = timeit.default_timer()  # Start timer.
 
 try:
-    It.Iterator(Files, Operators)
+    It.Iterator(FilePlots, OperatorSet)
 except Exception:
     pass
 
 try:
-    It.Iterator(Files)
+    It.Iterator(FilePlots)
 except Exception:
     pass
 

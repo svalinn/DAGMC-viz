@@ -1,7 +1,6 @@
 import visit as Vi
 
 import PathCreator as Pa
-import Inputs as In  #Temporary for testing
 
 # The next line can be commented to import and use in the VisIt GUI.
 Vi.Launch()  # Here to allow import of other modules.
@@ -10,9 +9,6 @@ import MakeImagesPython as Mk
 
 def Iterator(Files, OperatorSet=None):
     """Iterate through several operator options."""
-
-    OperatorSet = In.Operators  #Temporary for testing
-    Files = In.Files  # Temporary for testing
 
     Pa.PathCreator()  # Creates necessary folders.
     Image = Mk.MakeImages(Files)
