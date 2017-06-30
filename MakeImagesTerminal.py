@@ -3,46 +3,41 @@ import timeit
 
 import Iterator as It
 
-tic = timeit.default_timer()
+from Inputs import *
 
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
-parser.add_argument("-i", "--iterations",
-                    nargs="?",
-                    default=1,
-                    type=int,
-                    help="add plots of data",
+parser.add_argument("-p", "--plot",
+                    action="store_true",
+                    help="Add plots with settings.",
                     )
 parser.add_argument("-o", "--operator",
-                    nargs="?",
-                    default="None",
-                    type=str,
-                    help="settings for plots and operators",
-                    )
-parser.add_argument("-v", "--view",
-                    nargs="+",
-                    type=float,
-                    help="change view (x,y,z) in degrees",
+                    action="store_true",
+                    help="Add operators with settings.",
                     )
 
 args = parser.parse_args()
 
-if args.iterations:
-    Number = args.iterations
+if args.plot:
+    FilePlots = input("Insert list of plot lists: ")
 
 if args.operator:
-    OperatorSet = args.operator
+    OperatorSet = input("Insert list of operator lists: ")
 
-if args.view:
-    myList = tuple(args.view)
-    myList = myList
-else:
-    myList = tuple((0.0, 0.0, 0.0))
+tic = timeit.default_timer()  # Start timer.
 
-It.Iterator(OperatorSet)
+try:
+    It.Iterator(Files, Operators)
+except Exception:
+    pass
 
-toc = timeit.default_timer()
+try:
+    It.Iterator(Files)
+except Exception:
+    pass
+
+toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
 print("Elapsed time was "+str(ElapsedTime)+" seconds.")
