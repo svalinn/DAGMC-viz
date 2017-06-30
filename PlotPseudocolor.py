@@ -22,7 +22,7 @@ def PlotPseudocolor(File):
                     pass
 
                 try:
-                    print (item[4])[0].title()
+
                     if (item[4])[0].title() == "Min":
                         Attribute.min = item[4][1]
                         Attribute.minFlag = 1
