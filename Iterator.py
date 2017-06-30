@@ -62,4 +62,5 @@ def Iterator(Files, OperatorSet=None):
 
             Image.Save()
 
-    Image.Save()
+    if OperatorSet is None:
+        Image.Save()

@@ -16,16 +16,22 @@ def OperatorSlice(File, OperSet, myList):
 
         Attribute = SliceAttributes()
 
-        Attribute.originType = Attribute.Point
+        try:
+            if myList[1]:
 
-        if myList[0].lower() == "x":
-            Attribute.originPoint = (myList[1], 0, 0)
+                Attribute.originType = Attribute.Point
 
-        if myList[0].lower() == "y":
-            Attribute.originPoint = (0, myList[1], 0)
+                if myList[0].lower() == "x":
+                    Attribute.originPoint = (myList[1], 0, 0)
 
-        if myList[0].lower() == "z":
-            Attribute.originPoint = (0, 0, myList[1])
+                if myList[0].lower() == "y":
+                    Attribute.originPoint = (0, myList[1], 0)
+
+                if myList[0].lower() == "z":
+                    Attribute.originPoint = (0, 0, myList[1])
+
+        except Exception:
+            pass
 
         Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
 
