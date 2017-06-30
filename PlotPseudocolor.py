@@ -37,7 +37,7 @@ def PlotPseudocolor(File):
                     pass
 
                 try:
-                    if  (item[4])[0].title() == "Max":
+                    if (item[4])[0].title() == "Max":
                         Attribute.max = item[4][1]
                         Attribute.maxFlag = 1
                 except Exception:

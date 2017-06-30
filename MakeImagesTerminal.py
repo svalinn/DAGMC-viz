@@ -29,12 +29,7 @@ tic = timeit.default_timer()  # Start timer.
 try:
     It.Iterator(FilePlots, OperatorSet)
 except Exception:
-    pass
-
-try:
     It.Iterator(FilePlots)
-except Exception:
-    pass
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
