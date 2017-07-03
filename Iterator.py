@@ -19,7 +19,7 @@ def Iterator(Files, OperatorSet=None):
 
         for item in OperatorSet:
 
-            Vi.RemoveAllOperators()
+            Vi.RemoveAllOperators(all)
 
             # Apply single dictionary operator.
             try:

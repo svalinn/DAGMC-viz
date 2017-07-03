@@ -17,3 +17,7 @@ def WindowSettings():
     Attribute.height = 2000
 
     SetSaveWindowAttributes(Attribute)
+
+    light = GetLight(0)
+    light.type = light.Ambient
+    SetLight(0, light)
