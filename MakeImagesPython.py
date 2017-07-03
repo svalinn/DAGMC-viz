@@ -49,3 +49,7 @@ class MakeImages(object):
         Wi.WindowSettings()
         Sa.SaveSessions()
         Vi.SaveWindow()
+
+    def get_list(self):
+        """Return acquired data. """
+        return [self.PlottingSequence, self.PlottingCentroids]
