@@ -1,7 +1,7 @@
 from visit import *
 
 
-def OperatorSlice(File, OperSet, myList):
+def OperatorSlice(File, OperSet, myList, Centroids):
     """
     with no args - default direction and location
     [(<x,y,z>,val),(<x,y,z>,val),....]
@@ -15,6 +15,8 @@ def OperatorSlice(File, OperSet, myList):
         myList = list(myList)
 
         Attribute = SliceAttributes()
+
+        Attribute.project2d = 0
 
         try:
             if myList[1]:
@@ -31,7 +33,16 @@ def OperatorSlice(File, OperSet, myList):
                     Attribute.originPoint = (0, 0, myList[1])
 
         except Exception:
-            pass
+                Attribute.originType = Attribute.Point
+
+                if myList[0].lower() == "x":
+                    Attribute.originPoint = (Centroids["Pseudocolor"][0], 0, 0)
+
+                if myList[0].lower() == "y":
+                    Attribute.originPoint = (0, Centroids["Pseudocolor"][1], 0)
+
+                if myList[0].lower() == "z":
+                    Attribute.originPoint = (0, 0, Centroids["Pseudocolor"][2])
 
         Attribute.axisType = eval("Attribute."+str(myList[0]).upper()+"Axis")
 

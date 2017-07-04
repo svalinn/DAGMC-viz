@@ -15,15 +15,19 @@ There are three primary methods of use for this tool.
     The terminal will prompt the user to insert lists of plots (operators as well if -o is used). Each plot and operator has unique settings that can be defined. Look at each plot and operator python file for specifics.
 
     To plot, the following format is used:
+
         [[<File>, <PlotType>, <Variable>, [Individual Options]] ...]
 
     Plotting example is shown below:
+
         [["dummy.vtk", "Pseudocolor", "TALLY_TAG", "Log", ('Min',0.00001), ('Max',0.0001)],["dummy.vtk", "Contour", "ERROR_TAG", "DASH"],["dummy.stl", "Mesh", "STL_mesh", "DASH"]]
 
     To add an operator, the following format is used:
+
         [[<Operator Type>, [Operator Options]] ...]
 
     Operators example is shown below:
+
         [{"Clip": {"oct": (1, 1, 1), "rot": (30, 30, 30), "loc":(0,0,0)}},
              ["Slice", ["y", 10]], [{"Clip": {"oct": (1, 1, 1)}}, ["Slice", ["x", 10]]],
              ["Threshold", ["Pseudocolor", "=", (5.14*10**-05,0.00011)]]]

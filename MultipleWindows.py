@@ -5,7 +5,7 @@ import Iterator as It
 import MakeImagesPython as Mk
 
 
-def MultipleWindows(Files, OperatorSet=None):
+def MultipleWindows(Files, OperatorSet=None, Windows=False):
     """
     Attain:
     pseudo color of tally,
@@ -14,28 +14,38 @@ def MultipleWindows(Files, OperatorSet=None):
     Clip quadrant 1 at center.
     """
 
-    Pa.PathCreator()  # Creates necessary folders.
-    Image = Mk.MakeImages(Files)
-    Image.Plot()
+    if Windows is False:
+        It.Iterator(Files, OperatorSet)
 
-    print Image.get_list()[0]
-    print Image.get_list()[1]
+    if Windows is True:
+        Pa.PathCreator()  # Creates necessary folders.
 
-    Count = 2
-    for item in Files:
-        print Count
-        Vi.AddWindow()
-        Vi.SetActiveWindow(Count)
-        Vi.AddPlot(item[1].title(), item[2])
-        Vi.DrawPlots()
-        Count += 1
+        Count = 1
+        for item in Files:
+            if item[1] != "Mesh":
+                Vi.SetActiveWindow(Count)
+                Image = Mk.MakeImages([item])
+                Image.Plot()
+                Vi.DrawPlots()
+                Vi.ToggleLockViewMode()
+                Vi.AddWindow()
+                Count += 1
 
-    for item in OperatorSet:
-        Vi.AddWindow()
-        Vi.SetActiveWindow(Count)
-        print item
-        It.Iterator(Files, [item])
-        Vi.DrawPlots()
-        Count += 1
+            if item[1] == "Mesh":
+                pass
 
-    Vi.ToggleLockViewMode()
+        for item in OperatorSet:
+            Vi.AddWindow()
+            Vi.SetActiveWindow(Count)
+            It.Iterator(Files, [item])
+            Vi.DrawPlots()
+            Vi.ToggleLockViewMode()
+            Count += 1
+
+        # Compensate for odd number of windows.
+        if ((Count-1) % 2 == 0):
+            Vi.SetWindowLayout(Count-1)  # Even.
+        else:
+            Vi.SetWindowLayout(Count)  # Odd.
+
+        Image.Save()

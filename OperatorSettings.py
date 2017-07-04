@@ -15,7 +15,7 @@ class OperatorSettings(object):
         self.Centroids = Centroids
 
     def Slice(self):
-        OperatorSlice(self.File, self.OperSet, self.myList)
+        OperatorSlice(self.File, self.OperSet, self.myList, self.Centroids)
 
     def Clip(self):
         OperatorClip(self.File, self.OperSet, self.myList, self.Centroids)
