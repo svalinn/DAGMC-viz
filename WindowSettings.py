@@ -13,8 +13,8 @@ def WindowSettings():
 
     Attribute.fileName = "./Images/sample"
 
-    Attribute.width = 500
-    Attribute.height = 500
+    Attribute.width = 1000
+    Attribute.height = 1000
 
     SetSaveWindowAttributes(Attribute)
 

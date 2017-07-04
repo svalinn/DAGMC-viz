@@ -8,7 +8,7 @@ Vi.Launch()  # Here to allow import of other modules.
 import MakeImagesPython as Mk
 
 
-def Iterator(Files, OperatorSet=None):
+def Iterator(Files, OperatorSet=None, SliceProject=1):
     """Iterate through several operator options."""
 
     Pa.PathCreator()  # Creates necessary folders.
@@ -25,7 +25,7 @@ def Iterator(Files, OperatorSet=None):
             try:
                 Operator = (item.keys())[0]
                 myList = (item.values())[0]
-                Image.Operator(Operator, myList)
+                Image.Operator(Operator, myList, SliceProject)
             except Exception:
                 pass
 
@@ -33,7 +33,7 @@ def Iterator(Files, OperatorSet=None):
             try:
                 Operator = item[0]
                 myList = item[1]
-                Image.Operator(Operator, myList)
+                Image.Operator(Operator, myList, SliceProject)
             except Exception:
                 pass
 
@@ -45,7 +45,7 @@ def Iterator(Files, OperatorSet=None):
                     try:
                         Operator = (multiitem.keys())[0]
                         myList = (multiitem.values())[0]
-                        Image.Operator(Operator, myList)
+                        Image.Operator(Operator, myList, SliceProject)
                     except Exception:
                         pass
 
@@ -53,7 +53,7 @@ def Iterator(Files, OperatorSet=None):
                     try:
                         Operator = multiitem[0]
                         myList = multiitem[1]
-                        Image.Operator(Operator, myList)
+                        Image.Operator(Operator, myList, SliceProject)
                     except Exception:
                         pass
 

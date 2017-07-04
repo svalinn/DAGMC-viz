@@ -29,7 +29,7 @@ class MakeImages(object):
         for item in self.File:
             eval("Apply."+str(item[1])+"()")
 
-    def Operator(self, OperSet, myList=None):
+    def Operator(self, OperSet, myList=None, SliceProject=1):
         """Set the settings for plots and operators."""
 
         Apply = Op.OperatorSettings(
@@ -38,6 +38,7 @@ class MakeImages(object):
                                     myList,
                                     self.PlottingCentroids,
                                     self.PlottingSequence,
+                                    SliceProject
                                     )
 
         eval("Apply."+str(OperSet).title()+"()")

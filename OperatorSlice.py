@@ -1,7 +1,7 @@
 from visit import *
 
 
-def OperatorSlice(File, OperSet, myList, Centroids):
+def OperatorSlice(File, OperSet, myList, Centroids, SinglePlane=1):
     """
     with no args - default direction and location
     [(<x,y,z>,val),(<x,y,z>,val),....]
@@ -16,7 +16,7 @@ def OperatorSlice(File, OperSet, myList, Centroids):
 
         Attribute = SliceAttributes()
 
-        Attribute.project2d = 0
+        Attribute.project2d = SinglePlane
 
         try:
             if myList[1]:

@@ -1,7 +1,7 @@
 import argparse
 import timeit
 
-import Iterator as It
+import MultipleWindows as Mu
 
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
@@ -15,6 +15,10 @@ parser.add_argument("-o", "--operator",
                     action="store_true",
                     help="Add operators with settings.",
                     )
+parser.add_argument("-w", "--windows",
+                    action="store_true",
+                    help="Open multiple windows.",
+                    )
 
 args = parser.parse_args()
 
@@ -26,10 +30,19 @@ if args.operator:
 
 tic = timeit.default_timer()  # Start timer.
 
-try:
-    It.Iterator(FilePlots, OperatorSet)
-except Exception:
-    It.Iterator(FilePlots)
+
+if args.windows:
+    try:
+        Mu.MultipleWindows(FilePlots, OperatorSet, Windows=True)
+    except Exception:
+        Mu.MultipleWindows(FilePlots, Windows=True)
+
+else:
+    try:
+        Mu.MultipleWindows(FilePlots, OperatorSet)
+    except Exception:
+        Mu.MultipleWindows(FilePlots)
+
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
