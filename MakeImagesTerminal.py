@@ -29,7 +29,7 @@ args = parser.parse_args()
 
 if args.images:
     FilePlots = input("Insert list of plot lists: ")
-    Statement = raw_input("Add operators? (yes/no) ")
+    Statement = raw_input("Add operators? (yes/no): ")
 
     if Statement.lower() == "yes":
         OperatorSet = input("Insert list of operator lists: ")
@@ -46,7 +46,7 @@ if args.images:
 
 if args.windows:
     FilePlots = input("Insert list of plot lists: ")
-    Statement = raw_input("Add operators? (yes/no) ")
+    Statement = raw_input("Add operators? (yes/no): ")
 
     if Statement.lower() == "yes":
         OperatorSet = input("Insert list of operator lists: ")
@@ -75,7 +75,7 @@ if args.default:
 
 if args.multislice:
     FilePlots = input("Insert list of plot lists: ")
-    Axis = raw_input("Insert axis for slicing: ")
+    Axis = raw_input("Insert axis for slicing (x/y/z): ")
     Number = raw_input("Insert number of slices: ")
     myList = (str(Axis), int(Number))
 
