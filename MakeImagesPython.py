@@ -22,6 +22,7 @@ class MakeImages(object):
         PlotAndGetInfo = Qu.PlotAndInformation(self.File)
         self.PlottingSequence = PlotAndGetInfo[0]
         self.PlottingCentroids = PlotAndGetInfo[1]
+        self.PlottingSpatialExtents = PlotAndGetInfo[2]
 
         # Apply plot settings
         Apply = Pl.PlotSettings(self.File)
@@ -30,7 +31,7 @@ class MakeImages(object):
             eval("Apply."+str(item[1])+"()")
 
     def Operator(self, OperSet, myList=None, SliceProject=1):
-        """Set the settings for plots and operators."""
+        """Set the settings for operators."""
 
         Apply = Op.OperatorSettings(
                                     self.File,
@@ -38,7 +39,7 @@ class MakeImages(object):
                                     myList,
                                     self.PlottingCentroids,
                                     self.PlottingSequence,
-                                    SliceProject
+                                    SliceProject,
                                     )
 
         eval("Apply."+str(OperSet).title()+"()")
@@ -53,4 +54,9 @@ class MakeImages(object):
 
     def get_list(self):
         """Return acquired data. """
-        return [self.PlottingSequence, self.PlottingCentroids]
+
+        return [
+                self.PlottingSequence,
+                self.PlottingCentroids,
+                self.PlottingSpatialExtents,
+                ]

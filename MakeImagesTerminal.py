@@ -1,7 +1,8 @@
 import argparse
 import timeit
 
-import MultipleWindows as Mu
+import MultipleWindows as Mw
+import MultiSlice as Ms
 
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
@@ -23,6 +24,10 @@ parser.add_argument("-d", "--default",
                     action="store_true",
                     help="Apply default operators.",
                     )
+parser.add_argument("-m", "--multislice",
+                    action="store_true",
+                    help="Apply only slices.",
+                    )
 
 args = parser.parse_args()
 
@@ -37,11 +42,11 @@ tic = timeit.default_timer()  # Start timer.
 
 if args.windows:
     try:
-        Mu.MultipleWindows(FilePlots, OperatorSet, Windows=True)
+        Mw.MultipleWindows(FilePlots, OperatorSet, Windows=True)
     except Exception:
-        Mu.MultipleWindows(FilePlots, Windows=True)
+        w.MultipleWindows(FilePlots, Windows=True)
 
-elif args.default:
+if args.default:
     OperatorSet = [
                   ["Slice", ("x")],
                   ["Slice", ("y")],
@@ -49,14 +54,14 @@ elif args.default:
                   [{"Clip": {"oct": (1, 1, 1)}}],
                   ]
 
-    Mu.MultipleWindows(FilePlots, OperatorSet, Windows=True)
+    Mw.MultipleWindows(FilePlots, OperatorSet, Windows=True)
 
-else:
-    try:
-        Mu.MultipleWindows(FilePlots, OperatorSet)
-    except Exception:
-        Mu.MultipleWindows(FilePlots)
-
+if args.multislice:
+    FilePlots = input("Insert list of plot lists: ")
+    Axis = raw_input("Insert axis for slicing: ")
+    Number = raw_input("Insert number of slices: ")
+    myList = (str(Axis), int(Number))
+    Ms.MultiSlice(FilePlots, myList)
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic

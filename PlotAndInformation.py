@@ -8,6 +8,7 @@ def PlotAndInformation(File):
     PlotType = []
     Centroids = []
     plotnumber = []
+    SpatialExtents = []
 
     for item in File:
         OpenDatabase("./Data/"+item[0])
@@ -22,10 +23,14 @@ def PlotAndInformation(File):
         Query("Centroid")  # Centroid of selected plot.
         Centroids.append(GetQueryOutputValue())
 
+        Query("SpatialExtents")  # Bounds of selected plot.
+        SpatialExtents.append(GetQueryOutputValue())
+
         Count += 1
 
     # Create dictionaries of plot information.
     PlottingSequence = dict(zip(PlotType, plotnumber))
     PlottingCentroids = dict(zip(PlotType, Centroids))
+    PlottingSpatialExtents = dict(zip(PlotType, SpatialExtents))
 
-    return PlottingSequence, PlottingCentroids
+    return PlottingSequence, PlottingCentroids, PlottingSpatialExtents

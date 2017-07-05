@@ -1,10 +1,9 @@
 import visit as Vi
 
-import PathCreator as Pa
-
 # The next line can be commented to import and use in the VisIt GUI.
 Vi.Launch()  # Here to allow import of other modules.
 
+import PathCreator as Pa
 import MakeImagesPython as Mk
 
 

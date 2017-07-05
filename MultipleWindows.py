@@ -9,11 +9,8 @@ import MakeImagesPython as Mk
 
 def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
     """
-    Attain:
-    pseudo color of tally,
-    contour of error,
-    XY slice, YZ slice, ZX slice,
-    Clip quadrant 1 at center.
+    Attain multiple windows for different applied operators.
+    Data other than mesh are plotted individually as well.
     """
 
     if Windows is False:
@@ -51,7 +48,7 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
             pass
 
         Vi.SetActiveWindow(Count)
-        Vi.DeleteWindow()
+        Vi.DeleteWindow()  # Delete extra window.
 
         # Compensate for odd number of windows.
         if (Count-1) < 2:

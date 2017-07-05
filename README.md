@@ -4,7 +4,7 @@ Outdated Documentation
 DAGMC-viz Documentation
 =======================
 
-(Note: Python 2.7 and visit are required. Python path needs to be set for visit.)
+(Note: Python 2.7 and visit are required. Python path needs to be set for visit. Default operators rely on Pseudocolor.)
 
 There are three primary methods of use for this tool.
 
