@@ -43,13 +43,31 @@ def MultiSlice(File, myList):
     # For adding slices of and between maximum and minimum dimensions.
     Count = 0
     SliceList = []
-    for i in range(Number+1):
-        Lower = eval(Axis.lower()+"Lower")
-        SliceSet = Ma.floor(eval(Axis.lower()+"Increment"))*Count
-        SliceList.append([
-                          "Slice",
-                          (Axis.lower(), Lower+SliceSet)
-                         ])
+    for i in range(Number):
+
+        # Round up for lower bound.
+        if Count == 0:
+            Lower = Ma.ceil(eval(Axis.lower()+"Lower"))
+            SliceSet = Ma.floor(eval(Axis.lower()+"Increment"))*Count
+            SliceList.append([
+                              "Slice",
+                              (Axis.lower(), Lower+SliceSet)
+                             ])
+        # Round down for upper bound.
+        elif Count == Number-1:
+            Lower = eval(Axis.lower()+"Lower")
+            SliceSet = Ma.floor(eval(Axis.lower()+"Increment"))*Count
+            SliceList.append([
+                              "Slice",
+                              (Axis.lower(), Lower+SliceSet)
+                             ])
+        else:
+            Lower = eval(Axis.lower()+"Lower")
+            SliceSet = eval(Axis.lower()+"Increment")*Count
+            SliceList.append([
+                              "Slice",
+                              (Axis.lower(), Lower+SliceSet)
+                             ])
         Count += 1
 
     for item in SliceList:
