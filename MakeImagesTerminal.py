@@ -19,6 +19,10 @@ parser.add_argument("-w", "--windows",
                     action="store_true",
                     help="Open multiple windows.",
                     )
+parser.add_argument("-d", "--default",
+                    action="store_true",
+                    help="Apply default operators.",
+                    )
 
 args = parser.parse_args()
 
@@ -36,6 +40,16 @@ if args.windows:
         Mu.MultipleWindows(FilePlots, OperatorSet, Windows=True)
     except Exception:
         Mu.MultipleWindows(FilePlots, Windows=True)
+
+elif args.default:
+    OperatorSet = [
+                  ["Slice", ("x")],
+                  ["Slice", ("y")],
+                  ["Slice", ("z")],
+                  [{"Clip": {"oct": (1, 1, 1)}}],
+                  ]
+
+    Mu.MultipleWindows(FilePlots, OperatorSet, Windows=True)
 
 else:
     try:
