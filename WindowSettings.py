@@ -3,7 +3,7 @@ import os
 from visit import *
 
 
-def WindowSettings():
+def WindowSettings(Shading=False):
     """Modify window settings."""
 
     # Set window attributes for saving.
@@ -19,9 +19,12 @@ def WindowSettings():
     SetSaveWindowAttributes(Attribute)
 
     # Set lighting attributes.
-    light = GetLight(0)
-    light.type = light.Ambient
-    SetLight(0, light)
+    if Shading is False:
+        light = GetLight(0)
+        light.type = light.Ambient
+        SetLight(0, light)
+    else:
+        pass
 
     # Set legend options.
     Attribute = AnnotationAttributes()

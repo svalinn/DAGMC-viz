@@ -1,7 +1,9 @@
 from visit import *
+
 from OperatorClip import OperatorClip
 from OperatorSlice import OperatorSlice
 from OperatorThreshold import OperatorThreshold
+from OperatorTransform import OperatorTransform
 
 
 class OperatorSettings(object):
@@ -37,4 +39,12 @@ class OperatorSettings(object):
                           self.OperSet,
                           self.myList,
                           self.tags,
+                          )
+
+    def Transform(self):
+        OperatorTransform(
+                          self.File,
+                          self.OperSet,
+                          self.myList,
+                          self.Centroids,
                           )
