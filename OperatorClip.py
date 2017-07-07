@@ -4,7 +4,7 @@ from visit import *
 def OperatorClip(File, OperSet, myList, Centroids):
     """
     with no args - default octant, rotation and midpoint
-    [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(alpha,beta,gamma)},...]
+    [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(xdeg,ydeg,zdeg)},...]
     produces one image for each dictionary
     """
 
