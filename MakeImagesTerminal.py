@@ -80,7 +80,7 @@ if args.default:
 
 if args.multislice:
     FilePlots = input("Insert list of plot lists: ")
-    Axis = raw_input("Insert axis for slicing (x/y/z): ")
+    Axis = raw_input("Insert one or more axis together <xyz>: ")
     Number = raw_input("Insert number of slices: ")
     myList = (str(Axis), int(Number))
 
