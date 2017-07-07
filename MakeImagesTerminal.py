@@ -3,6 +3,7 @@ import timeit
 
 import MultipleWindows as Mw
 import MultiSlice as Ms
+import Orbit as Or
 
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
@@ -21,6 +22,10 @@ parser.add_argument("-d", "--default",
                     help="Apply default operators.",
                     )
 parser.add_argument("-m", "--multislice",
+                    action="store_true",
+                    help="Apply only slices.",
+                    )
+parser.add_argument("-o", "--orbit",
                     action="store_true",
                     help="Apply only slices.",
                     )
@@ -81,6 +86,14 @@ if args.multislice:
 
     tic = timeit.default_timer()  # Start timer.
     Ms.MultiSlice(FilePlots, myList)
+
+if args.orbit:
+    FilePlots = input("Insert list of plot lists: ")
+    Direction = raw_input("Orbit? (vertical/horizontal/both): ")
+    Iteration = raw_input("Number of views in orbit?: ")
+
+    tic = timeit.default_timer()  # Start timer.
+    Or.Orbit(FilePlots, (Direction, Iteration))
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
