@@ -9,6 +9,8 @@ def PlotMesh(File):
 
         Attribute = MeshAttributes()
 
+        Attribute.showInternal = 1
+
         for item in File:
             if item[1].title() == "Mesh":
                 # Check for optional inputs in Dictionary input.

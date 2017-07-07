@@ -21,18 +21,13 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
 
         Count = 1
         for item in Files:
-
-            if item[1] != "Mesh":
-                Vi.SetActiveWindow(Count)
-                Image = Mk.MakeImages([item])
-                Image.Plot()
-                Image.Save()
-                Vi.ToggleLockViewMode()
-                Vi.AddWindow()
-                Count += 1
-
-            if item[1] == "Mesh":
-                pass
+            Vi.SetActiveWindow(Count)
+            Image = Mk.MakeImages([item])
+            Image.Plot()
+            Image.Save()
+            Vi.ToggleLockViewMode()
+            Vi.AddWindow()
+            Count += 1
 
         try:
             for item in OperatorSet:
@@ -68,4 +63,4 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
         else:
             print "Too many windows for ViSit to Support."
 
-    Sa.SaveSessions()
+        Sa.SaveSessions()

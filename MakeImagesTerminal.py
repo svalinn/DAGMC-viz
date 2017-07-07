@@ -27,7 +27,7 @@ parser.add_argument("-m", "--multislice",
                     )
 parser.add_argument("-o", "--orbit",
                     action="store_true",
-                    help="Apply only slices.",
+                    help="Gather orbital view.",
                     )
 
 args = parser.parse_args()
