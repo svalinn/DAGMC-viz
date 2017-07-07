@@ -1,7 +1,9 @@
 import visit as Vi
 
-import Iterator as It
+Vi.Launch()
+
 import PathCreator as Pa
+import MakeImagesPython as Mk
 
 
 def Orbit(Files, myList):
@@ -15,18 +17,34 @@ def Orbit(Files, myList):
 
     myList = tuple(myList)
 
-    Axis = str(myList[0])
+    Line = str(myList[0])
     Number = int(myList[1])
+
+    if myList[0].lower() == "x":
+        Line = 0
+        ViewN = (0, 0, 1)
+        ViewU = (0, 1, 0)
+
+    if myList[0].lower() == "y":
+        Line = 1
+        ViewN = (0, 0, 1)
+        ViewU = (0, 1, 0)
+
+    if myList[0].lower() == "z":
+        Line = 1
+        ViewN = (1, 0, 0)
+        ViewU = (0, 0, 1)
 
     Increment = 360.0/float(Number)  # Degrees
 
-    Distance = 0
-    OperatorSet = []
-    while 360.0 > Distance:
+    Image = Mk.MakeImages(Files)
+    Image.Plot()
 
-        OperatorSet.append(["Transform", (Axis, Distance)])
+    v = Vi.GetView3D()
+    v.viewNormal = ViewN
+    v.viewUp = ViewU
 
-        Distance += Increment
-
-    It.Iterator(Files, OperatorSet)
-    print OperatorSet
+    for item in range(Number):
+        v.RotateAxis(Line, Increment)
+        Vi.SetView3D(v)
+        Image.Save(Shading=True)

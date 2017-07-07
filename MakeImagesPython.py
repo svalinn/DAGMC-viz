@@ -44,11 +44,11 @@ class MakeImages(object):
 
         eval("Apply."+str(OperSet).title()+"()")
 
-    def Save(self):
+    def Save(self, Shading=False):
         """Saves window image and XML session."""
 
         Vi.DrawPlots()
-        Wi.WindowSettings()
+        Wi.WindowSettings(Shading)
         Sa.SaveSessions()
         Vi.SaveWindow()
 
