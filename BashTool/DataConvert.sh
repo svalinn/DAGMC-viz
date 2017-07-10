@@ -9,6 +9,7 @@ read FileSTL
 
 echo -e "File name for cub to vtk conversion: "
 read FileCUB
+
 echo -e "Name of vtk file: "
 read FileVTK
 

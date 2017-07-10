@@ -1,0 +1,1 @@
+Data generated from bash scripts are stored here.
