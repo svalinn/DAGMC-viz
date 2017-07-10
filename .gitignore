@@ -1,8 +1,8 @@
-PythonToolvisitlog.py
+PythonTool/visitlog.py
 PythonTool/Data/*.vtk
 PythonTool/Data/*.stl
 PythonTool/Data/*.h5m
 PythonTool/Data/meshtal
 PythonTool/Sessions
 PythonTool/Images
-PythonTool*.pyc
+PythonTool/*.pyc
