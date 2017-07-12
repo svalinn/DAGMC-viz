@@ -11,7 +11,7 @@ def PlotAndInformation(File):
     SpatialExtents = []
 
     for item in File:
-        OpenDatabase("./Data/"+item[0])
+        OpenDatabase("../Data/"+item[0])
         AddPlot(item[1].title(), item[2])
 
         PlotType.append(item[1].title())

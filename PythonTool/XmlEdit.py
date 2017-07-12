@@ -23,6 +23,10 @@ parser.add_argument("NewVTK",
                     help="The path of the wanted session file (vtk portion).",
                     )
 
+os.chdir("..")
+
+print os.getcwd()
+
 args = parser.parse_args()
 
 
@@ -71,17 +75,18 @@ def XmlEdit(Original, OldSTL, OldVTK, NewSTL, NewVTK):
             Field.text = "localhost:"+str(os.getcwd())+NewVTK
 
     i = 0
-    while os.path.exists("Sessions/XML_Edited/edited%s.session" % i):
+    while os.path.exists("./Sessions/XML_Edited/edited%s.session" % i):
         i += 1
 
-    tree.write("Sessions/XML_Edited/edited%s.session" % i,
+    tree.write("./Sessions/XML_Edited/edited%s.session" % i,
                encoding="utf-8",
                xml_declaration=True,
                )
 
-Original = "Sessions/XML_Original/"+str(args.Original)
-OldSTL = "/./Data/"+str(args.OldSTL)
-OldVTK = "/./Data/"+str(args.OldVTK)
-NewSTL = "/./Data/"+str(args.NewSTL)
-NewVTK = "/./Data/"+str(args.NewVTK)
+Original = "./Sessions/XML_Original/"+str(args.Original)
+OldSTL = "/Data/"+str(args.OldSTL)
+OldVTK = "/Data/"+str(args.OldVTK)
+NewSTL = "/Data/"+str(args.NewSTL)
+NewVTK = "/Data/"+str(args.NewVTK)
+
 XmlEdit(Original, OldSTL, OldVTK, NewSTL, NewVTK)

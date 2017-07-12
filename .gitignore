@@ -1,9 +1,9 @@
 PythonTool/visitlog.py
-PythonTool/Data/*.vtk
-PythonTool/Data/*.stl
-PythonTool/Data/*.h5m
-PythonTool/Data/meshtal
-PythonTool/Sessions
-PythonTool/Images
+Data/*.vtk
+Data/*.stl
+Data/*.h5m
+Data/meshtal
+Sessions
+Images
 PythonTool/*.pyc
 BashTool/DataFileInfo/*.txt

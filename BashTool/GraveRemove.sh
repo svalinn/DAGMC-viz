@@ -1,5 +1,5 @@
 #!/bin/bash
-DATAPATH=../PythonTool/Data
+DATAPATH=../Data
 cd "${DATAPATH}"
 
 printf "Include file extensions for naming. \n"
@@ -10,7 +10,7 @@ read WithGrave
 # Save the relations.
 mbgsets $WithGrave > ../../BashTool/DataFileInfo/Structure.txt
 
-STRUCTUREPATH=../../BashTool/DataFileInfo
+STRUCTUREPATH=../BashTool/DataFileInfo
 cd "${STRUCTUREPATH}"
 
 
@@ -92,9 +92,9 @@ VertexIDList=$(cat VertexIDComma.txt | tr -d " \t\n\r")
 
 
 
-DATAPATH=../../PythonTool/Data
+DATAPATH=../../Data
 cd "${DATAPATH}"
-pwd
+
 echo -e "Name of stl mesh file: "
 read FileSTL
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-DATAPATH=../PythonTool/Data
+DATAPATH=../Data
 cd "${DATAPATH}"
 
 echo -e "File name for h5m to stl conversion: "

@@ -11,7 +11,7 @@ def WindowSettings(Shading=False):
 
     Attribute.format = Attribute.PNG
 
-    Attribute.fileName = "./Images/sample"
+    Attribute.fileName = "../Images/sample"
 
     Attribute.width = 1000
     Attribute.height = 1000

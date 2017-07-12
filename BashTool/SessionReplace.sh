@@ -1,8 +1,10 @@
 #!/bin/bash
-PythonScripts=../PythonTool
-cd "${PythonScripts}"
+SESSIONS=../Sessions/XML_Original/
+cd "${SESSIONS}"
 
-printf "Include file extensions for naming. \n"
+printf "Include file extensions. \n"
+
+
 
 echo -e "Name of the original session file: "
 read SessionFile
@@ -10,13 +12,20 @@ read SessionFile
 echo -e "Name of original stl file: "
 read FileSTLOld
 
-echo -e "Name of original vtk file: "
-read FileVTKOld
-
 echo -e "Name of new stl file: "
 read FileSTLNew
 
-echo -e "Name of new vtk file: "
-read FileVTKNew
 
-python XmlEdit.py $SessionFile $FileSTLOld $FileVTKOld $FileSTLNew $FileVTKNew
+
+name=../XML_Edited/edited
+if [[ -e $name.session ]] ; then
+    i=0
+    while [[ -e $name$i.session ]] ; do
+        let i++
+    done
+    name=$name$i
+fi
+
+
+
+sed "s/$FileSTLOld/$FileSTLNew/g" $SessionFile > ../XML_Edited/"$name".session
