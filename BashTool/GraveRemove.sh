@@ -8,7 +8,7 @@ echo -e "File (h5m) for removal of graveyard: "
 read WithGrave
 
 # Save the relations.
-mbgsets $WithGrave > ../../BashTool/DataFileInfo/Structure.txt
+mbgsets $WithGrave > ../BashTool/DataFileInfo/Structure.txt
 
 STRUCTUREPATH=../BashTool/DataFileInfo
 cd "${STRUCTUREPATH}"
