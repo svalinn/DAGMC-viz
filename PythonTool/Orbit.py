@@ -1,10 +1,11 @@
 import visit as Vi
 
+import Iterator as It
 import PathCreator as Pa
 import MakeImagesPython as Mk
 
 
-def Orbit(Files, myList):
+def Orbit(Files, myList, OperatorSet=False):
     """
     Take multiple views around Vertically or Horizontally.
     Views are evenly spaced.
@@ -29,6 +30,29 @@ def Orbit(Files, myList):
 
     Image = Mk.MakeImages(Files)
     Image.Plot()
+
+    # Multiple Operators.
+    try:
+        for multiitem in OperatorSet:
+
+            # Apply dictionary operator.
+            try:
+                Operator = (multiitem.keys())[0]
+                List = (multiitem.values())[0]
+                Image.Operator(Operator, List, SliceProject=0)
+            except Exception:
+                pass
+
+            # Apply list operator.
+            try:
+                Operator = multiitem[0]
+                List = multiitem[1]
+                Image.Operator(Operator, List, SliceProject=0)
+            except Exception:
+                pass
+
+    except Exception:
+        pass
 
     # Choose which orbits to do.
     if myList[0].lower() == "both":

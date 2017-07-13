@@ -89,11 +89,18 @@ if args.multislice:
 
 if args.orbit:
     FilePlots = input("Insert list of plot lists: ")
+    Statement = raw_input("Add operators? (yes/no): ")
+
+    if Statement.lower() == "yes":
+        OperatorSet = input("Insert list of operator lists: ")
+    else:
+        OperatorSet = False
+
     Direction = raw_input("Orbit? (vertical/horizontal/both): ")
     Iteration = raw_input("Number of views in orbit?: ")
 
     tic = timeit.default_timer()  # Start timer.
-    Or.Orbit(FilePlots, (Direction, Iteration))
+    Or.Orbit(FilePlots, (Direction, Iteration), OperatorSet)
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic

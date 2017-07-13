@@ -18,6 +18,14 @@ def WindowSettings(Shading=False):
 
     SetSaveWindowAttributes(Attribute)
 
+    # Set legend options.
+    Attribute = AnnotationAttributes()
+
+    Attribute.databaseInfoFlag = 0
+    Attribute.legendInfoFlag = 1
+
+    SetAnnotationAttributes(Attribute)
+
     # Set lighting attributes.
     if Shading is False:
         light = GetLight(0)
@@ -26,10 +34,7 @@ def WindowSettings(Shading=False):
     else:
         pass
 
-    # Set legend options.
-    Attribute = AnnotationAttributes()
-
-    Attribute.databaseInfoFlag = 0
-    Attribute.legendInfoFlag = 1
-
-    SetAnnotationAttributes(Attribute)
+    # Set Zoom.
+    v = GetView3D()
+    v.imageZoom = 0.75
+    SetView3D(v)
