@@ -1,8 +1,9 @@
+import os
+
 import visit as Vi
 
 import Iterator as It
 import PathCreator as Pa
-import SaveSessions as Sa
 import WindowSettings as Wi
 import MakeImagesPython as Mk
 
@@ -63,4 +64,11 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
         else:
             print "Too many windows for ViSit to Support."
 
-        Sa.SaveSessions()
+        i = 0
+        while os.path.exists(
+                             "../Sessions/XML_Original/SampleMulti%s.session"
+                             % i
+                             ):
+            i += 1
+
+        Vi.SaveSession("../Sessions/XML_Original/SampleMulti%s.session" % i)
