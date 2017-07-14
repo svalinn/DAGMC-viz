@@ -2,41 +2,61 @@ import argparse
 import timeit
 import ast
 
-import MultipleWindows as Mw
-import MultiSlice as Ms
-import Orbit as Or
+from TerminalOptions import TerminalOptions
+
+tic = timeit.default_timer()  # Start timer.
 
 parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
-parser.add_argument("-p", "--plots",
+parser.add_argument("-pl", "--plots",
                     type=str,
                     help="List of plots.",
                     )
-parser.add_argument("-o", "--operators",
+parser.add_argument("-op", "--operators",
                     type=str,
                     help="List of operators.",
                     )
-parser.add_argument("-i", "--images",
+parser.add_argument("-im", "--images",
                     action="store_true",
                     help="Make images of plots and operators.",
                     )
-parser.add_argument("-w", "--windows",
+parser.add_argument("-wi", "--windows",
                     action="store_true",
                     help="Open multiple windows.",
                     )
-parser.add_argument("-d", "--default",
+parser.add_argument("-de", "--default",
                     action="store_true",
                     help="Apply default operators.",
                     )
-parser.add_argument("-m", "--multislice",
+parser.add_argument("-mu", "--multislice",
                     type=str,
                     help="Apply only slices.",
                     )
-parser.add_argument("-O", "--orbit",
+parser.add_argument("-or", "--orbit",
                     type=str,
                     help="Gather orbital view (vertical/horizontal/both).",
+                    )
+parser.add_argument("-da", "--dataconvert",
+                    type=str,
+                    help="Convert file formats using mbconvert.",
+                    )
+parser.add_argument("-gr", "--graveremove",
+                    action="store_true",
+                    help="Remove grave yard from mesh.",
+                    )
+parser.add_argument("-su", "--surfaces",
+                    action="store_true",
+                    help="Create curve file from h5m file.",
+                    )
+parser.add_argument("-cu", "--curves",
+                    action="store_true",
+                    help="Create curve file from h5m file.",
+                    )
+parser.add_argument("-se", "--sessionreplace",
+                    action="store_true",
+                    help="Replace loaded data from sessions.",
                     )
 
 args = parser.parse_args()
@@ -46,61 +66,24 @@ FilePlots = ast.literal_eval(args.plots)
 
 if args.operators:
     OperatorSet = ast.literal_eval(args.operators)
+    Options = TerminalOptions(args, FilePlots, OperatorSet)
+
+Options = TerminalOptions(args, FilePlots)
 
 if args.images:
-
-    tic = timeit.default_timer()  # Start timer.
-
-    try:
-        Mw.MultipleWindows(FilePlots, OperatorSet, Windows=False)
-    except Exception:
-        Mw.MultipleWindows(FilePlots, Windows=False)
-
+    Options.Images()
 
 if args.windows:
-   
-    tic = timeit.default_timer()  # Start timer.
-
-    try:
-        Mw.MultipleWindows(FilePlots, OperatorSet, Windows=True)
-    except Exception:
-        Mw.MultipleWindows(FilePlots, Windows=True)
+    Options.Windows()
 
 if args.default:
-
-    OperatorSet = [
-                  ["Slice", ("x")],
-                  ["Slice", ("y")],
-                  ["Slice", ("z")],
-                  [{"Clip": {"oct": (1, 1, 1)}}],
-                  ]
-
-    tic = timeit.default_timer()  # Start timer.
-    Mw.MultipleWindows(FilePlots, OperatorSet, Windows=True)
+    Options.Default()
 
 if args.multislice:
-    Axis = ast.literal_eval(args.multislice)[0]
-    Number = ast.literal_eval(args.multislice)[1]
-    myList = (str(Axis), int(Number))
-
-    tic = timeit.default_timer()  # Start timer.
-    Ms.MultiSlice(FilePlots, myList)
+    Options.MultiSlice()
 
 if args.orbit:
-    print ast.literal_eval(args.orbit)[0]
-    Statement = ast.literal_eval(args.orbit)[0]
-
-    try:
-        if OperatorSet is None:
-            OperatorSet = False
-    except Exception:
-        pass
-
-    Direction = ast.literal_eval(args.orbit)[1]
-    Iteration = ast.literal_eval(args.orbit)[2]
-
-    tic = timeit.default_timer()  # Start timer.
-    Or.Orbit(FilePlots, (Direction, Iteration), OperatorSet)
+    Options.Orbit()
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
