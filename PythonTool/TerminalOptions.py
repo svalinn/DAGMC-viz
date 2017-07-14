@@ -28,7 +28,6 @@ class TerminalOptions(object):
         except Exception:
             Mw.MultipleWindows(self.FilePlots, Windows=True)
 
-
     def Default(self):
         self.OperatorSet = [
                            ["Slice", ("x")],
@@ -63,17 +62,12 @@ class TerminalOptions(object):
         tic = timeit.default_timer()  # Start timer.
         Or.Orbit(self.FilePlots, (Direction, Iteration), self.OperatorSet)
 
-
     # def DataConvert(self):
-
 
     # def GraveRemove(self):
 
-
     # def Surfaces(sefl):
 
-
     # def Curves(self):
-
 
     # def SessionReplace(self):
