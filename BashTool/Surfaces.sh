@@ -102,4 +102,4 @@ read FileSTLGrave
 
 
 
-mbconvert $WithGrave -t -v $VolumeIDList -s $SurfaceIDList -c $CurveIDList -V $VertexIDList $FileSTLGrave
+mbconvert $WithGrave -t -v $VolumeIDList -s $SurfaceIDList $FileSTLGrave

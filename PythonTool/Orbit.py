@@ -7,7 +7,7 @@ import MakeImagesPython as Mk
 
 def Orbit(Files, myList, OperatorSet=False):
     """
-    Take multiple views around Vertically or Horizontally.
+    Take multiple views around vertically, horizontally, or both.
     Views are evenly spaced.
     myList = (<axis>, <number of views>).
 

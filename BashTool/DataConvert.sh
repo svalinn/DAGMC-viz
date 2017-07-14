@@ -18,11 +18,11 @@ fi
 
 
 
-read -r -p "Convert cub to vtk? (yes/no): " response2
+read -r -p "Convert mesh data to vtk? (yes/no): " response2
 if [[ "$response2" =~ ^([yY][eE][sS]|[yY])+$ ]]
 then
 
-	echo -e "File name for cub to vtk conversion: "
+	echo -e "File name for conversion to vtk: "
 	read FileCUB
 
 	echo -e "Name of vtk file: "

@@ -19,9 +19,9 @@ DAGMC-viz Documentation
     Plotting example is shown below:
 
         [
-        ["dummy.vtk", "Pseudocolor", "TALLY_TAG", "Log", ('Min',0.00001),('Max',0.0001)],
-        ["dummy.vtk", "Contour", "ERROR_TAG", "DASH"],
-        ["dummy.stl", "Mesh", "STL_mesh", "DASH"]
+        ['test.vtk', 'Pseudocolor', 'TALLY_TAG', 'Log', ('Min',0.00001),('Max',0.0001)],
+        ['test.vtk', 'Contour', 'ERROR_TAG', 'DASH'],
+        ['test.stl', 'Mesh', 'STL_mesh', 'DASH']
         ]
 
     To add an operator, the following format is used:
@@ -32,8 +32,8 @@ DAGMC-viz Documentation
 
         [
         {"Clip": {"oct": (1, 1, 1), "rot": (30, 30, 30), "loc":(0,0,0)}},
-             ["Slice", ["y", 10]], [{"Clip": {"oct": (1, 1, 1)}}, ["Slice", ["x", 10]]],
-             ["Threshold", ["Pseudocolor", "=", (5.14*10**-05,0.00011)]]
+        ["Slice", ["y", 10]], [{"Clip": {"oct": (1, 1, 1)}}, ["Slice", ["x", 10]]],
+        ["Threshold", ["Pseudocolor", "=", (5.14*10**-05,0.00011)]]
         ]
 
 2. MakeImagesTerminal.py has an option to display tally data, error associated with tally data, three slices (x/y/z) at the origin, and a clip of the first octant by default. The session file associated with this option can be loaded in VisIt to view all options with the same orientation.

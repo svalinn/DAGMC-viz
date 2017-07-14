@@ -1,5 +1,6 @@
 import argparse
 import timeit
+import ast
 
 import MultipleWindows as Mw
 import MultiSlice as Ms
@@ -9,9 +10,17 @@ parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
+parser.add_argument("-p", "--plots",
+                    type=str,
+                    help="List of plots.",
+                    )
+parser.add_argument("-o", "--operators",
+                    type=str,
+                    help="List of operators.",
+                    )
 parser.add_argument("-i", "--images",
                     action="store_true",
-                    help="Make Images of plots and operators.",
+                    help="Make images of plots and operators.",
                     )
 parser.add_argument("-w", "--windows",
                     action="store_true",
@@ -22,24 +31,23 @@ parser.add_argument("-d", "--default",
                     help="Apply default operators.",
                     )
 parser.add_argument("-m", "--multislice",
-                    action="store_true",
+                    type=str,
                     help="Apply only slices.",
                     )
-parser.add_argument("-o", "--orbit",
-                    action="store_true",
-                    help="Gather orbital view.",
+parser.add_argument("-O", "--orbit",
+                    type=str,
+                    help="Gather orbital view (vertical/horizontal/both).",
                     )
 
 args = parser.parse_args()
 
-if args.images:
-    FilePlots = input("Insert list of plot lists: ")
-    Statement = raw_input("Add operators? (yes/no): ")
+# Gather plot and operator inputs.
+FilePlots = ast.literal_eval(args.plots)
 
-    if Statement.lower() == "yes":
-        OperatorSet = input("Insert list of operator lists: ")
-    else:
-        pass
+if args.operators:
+    OperatorSet = ast.literal_eval(args.operators)
+
+if args.images:
 
     tic = timeit.default_timer()  # Start timer.
 
@@ -50,14 +58,7 @@ if args.images:
 
 
 if args.windows:
-    FilePlots = input("Insert list of plot lists: ")
-    Statement = raw_input("Add operators? (yes/no): ")
-
-    if Statement.lower() == "yes":
-        OperatorSet = input("Insert list of operator lists: ")
-    else:
-        pass
-
+   
     tic = timeit.default_timer()  # Start timer.
 
     try:
@@ -66,7 +67,6 @@ if args.windows:
         Mw.MultipleWindows(FilePlots, Windows=True)
 
 if args.default:
-    FilePlots = input("Insert list of plot lists: ")
 
     OperatorSet = [
                   ["Slice", ("x")],
@@ -79,25 +79,25 @@ if args.default:
     Mw.MultipleWindows(FilePlots, OperatorSet, Windows=True)
 
 if args.multislice:
-    FilePlots = input("Insert list of plot lists: ")
-    Axis = raw_input("Insert one or more axis together <xyz>: ")
-    Number = raw_input("Insert number of slices: ")
+    Axis = ast.literal_eval(args.multislice)[0]
+    Number = ast.literal_eval(args.multislice)[1]
     myList = (str(Axis), int(Number))
 
     tic = timeit.default_timer()  # Start timer.
     Ms.MultiSlice(FilePlots, myList)
 
 if args.orbit:
-    FilePlots = input("Insert list of plot lists: ")
-    Statement = raw_input("Add operators? (yes/no): ")
+    print ast.literal_eval(args.orbit)[0]
+    Statement = ast.literal_eval(args.orbit)[0]
 
-    if Statement.lower() == "yes":
-        OperatorSet = input("Insert list of operator lists: ")
-    else:
-        OperatorSet = False
+    try:
+        if OperatorSet is None:
+            OperatorSet = False
+    except Exception:
+        pass
 
-    Direction = raw_input("Orbit? (vertical/horizontal/both): ")
-    Iteration = raw_input("Number of views in orbit?: ")
+    Direction = ast.literal_eval(args.orbit)[1]
+    Iteration = ast.literal_eval(args.orbit)[2]
 
     tic = timeit.default_timer()  # Start timer.
     Or.Orbit(FilePlots, (Direction, Iteration), OperatorSet)
