@@ -70,7 +70,8 @@ if args.operators:
     OperatorSet = ast.literal_eval(args.operators)
     Options = TerminalOptions(args, FilePlots, OperatorSet)
 
-Options = TerminalOptions(args, FilePlots)
+else:
+    Options = TerminalOptions(args, FilePlots)
 
 if args.images:
     Options.Images()

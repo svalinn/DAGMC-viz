@@ -18,9 +18,9 @@ class TerminalOptions(object):
 
     def Images(self):
         try:
-            Mw.MultipleWindows(self.FilePlots, self.OperatorSet, Windows=True)
+            Mw.MultipleWindows(self.FilePlots, self.OperatorSet)
         except Exception:
-            Mw.MultipleWindows(self.FilePlots, Windows=True)
+            Mw.MultipleWindows(self.FilePlots)
 
     def Windows(self):
         try:
@@ -46,7 +46,6 @@ class TerminalOptions(object):
         Ms.MultiSlice(self.FilePlots, myList)
 
     def Orbit(self):
-        Statement = ast.literal_eval(self.Arguments.orbit)[0]
 
         try:
             if self.OperatorSet is None:
@@ -54,8 +53,8 @@ class TerminalOptions(object):
         except Exception:
             pass
 
-        Direction = ast.literal_eval(self.Arguments.orbit)[1]
-        Iteration = ast.literal_eval(self.Arguments.orbit)[2]
+        Direction = ast.literal_eval(self.Arguments.orbit)[0]
+        Iteration = ast.literal_eval(self.Arguments.orbit)[1]
 
         Or.Orbit(self.FilePlots, (Direction, Iteration), self.OperatorSet)
 
