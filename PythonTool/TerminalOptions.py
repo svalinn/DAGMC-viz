@@ -58,12 +58,17 @@ class TerminalOptions(object):
 
         Or.Orbit(self.FilePlots, (Direction, Iteration), self.OperatorSet)
 
-    # def DataConvert(self):
+    def DataConvert(self):
+        1+1
 
-    # def GraveRemove(self):
+    def GraveRemove(self):
+        1+1
 
-    # def Surfaces(sefl):
+    def Surfaces(self):
+        1+1
 
-    # def Curves(self):
+    def Curves(self):
+        1+1
 
-    # def SessionReplace(self):
+    def SessionReplace(self):
+        1+1

@@ -1,11 +1,10 @@
 #!/bin/bash
+WithGrave=$1
+FileSTLGrave=$2
+
+
 DATAPATH=../Data
 cd "${DATAPATH}"
-
-printf "Include file extensions for naming. \n"
-
-echo -e "File (h5m) for removal of graveyard: "
-read WithGrave
 
 # Save the relations.
 mbgsets $WithGrave > ../BashTool/DataFileInfo/Structure.txt
@@ -94,11 +93,6 @@ VertexIDList=$(cat VertexIDComma.txt | tr -d " \t\n\r")
 
 DATAPATH=../../Data
 cd "${DATAPATH}"
-
-
-
-echo -e "Name of no grave yard stl mesh file: "
-read FileSTLGrave
 
 
 

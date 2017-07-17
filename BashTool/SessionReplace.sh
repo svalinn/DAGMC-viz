@@ -2,18 +2,16 @@
 SESSIONS=../Sessions/XML_Original/
 cd "${SESSIONS}"
 
-printf "Include file extensions. \n"
 
 
+#Name of the original session file:
+read SessionFile=$1
 
-echo -e "Name of the original session file: "
-read SessionFile
+# Name of original stl file:
+read FileSTLOld=$2
 
-echo -e "Name of original stl file: "
-read FileSTLOld
-
-echo -e "Name of new stl file: "
-read FileSTLNew
+# Name of new stl file:
+read FileSTLNew=$3
 
 
 

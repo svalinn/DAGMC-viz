@@ -64,8 +64,6 @@ args = parser.parse_args()
 # Gather plot and operator inputs.
 FilePlots = ast.literal_eval(args.plots)
 
-tic = timeit.default_timer()  # Start timer.
-
 if args.operators:
     OperatorSet = ast.literal_eval(args.operators)
     Options = TerminalOptions(args, FilePlots, OperatorSet)
@@ -87,6 +85,21 @@ if args.multislice:
 
 if args.orbit:
     Options.Orbit()
+
+if args.dataconvert:
+    Options.DataConvert()
+
+if args.graveremove:
+    Options.GraveRemove()
+
+if args.surfaces:
+    Options.Surfaces()
+
+if args.orbit:
+    Options.curves()
+
+if args.sessionreplace:
+    Options.SessionReplace()
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic

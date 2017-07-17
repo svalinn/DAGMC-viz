@@ -4,7 +4,10 @@ Outdated Documentation
 DAGMC-viz Documentation
 =======================
 
-(Note: Python 2.7 and visit are required. Python path needs to be set for visit. Default operators rely on Pseudocolor for spatial definition.)
+Note: Python 2.7 and visit are required.
+Python path needs to be set for visit.
+Default operators rely on Pseudocolor for spatial definition.
+mbconvert and mbgsets are used for bash options.
 
 ----------------------------------------
 
