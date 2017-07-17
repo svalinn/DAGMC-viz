@@ -64,6 +64,8 @@ args = parser.parse_args()
 # Gather plot and operator inputs.
 FilePlots = ast.literal_eval(args.plots)
 
+tic = timeit.default_timer()  # Start timer.
+
 if args.operators:
     OperatorSet = ast.literal_eval(args.operators)
     Options = TerminalOptions(args, FilePlots, OperatorSet)

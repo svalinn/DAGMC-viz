@@ -6,6 +6,13 @@ DAGMC-viz Documentation
 
 (Note: Python 2.7 and visit are required. Python path needs to be set for visit. Default operators rely on Pseudocolor for spatial definition.)
 
+An example use of this tool is as follows:
+        python MakeImagesTerminal.py -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Log',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG','DASH'],]" -op "[[{'Clip': {'oct': (1, 1, 1)}},{'Clip': {'oct': (-1, 1, 1)}}]]" -mu "['xyz',5]"
+
+The documentation below is outdated.
+
+----------------------------------------
+
 1. MakeImagesTerminal.py can be used to load data.
 	
 		python MakeImagesTerminal.py -i
