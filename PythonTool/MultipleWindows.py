@@ -66,9 +66,9 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
 
         i = 0
         while os.path.exists(
-                             "../Sessions/XML_Original/SampleMulti%s.session"
+                             "../Sessions/XML_Original/sampleMulti%s.session"
                              % i
                              ):
             i += 1
 
-        Vi.SaveSession("../Sessions/XML_Original/SampleMulti%s.session" % i)
+        Vi.SaveSession("../Sessions/XML_Original/sampleMulti%s.session" % i)

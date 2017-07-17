@@ -8,10 +8,10 @@ import MultiSlice as Ms
 import Orbit as Or
 
 
-class TerminalOptions(object):
-    """ Terminal execution settings."""
+class VisitOptions(object):
+    """Terminal execution settings."""
 
-    def __init__(self, Arguments, FilePlots, OperatorSet=None):
+    def __init__(self, Arguments=None, FilePlots=None, OperatorSet=None):
         self.Arguments = Arguments
         self.FilePlots = FilePlots
         self.OperatorSet = OperatorSet
@@ -57,18 +57,3 @@ class TerminalOptions(object):
         Iteration = ast.literal_eval(self.Arguments.orbit)[1]
 
         Or.Orbit(self.FilePlots, (Direction, Iteration), self.OperatorSet)
-
-    def DataConvert(self):
-        1+1
-
-    def GraveRemove(self):
-        1+1
-
-    def Surfaces(self):
-        1+1
-
-    def Curves(self):
-        1+1
-
-    def SessionReplace(self):
-        1+1

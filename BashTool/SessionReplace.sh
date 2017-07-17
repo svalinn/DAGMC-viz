@@ -5,13 +5,13 @@ cd "${SESSIONS}"
 
 
 #Name of the original session file:
-read SessionFile=$1
+SessionFile=$1
 
 # Name of original stl file:
-read FileSTLOld=$2
+FileSTLOld=$2
 
 # Name of new stl file:
-read FileSTLNew=$3
+FileSTLNew=$3
 
 
 
@@ -28,4 +28,4 @@ fi
 
 sed "s/$FileSTLOld/$FileSTLNew/g" $SessionFile > ../XML_Edited/"$name".session
 
-printf "$name"'.session was saved.'
+printf "$name"'.session was saved.\n'

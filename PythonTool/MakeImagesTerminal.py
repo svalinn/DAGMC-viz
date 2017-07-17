@@ -2,7 +2,7 @@ import argparse
 import timeit
 import ast
 
-from TerminalOptions import TerminalOptions
+from BashOptions import BashOptions
 
 tic = timeit.default_timer()  # Start timer.
 
@@ -38,38 +38,36 @@ parser.add_argument("-or", "--orbit",
                     type=str,
                     help="Gather orbital view (vertical/horizontal/both).",
                     )
-parser.add_argument("-da", "--dataconvert",
-                    type=str,
-                    help="Convert file formats using mbconvert.",
-                    )
 parser.add_argument("-gr", "--graveremove",
-                    action="store_true",
+                    type=str,
                     help="Remove grave yard from mesh.",
                     )
 parser.add_argument("-su", "--surfaces",
-                    action="store_true",
+                    type=str,
                     help="Create curve file from h5m file.",
                     )
 parser.add_argument("-cu", "--curves",
-                    action="store_true",
+                    type=str,
                     help="Create curve file from h5m file.",
                     )
 parser.add_argument("-se", "--sessionreplace",
-                    action="store_true",
+                    type=str,
                     help="Replace loaded data from sessions.",
                     )
 
 args = parser.parse_args()
 
 # Gather plot and operator inputs.
-FilePlots = ast.literal_eval(args.plots)
+if args.plots:
+    # Imported here to avoid loading VisIt when not needed.
+    from VisitOptions import VisitOptions
+    FilePlots = ast.literal_eval(args.plots)
 
-if args.operators:
-    OperatorSet = ast.literal_eval(args.operators)
-    Options = TerminalOptions(args, FilePlots, OperatorSet)
-
-else:
-    Options = TerminalOptions(args, FilePlots)
+    if args.operators:
+        OperatorSet = ast.literal_eval(args.operators)
+        Options = VisitOptions(args, FilePlots, OperatorSet)
+    else:
+        Options = VisitOptions(args, FilePlots)
 
 if args.images:
     Options.Images()
@@ -86,21 +84,26 @@ if args.multislice:
 if args.orbit:
     Options.Orbit()
 
-if args.dataconvert:
-    Options.DataConvert()
-
 if args.graveremove:
-    Options.GraveRemove()
+    BashCommand = args.graveremove
+    FileBash = BashOptions(BashCommand)
+    FileBash.GraveRemove()
 
 if args.surfaces:
-    Options.Surfaces()
+    BashCommand = args.surfaces
+    FileBash = BashOptions(BashCommand)
+    FileBash.Surfaces()
 
-if args.orbit:
-    Options.curves()
+if args.curves:
+    BashCommand = args.curves
+    FileBash = BashOptions(BashCommand)
+    FileBash.curves()
 
 if args.sessionreplace:
-    Options.SessionReplace()
+    BashCommand = args.sessionreplace
+    FileBash = BashOptions(BashCommand)
+    FileBash.SessionReplace()
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
-print("Elapsed time was "+str(ElapsedTime)+" seconds.")
+print "Elapsed time was "+str(ElapsedTime)+" seconds."

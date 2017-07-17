@@ -79,4 +79,28 @@ If the same plotting settings are to be used on another data set containing simi
 
 ----------------------------------------
 
-Bash option coming in the future.
+Bash scripts for removing a graveyard from an h5m file, extracting surfaces, extracting, curves, and substituting loaded datasets are under /BashTool.
+
+To remove a graveyard, the following example can be used:
+
+        python MakeImagesTerminal.py -gr "['fng_zip.h5m','test.stl']"
+
+To extract surfaces, the following example can be used:
+
+        python MakeImagesTerminal.py -su "['fng_zip.h5m','test.stl']"
+
+To extract curves, the following example can be used:
+
+        python MakeImagesTerminal.py -cu "['fng_zip.h5m','test.stl']"
+
+To replace data to be loaded, the following example can be used:
+
+        python MakeImagesTerminal.py -se "['sample0.session','fng_zip.h5m','test.stl']"
+
+----------------------------------------
+
+Bash options can be used in conjunction with python scripts to remove a graveyard, load data, and then replace the loaded data file. An example is shown below. Note that in the example the last of the generated session files has the loaded data substituted.
+
+python MakeImagesTerminal.py -gr "['fng_zip.h5m','rmgrave.stl']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Linear',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG'],['test.stl', 'Mesh', 'STL_mesh']]" -de -se "['sampleMulti0.session','test.stl','rmgrave.stl']"
+
+
