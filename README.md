@@ -1,6 +1,3 @@
-Outdated Documentation
-
-
 DAGMC-viz Documentation
 =======================
 
@@ -101,6 +98,6 @@ To replace data to be loaded, the following example can be used:
 
 Bash options can be used in conjunction with python scripts to remove a graveyard, load data, and then replace the loaded data file. An example is shown below. Note that in the example the last of the generated session files has the loaded data substituted.
 
-python MakeImagesTerminal.py -gr "['fng_zip.h5m','rmgrave.stl']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Linear',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG'],['test.stl', 'Mesh', 'STL_mesh']]" -de -se "['sampleMulti0.session','test.stl','rmgrave.stl']"
+        python MakeImagesTerminal.py -gr "['fng_zip.h5m','rmgrave.stl']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Linear',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG'],['test.stl', 'Mesh', 'STL_mesh']]" -de -se "['sampleMulti0.session','test.stl','rmgrave.stl']"
 
 
