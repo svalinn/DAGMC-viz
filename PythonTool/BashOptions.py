@@ -8,6 +8,17 @@ class BashOptions(object):
     def __init__(self, Options):
         self.Options = Options
 
+    def DataConvert(self):
+        FileIn = ast.literal_eval(self.Options)[0]
+        FileOut = ast.literal_eval(self.Options)[1]
+
+        subprocess.call([
+                         "bash",
+                         "../BashTool/DataConvert.sh",
+                         str(FileIn),
+                         str(FileOut),
+                         ])
+
     def GraveRemove(self):
         h5mFile = ast.literal_eval(self.Options)[0]
         stlFile = ast.literal_eval(self.Options)[1]

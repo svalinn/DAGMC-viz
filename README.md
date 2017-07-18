@@ -78,6 +78,11 @@ If the same plotting settings are to be used on another data set containing simi
 
 Bash scripts for removing a graveyard from an h5m file, extracting surfaces, extracting, curves, and substituting loaded datasets are under /BashTool.
 
+To convert an h5m file to stl or a meshtal file to vtk, the following examples can be used:
+
+        python MakeImagesTerminal.py -da "['meshtal','scalars.vtk']"
+        python MakeImagesTerminal.py -da "['fng_zip.h5m','scalars.stl']"  
+
 To remove a graveyard, the following example can be used:
 
         python MakeImagesTerminal.py -gr "['fng_zip.h5m','test.stl']"

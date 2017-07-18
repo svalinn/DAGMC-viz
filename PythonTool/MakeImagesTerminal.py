@@ -38,6 +38,10 @@ parser.add_argument("-or", "--orbit",
                     type=str,
                     help="Gather orbital view (vertical/horizontal/both).",
                     )
+parser.add_argument("-da", "--dataconvert",
+                    type=str,
+                    help="Convert h5m or cubit files.",
+                    )
 parser.add_argument("-gr", "--graveremove",
                     type=str,
                     help="Remove grave yard from mesh.",
@@ -59,7 +63,7 @@ args = parser.parse_args()
 
 # Gather plot and operator inputs.
 if args.plots:
-    # Imported here to avoid loading VisIt when not needed.
+    # Imported here to avoid loading the viewer when not needed.
     from VisitOptions import VisitOptions
     FilePlots = ast.literal_eval(args.plots)
 
@@ -83,6 +87,11 @@ if args.multislice:
 
 if args.orbit:
     Options.Orbit()
+
+if args.dataconvert:
+    BashCommand = args.dataconvert
+    FileBash = BashOptions(BashCommand)
+    FileBash.DataConvert()
 
 if args.graveremove:
     BashCommand = args.graveremove
