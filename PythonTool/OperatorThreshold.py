@@ -3,7 +3,7 @@ from visit import *
 
 def OperatorThreshold(OperSet, myList, tags):
     """
-    expr = tagname > val | tagname < val | tagname = (min,max)
+    expr = plottype > val | plottype < val | plottype = (min,max)
     """
 
     ResetView()
