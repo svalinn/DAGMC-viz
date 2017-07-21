@@ -106,7 +106,7 @@ if args.surfaces:
 if args.curves:
     BashCommand = args.curves
     FileBash = BashOptions(BashCommand)
-    FileBash.curves()
+    FileBash.Curves()
 
 if args.sessionreplace:
     BashCommand = args.sessionreplace
