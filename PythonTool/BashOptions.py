@@ -52,15 +52,26 @@ class BashOptions(object):
                          str(stlFile),
                          ])
 
-    def SessionReplace(self):
+    def SessionReplaceSingle(self):
         SessionFile = ast.literal_eval(self.Options)[0]
         stlOld = ast.literal_eval(self.Options)[1]
         stlNew = ast.literal_eval(self.Options)[2]
 
         subprocess.call([
                          "bash",
-                         "../BashTool/SessionReplace.sh",
+                         "../BashTool/SessionReplaceSingle.sh",
                          str(SessionFile),
+                         str(stlOld),
+                         str(stlNew),
+                         ])
+
+    def SessionReplaceMultiple(self):
+        stlOld = ast.literal_eval(self.Options)[0]
+        stlNew = ast.literal_eval(self.Options)[1]
+
+        subprocess.call([
+                         "bash",
+                         "../BashTool/SessionReplaceMultiple.sh",
                          str(stlOld),
                          str(stlNew),
                          ])

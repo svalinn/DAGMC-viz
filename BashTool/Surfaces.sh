@@ -12,7 +12,7 @@ SurfacesOnly=$2
 
 
 
-mbconvert -3 $Original surfaces.h5m
+mbconvert -2 $Original surfaces.h5m
 mbconvert surfaces.h5m $SurfacesOnly
 
 rm surfaces.h5m

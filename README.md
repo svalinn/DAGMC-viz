@@ -95,9 +95,13 @@ To extract curves, the following example can be used:
 
         python MakeImagesTerminal.py -cu "['fng_zip.h5m','test.stl']"
 
-To replace data to be loaded, the following example can be used:
+To replace data to be loaded in a single session file, the following example can be used:
 
         python MakeImagesTerminal.py -se "['sample0.session','fng_zip.h5m','test.stl']"
+
+To replace data to be loaded in all session files under the original session file directory, the following example can be used:
+
+        python MakeImagesTerminal.py -sm "['fng_zip.h5m','test.stl']"
 
 ----------------------------------------
 

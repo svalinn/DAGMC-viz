@@ -10,6 +10,22 @@ parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
+parser.add_argument("-da", "--dataconvert",
+                    type=str,
+                    help="Convert h5m or cubit files.",
+                    )
+parser.add_argument("-gr", "--graveremove",
+                    type=str,
+                    help="Remove grave yard from mesh.",
+                    )
+parser.add_argument("-su", "--surfaces",
+                    type=str,
+                    help="Create curve file from h5m file.",
+                    )
+parser.add_argument("-cu", "--curves",
+                    type=str,
+                    help="Create curve file from h5m file.",
+                    )
 parser.add_argument("-pl", "--plots",
                     type=str,
                     help="List of plots.",
@@ -38,25 +54,13 @@ parser.add_argument("-or", "--orbit",
                     type=str,
                     help="Gather orbital view (vertical/horizontal/both).",
                     )
-parser.add_argument("-da", "--dataconvert",
+parser.add_argument("-se", "--sessionreplacesingle",
                     type=str,
-                    help="Convert h5m or cubit files.",
+                    help="Replace loaded data from a session file.",
                     )
-parser.add_argument("-gr", "--graveremove",
+parser.add_argument("-sm", "--sessionreplacemultiple",
                     type=str,
-                    help="Remove grave yard from mesh.",
-                    )
-parser.add_argument("-su", "--surfaces",
-                    type=str,
-                    help="Create curve file from h5m file.",
-                    )
-parser.add_argument("-cu", "--curves",
-                    type=str,
-                    help="Create curve file from h5m file.",
-                    )
-parser.add_argument("-se", "--sessionreplace",
-                    type=str,
-                    help="Replace loaded data from sessions.",
+                    help="Replace loaded data from multiple session files.",
                     )
 
 args = parser.parse_args()
@@ -72,21 +76,6 @@ if args.plots:
         Options = VisitOptions(args, FilePlots, OperatorSet)
     else:
         Options = VisitOptions(args, FilePlots)
-
-if args.images:
-    Options.Images()
-
-if args.windows:
-    Options.Windows()
-
-if args.default:
-    Options.Default()
-
-if args.multislice:
-    Options.MultiSlice()
-
-if args.orbit:
-    Options.Orbit()
 
 if args.dataconvert:
     BashCommand = args.dataconvert
@@ -108,10 +97,30 @@ if args.curves:
     FileBash = BashOptions(BashCommand)
     FileBash.Curves()
 
-if args.sessionreplace:
-    BashCommand = args.sessionreplace
+if args.images:
+    Options.Images()
+
+if args.windows:
+    Options.Windows()
+
+if args.default:
+    Options.Default()
+
+if args.multislice:
+    Options.MultiSlice()
+
+if args.orbit:
+    Options.Orbit()
+
+if args.sessionreplacesingle:
+    BashCommand = args.sessionreplacesingle
     FileBash = BashOptions(BashCommand)
-    FileBash.SessionReplace()
+    FileBash.SessionReplaceSingle()
+
+if args.sessionreplacemultiple:
+    BashCommand = args.sessionreplacemultiple
+    FileBash = BashOptions(BashCommand)
+    FileBash.SessionReplaceMultiple()
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
