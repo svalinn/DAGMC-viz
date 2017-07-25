@@ -2,6 +2,7 @@ import argparse
 import timeit
 import ast
 
+from GrabImagesFromSessions import GrabImagesFromSessions
 from BashOptions import BashOptions
 
 tic = timeit.default_timer()  # Start timer.
@@ -10,9 +11,13 @@ parser = argparse.ArgumentParser(description="Terminal execution of tool.",
                                  usage="Create plots to save.",
                                  )
 
-parser.add_argument("-da", "--dataconvert",
+parser.add_argument("-ds", "--dataconvertstl",
                     type=str,
-                    help="Convert h5m or cubit files.",
+                    help="Convert h5m to stl.",
+                    )
+parser.add_argument("-dv", "--dataconvertvtk",
+                    type=str,
+                    help="Convert h5m to vtk.",
                     )
 parser.add_argument("-gr", "--graveremove",
                     type=str,
@@ -62,6 +67,10 @@ parser.add_argument("-sm", "--sessionreplacemultiple",
                     type=str,
                     help="Replace loaded data from multiple session files.",
                     )
+parser.add_argument("-gi", "--grabimagesfromsessions",
+                    action="store_true",
+                    help="Load sessions and grab window images.",
+                    )
 
 args = parser.parse_args()
 
@@ -77,8 +86,13 @@ if args.plots:
     else:
         Options = VisitOptions(args, FilePlots)
 
-if args.dataconvert:
-    BashCommand = args.dataconvert
+if args.dataconvertstl:
+    BashCommand = args.dataconvertstl
+    FileBash = BashOptions(BashCommand)
+    FileBash.DataConvert()
+
+if args.dataconvertvtk:
+    BashCommand = args.dataconvertvtk
     FileBash = BashOptions(BashCommand)
     FileBash.DataConvert()
 
@@ -121,6 +135,9 @@ if args.sessionreplacemultiple:
     BashCommand = args.sessionreplacemultiple
     FileBash = BashOptions(BashCommand)
     FileBash.SessionReplaceMultiple()
+
+if args.grabimagesfromsessions:
+    GrabImagesFromSessions()
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic

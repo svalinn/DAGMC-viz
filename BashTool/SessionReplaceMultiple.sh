@@ -18,12 +18,14 @@ for filename in *.session
 
 do
 	name=../XML_Edited/edited
-	if [[ -e $name.session ]] ; then
+	if [[ -e $name"0.session" ]] ; then
 	    i=0
 	    while [[ -e $name$i.session ]] ; do
 	        let i++
 	    done
 	    name=$name$i
+	else
+		name=../XML_Edited/edited0
 	fi
 
 	sed "s/$FileSTLOld/$FileSTLNew/g" "$filename" > ../XML_Edited/"$name".session
