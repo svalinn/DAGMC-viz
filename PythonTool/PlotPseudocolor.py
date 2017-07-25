@@ -1,8 +1,13 @@
 from visit import *
 
 
-def PlotPseudocolor(File):
+def PlotPseudocolor(File, ObjectSequence):
     # Pseudocolor plot attributes.
+
+    # Change orientation of legend
+    LegendAttributes = GetAnnotationObject(ObjectSequence["Pseudocolor"])
+    LegendAttributes.orientation = "VerticalLeft"
+    LegendAttributes.fontHeight = 0.017
 
     Attribute = PseudocolorAttributes()
 

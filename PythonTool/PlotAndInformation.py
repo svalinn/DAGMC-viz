@@ -8,6 +8,7 @@ def PlotAndInformation(File):
     PlotType = []
     Centroids = []
     plotnumber = []
+    PlotObjects = []
     SpatialExtents = []
 
     for item in File:
@@ -26,11 +27,19 @@ def PlotAndInformation(File):
         Query("SpatialExtents")  # Bounds of selected plot.
         SpatialExtents.append(GetQueryOutputValue())
 
+        PlotObjects.append((GetAnnotationObjectNames())[Count])
+
         Count += 1
 
     # Create dictionaries of plot information.
+    ObjectSequence = dict(zip(PlotType, PlotObjects))
     PlottingSequence = dict(zip(PlotType, plotnumber))
     PlottingCentroids = dict(zip(PlotType, Centroids))
     PlottingSpatialExtents = dict(zip(PlotType, SpatialExtents))
 
-    return PlottingSequence, PlottingCentroids, PlottingSpatialExtents
+    return(
+           PlottingSequence,
+           PlottingCentroids,
+           PlottingSpatialExtents,
+           ObjectSequence,
+           )

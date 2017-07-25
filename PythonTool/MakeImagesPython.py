@@ -23,9 +23,10 @@ class MakeImages(object):
         self.PlottingSequence = PlotAndGetInfo[0]
         self.PlottingCentroids = PlotAndGetInfo[1]
         self.PlottingSpatialExtents = PlotAndGetInfo[2]
+        self.ObjectSequence = PlotAndGetInfo[3]
 
         # Apply plot settings
-        Apply = Pl.PlotSettings(self.File)
+        Apply = Pl.PlotSettings(self.File, self.ObjectSequence)
 
         for item in self.File:
             eval("Apply."+str(item[1])+"()")
@@ -59,4 +60,5 @@ class MakeImages(object):
                 self.PlottingSequence,
                 self.PlottingCentroids,
                 self.PlottingSpatialExtents,
+                self.ObjectSequence,
                 ]

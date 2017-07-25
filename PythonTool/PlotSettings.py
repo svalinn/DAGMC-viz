@@ -8,14 +8,15 @@ from PlotPseudocolor import PlotPseudocolor
 class PlotSettings(object):
     """Visual settings for plots."""
 
-    def __init__(self, File):
+    def __init__(self, File, ObjectSequence):
         self.File = File
+        self.ObjectSequence = ObjectSequence
 
     def Pseudocolor(self):
-        PlotPseudocolor(self.File)
+        PlotPseudocolor(self.File, self.ObjectSequence)
 
     def Contour(self):
-        PlotContour(self.File)
+        PlotContour(self.File, self.ObjectSequence)
 
     def Mesh(self):
-        PlotMesh(self.File)
+        PlotMesh(self.File, self.ObjectSequence)

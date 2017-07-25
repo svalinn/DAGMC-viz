@@ -1,7 +1,7 @@
 from visit import *
 
 
-def PlotMesh(File):
+def PlotMesh(File, ObjectSequence):
     # Mesh plot attributes.
 
     Attribute = MeshAttributes()

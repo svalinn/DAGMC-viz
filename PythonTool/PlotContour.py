@@ -1,13 +1,17 @@
 from visit import *
 
 
-def PlotContour(File):
+def PlotContour(File, ObjectSequence):
     # Contour plot attributes.
+
+    # Change orientation of legend
+    LegendAttributes = GetAnnotationObject(ObjectSequence["Contour"])
+    LegendAttributes.orientation = "VerticalLeft"
+    LegendAttributes.fontHeight = 0.017
 
     Attribute = ContourAttributes()
 
     Attribute.legendFlag = 1
-    Attribute.invertColorTable = 1
 
     if File is not None:
         File = list(File)
