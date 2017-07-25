@@ -4,10 +4,10 @@ from visit import *
 def PlotMesh(File):
     # Mesh plot attributes.
 
+    Attribute = MeshAttributes()
+
     if File is not None:
         File = list(File)
-
-        Attribute = MeshAttributes()
 
         Attribute.showInternal = 1
 
@@ -22,4 +22,4 @@ def PlotMesh(File):
                 except Exception:
                     pass
 
-        SetPlotOptions(Attribute)
+    SetPlotOptions(Attribute)

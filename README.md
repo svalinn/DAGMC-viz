@@ -105,6 +105,6 @@ To replace data to be loaded in all session files under the original session fil
 
 ----------------------------------------
 
-Bash options can be used in conjunction with python scripts to remove a graveyard, load data, replace the loaded data, and get images from replaced loaded dat file. An example is shown below.
+Bash options can be used in conjunction with python scripts to remove a graveyard, load data, replace the loaded data, and get images from replaced loaded data file. An example is shown below.
 
         python MakeImagesTerminal.py -ds "['fng_zip.h5m','test.stl']" -dv "['meshtal','test.vtk']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Log',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG','DASH'], ['test.stl','Mesh','STL_mesh']]" -op "[{'Clip': {'oct': (1, 1, 1), 'rot': (30, 30, 30), 'loc':(0,0,0)}},['Slice', ['y', 10]], [{'Clip': {'oct': (1, 1, 1)}}, ['Slice', ['x', 10]]],['Threshold', ['Pseudocolor', '=', '(5.14*10**-05,0.00011)']]]" -im -gr "['fng_zip.h5m','rmgrave.stl']" -sm "['test.stl','rmgrave.stl']" -gi

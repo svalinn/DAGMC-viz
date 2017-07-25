@@ -4,10 +4,10 @@ from visit import *
 def PlotPseudocolor(File):
     # Pseudocolor plot attributes.
 
+    Attribute = PseudocolorAttributes()
+
     if File is not None:
         File = list(File)
-
-        Attribute = PseudocolorAttributes()
 
         for item in File:
             if item[1].title() == "Pseudocolor":
@@ -43,4 +43,4 @@ def PlotPseudocolor(File):
                 except Exception:
                     pass
 
-        SetPlotOptions(Attribute)
+    SetPlotOptions(Attribute)
