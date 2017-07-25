@@ -7,7 +7,7 @@ def PlotContour(File, ObjectSequence):
     # Change orientation of legend
     LegendAttributes = GetAnnotationObject(ObjectSequence["Contour"])
     LegendAttributes.orientation = "VerticalLeft"
-    LegendAttributes.fontHeight = 0.017
+    LegendAttributes.fontHeight = 0.03
 
     Attribute = ContourAttributes()
 

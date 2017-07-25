@@ -7,6 +7,9 @@ def WindowSettings(Shading=False):
     """Modify window settings."""
 
     # Set window attributes for saving.
+    MoveAndResizeWindow(1, 0, 0, 2048, 1024)
+
+
     Attribute = SaveWindowAttributes()
 
     Attribute.format = Attribute.PNG
@@ -34,11 +37,6 @@ def WindowSettings(Shading=False):
     else:
         pass
 
-    # Set Zoom.
-    v = GetView3D()
-    v.imageZoom = 0.75
-    SetView3D(v)
-
     # Change legend options
     Attribute = AnnotationAttributes()
 
@@ -47,5 +45,26 @@ def WindowSettings(Shading=False):
     Attribute.timeInfoFlag = 0
     Attribute.userInfoFlag = 0
 
+
     SetAnnotationAttributes(Attribute)
 
+    # Change annotation options
+    Annotation = AnnotationAttributes()
+
+    Scale = 1.5
+        
+    Annotation.axes3D.xAxis.label.font.scale = Scale
+    Annotation.axes3D.yAxis.label.font.scale = Scale
+    Annotation.axes3D.zAxis.label.font.scale = Scale
+
+    Annotation.axes2D.xAxis.label.font.scale = Scale
+    Annotation.axes2D.yAxis.label.font.scale = Scale
+
+    Annotation.axes3D.xAxis.label.font.bold = 1
+    Annotation.axes3D.yAxis.label.font.bold = 1
+    Annotation.axes3D.zAxis.label.font.bold = 1
+
+    Annotation.axes2D.xAxis.label.font.bold = 1
+    Annotation.axes2D.yAxis.label.font.bold = 1
+
+    SetAnnotationAttributes(Annotation)
