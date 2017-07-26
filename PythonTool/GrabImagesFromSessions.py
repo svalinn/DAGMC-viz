@@ -14,4 +14,4 @@ def GrabImagesFromSessions():
     for file in sorted(os.listdir(Directory)):
         if file.endswith(".session"):
             Vi.RestoreSession(os.path.join(Directory, file), 0)
-            Vi.SaveWindow()
+            Vi.SaveWindow()  # Save directory defined by session.

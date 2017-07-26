@@ -7,7 +7,7 @@ def OperatorClip(File, OperSet, myList, Centroids):
     [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(xdeg,ydeg,zdeg)},...]
     produces one image for each dictionary.
 
-    If multiple clips are used, define the rotation key.
+    Clip must be applied last for the view effect to work.
     """
 
     ResetView()
