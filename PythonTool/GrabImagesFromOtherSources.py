@@ -1,7 +1,6 @@
 import os
 
 import visit as Vi
-Vi.Launch()
 
 
 def GrabImagesFromOtherSources(Data):
@@ -22,5 +21,4 @@ def GrabImagesFromOtherSources(Data):
 												  0,
 												  DataSource,
 												  )
-			Vi.RecenterView()
 			Vi.SaveWindow()  # Save directory defined by session.

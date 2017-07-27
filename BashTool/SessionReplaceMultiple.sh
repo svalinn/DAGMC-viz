@@ -28,7 +28,7 @@ do
 		name=../XML_Edited/edited0
 	fi
 
-	sed "s/$FileSTLOld/$FileSTLNew/g" "$filename" > ../XML_Edited/"$name".session
+	grep "localhost:" "$filename" | sed "s/$FileSTLOld/$FileSTLNew/g" "$filename" > ../XML_Edited/"$name".session
 
 done
 

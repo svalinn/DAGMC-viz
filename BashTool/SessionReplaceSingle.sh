@@ -28,6 +28,6 @@ fi
 
 
 
-sed "s/$FileSTLOld/$FileSTLNew/g" $SessionFile > ../XML_Edited/"$name".session
+grep "localhost:" "$filename" | sed "s/$FileSTLOld/$FileSTLNew/g" $SessionFile > ../XML_Edited/"$name".session
 
 printf "$name"'.session was saved.\n'

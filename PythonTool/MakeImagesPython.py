@@ -5,6 +5,7 @@ import SaveSessions as Sa
 import WindowSettings as Wi
 import OperatorSettings as Op
 import PlotAndInformation as Qu
+import GrabImagesFromOtherSources as Gr
 
 
 class MakeImages(object):
@@ -45,13 +46,21 @@ class MakeImages(object):
 
         eval("Apply."+str(OperSet).title()+"()")
 
-    def Save(self, Shading=False):
+    def Save(self, Shading=False, OtherSources=False):
         """Saves window image and XML session."""
 
         Vi.DrawPlots()
         Wi.WindowSettings(Shading)
         Sa.SaveSessions()
         Vi.SaveWindow()
+
+        print "Plot order is:\n"+str(self.PlottingSequence)
+        print "Centroids are:\n"+str(self.PlottingCentroids)
+        print "Bounds are:\n"+str(self.PlottingSpatialExtents)
+        print "Plot object names:\n"+str(self.ObjectSequence)
+
+        if OtherSources is not False:
+            Gr.GrabImagesFromOtherSources(OtherSources)
 
     def get_list(self):
         """Return acquired data. """
