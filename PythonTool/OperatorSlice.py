@@ -90,8 +90,8 @@ def OperatorSlice(
                     Attribute.originPoint = (0, 0, Centroids["Pseudocolor"][2])
 
         Attribute.axisType = eval(
-                                  "Attribute."+
-                                  str(OperOptions[0]).upper()+
+                                  "Attribute." +
+                                  str(OperOptions[0]).upper() +
                                   "Axis"
                                   )
 
