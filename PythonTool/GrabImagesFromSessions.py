@@ -2,6 +2,11 @@ import os
 
 import visit as Vi
 
+try:
+    Vi.Launch()  # Here to allow import of other modules.
+except Exception:
+    pass
+
 
 def GrabImagesFromSessions():
     """

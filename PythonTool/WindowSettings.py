@@ -29,7 +29,7 @@ def WindowSettings(Shading=False):
     Annotation = AnnotationAttributes()
 
     Scale = 1.5
-        
+
     Annotation.axes3D.xAxis.label.font.scale = Scale
     Annotation.axes3D.yAxis.label.font.scale = Scale
     Annotation.axes3D.zAxis.label.font.scale = Scale

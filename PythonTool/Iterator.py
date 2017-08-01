@@ -1,7 +1,10 @@
 import visit as Vi
 
 # The next line can be commented to import and use in the VisIt GUI.
-Vi.Launch()  # Here to allow import of other modules.
+try:
+    Vi.Launch()  # Here to allow import of other modules.
+except Exception:
+    pass
 
 import PathCreator as Pa
 import MakeImagesPython as Mk
@@ -14,7 +17,11 @@ def Iterator(Files, OperatorSet=None, SliceProject=1):
     Image = Mk.MakeImages(Files)
     Image.Plot()
 
-    if OperatorSet is not None:
+    if OperatorSet is None:
+
+        Image.Save()
+
+    else:
 
         for item in OperatorSet:
 
@@ -60,6 +67,3 @@ def Iterator(Files, OperatorSet=None, SliceProject=1):
                 pass
 
             Image.Save()
-
-    if OperatorSet is None:
-        Image.Save()

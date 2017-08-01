@@ -1,7 +1,7 @@
 from visit import *
 
 
-def OperatorClip(File, OperSet, myList, Centroids):
+def OperatorClip(File, OperSet, OperOptions, Centroids):
     """
     With no args - default octant, rotation and midpoint
     [{loc:(x,y,z),oct:(+/-1,+/-1,+/-1),rot:(xdeg,ydeg,zdeg)},...]
@@ -14,8 +14,8 @@ def OperatorClip(File, OperSet, myList, Centroids):
     AddOperator(OperSet.title(), 1)
     SetActivePlots((tuple(range(0, len(File)))))
 
-    if myList is not None:
-        myList = dict(myList)
+    if OperOptions is not None:
+        OperOptions = dict(OperOptions)
 
         Attribute = ClipAttributes()
 
@@ -25,10 +25,10 @@ def OperatorClip(File, OperSet, myList, Centroids):
         Attribute.plane2Status = 1  # xz-plane
         Attribute.plane3Status = 1  # xy-plane
 
-        if "loc" in myList:
-            xpos = myList["loc"][0]
-            ypos = myList["loc"][1]
-            zpos = myList["loc"][2]
+        if "loc" in OperOptions:
+            xpos = OperOptions["loc"][0]
+            ypos = OperOptions["loc"][1]
+            zpos = OperOptions["loc"][2]
 
             Attribute.plane1Origin = (xpos, 0, 0)
             Attribute.plane2Origin = (0, ypos, 0)
@@ -41,14 +41,14 @@ def OperatorClip(File, OperSet, myList, Centroids):
             Attribute.plane2Origin = (0, Centroids["Pseudocolor"][1], 0)
             Attribute.plane3Origin = (0, 0, Centroids["Pseudocolor"][2])
 
-        Attribute.plane1Normal = (myList["oct"][0], 0, 0)
-        Attribute.plane2Normal = (0, myList["oct"][1], 0)
-        Attribute.plane3Normal = (0, 0, myList["oct"][2])
+        Attribute.plane1Normal = (OperOptions["oct"][0], 0, 0)
+        Attribute.plane2Normal = (0, OperOptions["oct"][1], 0)
+        Attribute.plane3Normal = (0, 0, OperOptions["oct"][2])
 
-        if "rot" in myList:
-            xdeg = myList["rot"][0]
-            ydeg = myList["rot"][1]
-            zdeg = myList["rot"][2]
+        if "rot" in OperOptions:
+            xdeg = OperOptions["rot"][0]
+            ydeg = OperOptions["rot"][1]
+            zdeg = OperOptions["rot"][2]
 
             ResetView()
 
@@ -68,9 +68,9 @@ def OperatorClip(File, OperSet, myList, Centroids):
             v = GetView3D()
 
             v.viewNormal = (
-                            myList["oct"][0],
-                            myList["oct"][1],
-                            myList["oct"][2],
+                            OperOptions["oct"][0],
+                            OperOptions["oct"][1],
+                            OperOptions["oct"][2],
                             )
 
             SetView3D(v)

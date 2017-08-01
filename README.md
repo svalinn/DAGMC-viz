@@ -80,8 +80,8 @@ Bash scripts for removing a graveyard from an h5m file, extracting surfaces, ext
 
 To convert an h5m file to stl or a meshtal file to vtk, the following examples can be used:
 
-        python MakeImagesTerminal.py -da "['meshtal','scalars.vtk']"
-        python MakeImagesTerminal.py -da "['fng_zip.h5m','scalars.stl']"  
+        python MakeImagesTerminal.py -ds "['meshtal','test.vtk']"
+        python MakeImagesTerminal.py -dv "['fng_zip.h5m','test.stl']"  
 
 To remove a graveyard, the following example can be used:
 
@@ -102,6 +102,10 @@ To replace data to be loaded in a single session file, the following example can
 To replace data to be loaded in all session files under the original session file directory, the following example can be used:
 
         python MakeImagesTerminal.py -sm "['test.stl','rmgrave.stl']"
+
+Images from edited session files can be gathered by running the following:
+
+        python MakeImagesTerminal.py -gi 
 
 ----------------------------------------
 

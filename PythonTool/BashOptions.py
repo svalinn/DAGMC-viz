@@ -43,13 +43,13 @@ class BashOptions(object):
 
     def Curves(self):
         h5mFile = ast.literal_eval(self.Options)[0]
-        stlFile = ast.literal_eval(self.Options)[1]
+        vtkFile = ast.literal_eval(self.Options)[1]
 
         subprocess.call([
                          "bash",
                          "../BashTool/Curves.sh",
                          str(h5mFile),
-                         str(stlFile),
+                         str(vtkFile),
                          ])
 
     def SessionReplaceSingle(self):

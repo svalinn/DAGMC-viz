@@ -9,20 +9,32 @@ from OperatorTransform import OperatorTransform
 class OperatorSettings(object):
     """Add operator and its settings."""
 
-    def __init__(self, File, OperSet, myList, Centroids, tags, SliceProject=1):
+    def __init__(
+                 self,
+                 File,
+                 OperSet,
+                 OperOptions,
+                 Centroids,
+                 tags,
+                 PlottingSpatialExtents,
+                 SliceProject=1
+                 ):
+
         self.File = File
         self.tags = tags
-        self.myList = myList
         self.OperSet = OperSet
         self.Centroids = Centroids
+        self.OperOptions = OperOptions
         self.SliceProject = SliceProject
+        self.PlottingSpatialExtents = PlottingSpatialExtents
 
     def Slice(self):
         OperatorSlice(
                       self.File,
                       self.OperSet,
-                      self.myList,
+                      self.OperOptions,
                       self.Centroids,
+                      self.PlottingSpatialExtents,
                       self.SliceProject,
                       )
 
@@ -30,14 +42,14 @@ class OperatorSettings(object):
         OperatorClip(
                      self.File,
                      self.OperSet,
-                     self.myList,
+                     self.OperOptions,
                      self.Centroids,
                      )
 
     def Threshold(self):
         OperatorThreshold(
                           self.OperSet,
-                          self.myList,
+                          self.OperOptions,
                           self.tags,
                           )
 
@@ -45,6 +57,6 @@ class OperatorSettings(object):
         OperatorTransform(
                           self.File,
                           self.OperSet,
-                          self.myList,
+                          self.OperOptions,
                           self.Centroids,
                           )

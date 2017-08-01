@@ -5,7 +5,6 @@ import SaveSessions as Sa
 import WindowSettings as Wi
 import OperatorSettings as Op
 import PlotAndInformation as Qu
-import GrabImagesFromOtherSources as Gr
 
 
 class MakeImages(object):
@@ -32,15 +31,16 @@ class MakeImages(object):
         for item in self.File:
             eval("Apply."+str(item[1])+"()")
 
-    def Operator(self, OperSet, myList=None, SliceProject=1):
+    def Operator(self, OperSet, OperOptions=None, SliceProject=1):
         """Set the settings for operators."""
 
         Apply = Op.OperatorSettings(
                                     self.File,
                                     OperSet,
-                                    myList,
+                                    OperOptions,
                                     self.PlottingCentroids,
                                     self.PlottingSequence,
+                                    self.PlottingSpatialExtents,
                                     SliceProject,
                                     )
 
@@ -58,9 +58,6 @@ class MakeImages(object):
         print "Centroids are:\n"+str(self.PlottingCentroids)
         print "Bounds are:\n"+str(self.PlottingSpatialExtents)
         print "Plot object names:\n"+str(self.ObjectSequence)
-
-        if OtherSources is not False:
-            Gr.GrabImagesFromOtherSources(OtherSources)
 
     def get_list(self):
         """Return acquired data. """
