@@ -36,7 +36,7 @@ class BashOptions(object):
 
         subprocess.call([
                          "bash",
-                         "../BashTool/Surfaces.sh",
+                         "../BashTool/SurfacesNoGrave.sh",
                          str(h5mFile),
                          str(stlFile),
                          ])
@@ -47,7 +47,7 @@ class BashOptions(object):
 
         subprocess.call([
                          "bash",
-                         "../BashTool/Curves.sh",
+                         "../BashTool/CurvesNoGrave.sh",
                          str(h5mFile),
                          str(vtkFile),
                          ])

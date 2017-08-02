@@ -53,6 +53,9 @@ def PlotPseudocolor(File, ObjectSequence):
                     pass
 
                 # Change how colors scale based on defined data values.
+                # The item[4] in the following indicate whether
+                # an option at the end of an inserted pseudocolor plot
+                # will take effect.
                 try:
                     if (item[4])[0].title() == "Min":
                         Attribute.min = item[4][1]

@@ -16,8 +16,6 @@ helpdataconvert1 = (
 
     -ds "['fng_zip.h5m','test.stl']"
     """
-
-
     )
 
 helpdataconvert2 = (
