@@ -54,11 +54,12 @@ def Orbit(Files, OrbitOptions, OperatorSet=False):
     except Exception:
         pass
 
-    # Choose which orbits to do.
+    # Define which orbits to do.
     orbitSettings = {}
     orbitSettings['vertical'] = {'Line': 0}
     orbitSettings['horizontal'] = {'Line': 1}
 
+    # Choose which orbits to do.
     if OrbitOptions[0].lower() == 'both':
         OrbitOptions = ['vertical', 'horizontal']
 

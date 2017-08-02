@@ -9,7 +9,12 @@ import Orbit as Or
 
 
 class VisitOptions(object):
-    """Terminal execution settings."""
+    """
+    Terminal execution settings.
+
+    All of the following inserts data appropriately into scripts
+    based on inputs to the terminal.
+    """
 
     def __init__(self, Arguments=None, FilePlots=None, OperatorSet=None):
         self.Arguments = Arguments

@@ -21,30 +21,34 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
         Pa.PathCreator()  # Creates necessary folders.
 
         Count = 1
+
+        # Load the plots without operators.
         for item in Files:
-            Vi.SetActiveWindow(Count)
+            Vi.SetActiveWindow(Count)  # Select window to be worked in.
             Image = Mk.MakeImages([item])
             Image.Plot()
             Image.Save()
-            Vi.ToggleLockViewMode()
-            Vi.AddWindow()
+            Vi.ToggleLockViewMode()  # Lock the view perspective.
+            Vi.AddWindow()  # Add another window for next iteration.
             Count += 1
 
         try:
+            # Display plots with operators if defined.
             for item in OperatorSet:
-                Vi.SetActiveWindow(Count)
+                Vi.SetActiveWindow(Count)  # Select window to be worked in.
                 It.Iterator(Files, [item], SliceProject=0)
-                Vi.DrawPlots()
+                Vi.DrawPlots()  # Draw plots with operator.
                 Wi.WindowSettings()
-                Vi.ToggleLockViewMode()
-                Vi.AddWindow()
+                Vi.ToggleLockViewMode()  # Lock the view perspective.
+                Vi.AddWindow()  # Add another window for next iteration.
                 Count += 1
 
         except Exception:
             pass
 
+        # Last window is always empty.
         Vi.SetActiveWindow(Count)
-        Vi.DeleteWindow()  # Delete extra window.
+        Vi.DeleteWindow()  # Delete last window.
 
         # Compensate for odd number of windows.
         if (Count-1) < 2:
@@ -64,6 +68,7 @@ def MultipleWindows(Files, OperatorSet=None, Windows=False, SliceProject=1):
         else:
             print "Too many windows for ViSit to Support."
 
+        # Alternate saving scheme for multiple windows is used.
         i = 0
         while os.path.exists(
                              "../Sessions/XML_Original/sampleMulti%s.session"

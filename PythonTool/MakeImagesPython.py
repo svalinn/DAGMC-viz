@@ -49,10 +49,10 @@ class MakeImages(object):
     def Save(self, Shading=False, OtherSources=False):
         """Saves window image and XML session."""
 
-        Vi.DrawPlots()
-        Wi.WindowSettings(Shading)
-        Sa.SaveSessions()
-        Vi.SaveWindow()
+        Vi.DrawPlots()  # Draw plots after plots and/or operators.
+        Wi.WindowSettings(Shading)  # Set settings for saved image.
+        Sa.SaveSessions()  # Save incrementally a session.
+        Vi.SaveWindow()  # Save incrementally the wanted image.
 
         print "Plot order is:\n"+str(self.PlottingSequence)
         print "Centroids are:\n"+str(self.PlottingCentroids)

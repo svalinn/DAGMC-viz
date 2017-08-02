@@ -2,7 +2,7 @@ import visit as Vi
 
 # The next line can be commented to import and use in the VisIt GUI.
 try:
-    Vi.Launch()  # Here to allow import of other modules.
+    Vi.LaunchNowin()  # Here to allow import of other modules.
 except Exception:
     pass
 
@@ -26,7 +26,7 @@ def Iterator(Files, OperatorSet=None, SliceProject=1):
 
         for item in OperatorSet:
 
-            Vi.RemoveAllOperators(all)
+            Vi.RemoveAllOperators(all)  # Removes previous slice in loop.
 
             # Apply single dictionary operator.
             try:
@@ -67,4 +67,4 @@ def Iterator(Files, OperatorSet=None, SliceProject=1):
             except Exception:
                 pass
 
-            Image.Save()
+            Image.Save()  # Saves for every operator set defined.

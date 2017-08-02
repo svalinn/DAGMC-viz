@@ -176,7 +176,7 @@ helpgrabimagesfromsessions = (
 
     An example input is as follows:
 
-    -gi 
+    -gi
     """
     )
 

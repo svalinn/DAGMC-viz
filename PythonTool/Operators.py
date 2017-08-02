@@ -16,8 +16,13 @@ def OperatorSlice(
     A warning is raised for exceeding pseudocolor plot bounds.
     """
 
+    # Resets the view in case other previous view modification via Iterator.py.
     ResetView()
+
+    # Apply the defined operator.
     AddOperator(OperSet.title(), 1)
+
+    # Select all plots for application of operator.
     SetActivePlots((tuple(range(0, len(File)))))
 
     try:
@@ -35,13 +40,15 @@ def OperatorSlice(
     if OperOptions is not None:
         OperOptions = list(OperOptions)
 
-        Attribute = SliceAttributes()
+        Attribute = SliceAttributes()  # Enables changing operator attributes.
 
+        # Choose whether or not to display in 2D.
         Attribute.project2d = SinglePlane
 
         try:
             if OperOptions[1]:
 
+                # Enables choosing point along axis.
                 Attribute.originType = Attribute.Point
 
                 if OperOptions[0].lower() == "x":
@@ -53,6 +60,7 @@ def OperatorSlice(
                     except Exception:
                         pass
 
+                    # Define slice plane.
                     Attribute.originPoint = (OperOptions[1], 0, 0)
 
                 if OperOptions[0].lower() == "y":
@@ -64,6 +72,7 @@ def OperatorSlice(
                     except Exception:
                         pass
 
+                    # Define slice plane.
                     Attribute.originPoint = (0, OperOptions[1], 0)
 
                 if OperOptions[0].lower() == "z":
@@ -75,27 +84,32 @@ def OperatorSlice(
                     except Exception:
                         pass
 
+                    # Define slice plane.
                     Attribute.originPoint = (0, 0, OperOptions[1])
 
         except Exception:
                 Attribute.originType = Attribute.Point
 
                 if OperOptions[0].lower() == "x":
+                    # Define slice plane.
                     Attribute.originPoint = (Centroids["Pseudocolor"][0], 0, 0)
 
                 if OperOptions[0].lower() == "y":
+                    # Define slice plane.
                     Attribute.originPoint = (0, Centroids["Pseudocolor"][1], 0)
 
                 if OperOptions[0].lower() == "z":
+                    # Define slice plane.
                     Attribute.originPoint = (0, 0, Centroids["Pseudocolor"][2])
 
+        # Defines which axis a slice plane is perpendicular to.
         Attribute.axisType = eval(
                                   "Attribute." +
                                   str(OperOptions[0]).upper() +
                                   "Axis"
                                   )
 
-        SetOperatorOptions(Attribute)
+        SetOperatorOptions(Attribute)  # Apply changed attributes.
 
 
 def OperatorClip(File, OperSet, OperOptions, Centroids):
@@ -107,16 +121,21 @@ def OperatorClip(File, OperSet, OperOptions, Centroids):
     Clip must be applied last for the view effect to work.
     """
 
+    # Resets the view in case other previous view modification via Iterator.py.
     ResetView()
+
+    # Apply the defined operator.
     AddOperator(OperSet.title(), 1)
+
+    # Select all plots for application of operator.
     SetActivePlots((tuple(range(0, len(File)))))
 
     if OperOptions is not None:
         OperOptions = dict(OperOptions)
 
-        Attribute = ClipAttributes()
+        Attribute = ClipAttributes()  # Enables changing operator attributes.
 
-        Attribute.quality = Attribute.Accurate
+        Attribute.quality = Attribute.Accurate  # Better clip visualization.
 
         Attribute.plane1Status = 1  # yz-plane
         Attribute.plane2Status = 1  # xz-plane
@@ -127,6 +146,7 @@ def OperatorClip(File, OperSet, OperOptions, Centroids):
             ypos = OperOptions["loc"][1]
             zpos = OperOptions["loc"][2]
 
+            # Define the origin of a clip.
             Attribute.plane1Origin = (xpos, 0, 0)
             Attribute.plane2Origin = (0, ypos, 0)
             Attribute.plane3Origin = (0, 0, zpos)
@@ -134,6 +154,7 @@ def OperatorClip(File, OperSet, OperOptions, Centroids):
         else:
             Centroids = dict(Centroids)
 
+            # Define the origin of a clip based on pseudocolor plot.
             Attribute.plane1Origin = (Centroids["Pseudocolor"][0], 0, 0)
             Attribute.plane2Origin = (0, Centroids["Pseudocolor"][1], 0)
             Attribute.plane3Origin = (0, 0, Centroids["Pseudocolor"][2])
@@ -142,27 +163,20 @@ def OperatorClip(File, OperSet, OperOptions, Centroids):
         Attribute.plane2Normal = (0, OperOptions["oct"][1], 0)
         Attribute.plane3Normal = (0, 0, OperOptions["oct"][2])
 
+        v = GetView3D()  # Get current state of 3D view.
+
         if "rot" in OperOptions:
+
+            # Define rotation around each axis.
             xdeg = OperOptions["rot"][0]
             ydeg = OperOptions["rot"][1]
             zdeg = OperOptions["rot"][2]
-
-            ResetView()
-
-            # Set view
-            v = GetView3D()
 
             v.RotateAxis(0, float(xdeg))  # rotate around x-axis
             v.RotateAxis(1, float(ydeg))  # rotate around y-axis
             v.RotateAxis(2, float(zdeg))  # rotate around z-axis
 
-            SetView3D(v)
-
         else:
-            ResetView()
-
-            # Set view
-            v = GetView3D()
 
             v.viewNormal = (
                             OperOptions["oct"][0],
@@ -170,9 +184,9 @@ def OperatorClip(File, OperSet, OperOptions, Centroids):
                             OperOptions["oct"][2],
                             )
 
-            SetView3D(v)
+        SetView3D(v)  # Set the changed view attributes.
 
-        SetOperatorOptions(Attribute)
+        SetOperatorOptions(Attribute)  # Apply changed attributes.
 
 
 def OperatorThreshold(OperSet, OperOptions, tags):
@@ -180,24 +194,30 @@ def OperatorThreshold(OperSet, OperOptions, tags):
     expr = plottype > val | plottype < val | plottype = (min,max)
     """
 
+    # Resets the view in case other previous view modification via Iterator.py.
     ResetView()
+
+    # Set active the plot that threshold is going to affect.
     SetActivePlots(tags[OperOptions[0].title()])
+
+    # Apply the defined operator.
     AddOperator(OperSet.title(), 0)
 
     if OperOptions is not None:
         OperOptions = list(OperOptions)
         Bounds = eval(OperOptions[2])
 
+        # Enables changing operator attributes.
         Attribute = ThresholdAttributes()
 
         if OperOptions[1] == "=":
-            Attribute.lowerBounds = Bounds[0]
-            Attribute.upperBounds = Bounds[1]
+            Attribute.lowerBounds = Bounds[0]  # Define lower bound.
+            Attribute.upperBounds = Bounds[1]  # Define upper bound.
 
         if OperOptions[1] == ">":
-            Attribute.lowerBounds = Bounds
+            Attribute.lowerBounds = Bounds  # Define lower bound.
 
         if OperOptions[1] == "<":
-            Attribute.upperBounds = Bounds
+            Attribute.upperBounds = Bounds  # Define upper bound.
 
-        SetOperatorOptions(Attribute)
+        SetOperatorOptions(Attribute)  # Apply changed attributes.

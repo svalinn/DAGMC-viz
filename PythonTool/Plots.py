@@ -4,17 +4,18 @@ from visit import *
 def PlotMesh(File, ObjectSequence):
     # Mesh plot attributes.
 
-    Attribute = MeshAttributes()
+    Attribute = MeshAttributes()  # Enables changing plot attributes.
 
     if File is not None:
         File = list(File)
 
-        Attribute.showInternal = 1
+        Attribute.showInternal = 1  # Show internal geometry of a mesh.
 
         for item in File:
             if item[1].title() == "Mesh":
                 # Check for optional inputs in Dictionary input.
                 try:
+                    # Change the options for line style.
                     Attribute.lineStyle = eval(
                                                "Attribute." +
                                                str(item[3]).upper()
@@ -22,18 +23,18 @@ def PlotMesh(File, ObjectSequence):
                 except Exception:
                     pass
 
-    SetPlotOptions(Attribute)
+    SetPlotOptions(Attribute)  # Apply changed attributes.
 
 
 def PlotPseudocolor(File, ObjectSequence):
     # Pseudocolor plot attributes.
 
-    # Change orientation of legend
+    # Change orientation of legend and font.
     LegendAttributes = GetAnnotationObject(ObjectSequence["Pseudocolor"])
     LegendAttributes.orientation = "VerticalLeft"
     LegendAttributes.fontHeight = 0.03
 
-    Attribute = PseudocolorAttributes()
+    Attribute = PseudocolorAttributes()  # Enables changing plot attributes.
 
     if File is not None:
         File = list(File)
@@ -41,8 +42,9 @@ def PlotPseudocolor(File, ObjectSequence):
         for item in File:
             if item[1].title() == "Pseudocolor":
 
-                # Check for optional inputs in Dictionary input.
+                # Check for optional inputs.
                 try:
+                    # Can choose linear or logarithmic scaling for the plot.
                     Attribute.scaling = eval(
                                              "Attribute." +
                                              str(item[3]).title()
@@ -50,8 +52,8 @@ def PlotPseudocolor(File, ObjectSequence):
                 except Exception:
                     pass
 
+                # Change how colors scale based on defined data values.
                 try:
-
                     if (item[4])[0].title() == "Min":
                         Attribute.min = item[4][1]
                         Attribute.minFlag = 1
@@ -72,20 +74,18 @@ def PlotPseudocolor(File, ObjectSequence):
                 except Exception:
                     pass
 
-    SetPlotOptions(Attribute)
+    SetPlotOptions(Attribute)  # Apply changed attributes.
 
 
 def PlotContour(File, ObjectSequence):
     # Contour plot attributes.
 
-    # Change orientation of legend
+    # Change orientation of legend and font.
     LegendAttributes = GetAnnotationObject(ObjectSequence["Contour"])
     LegendAttributes.orientation = "VerticalLeft"
     LegendAttributes.fontHeight = 0.03
 
-    Attribute = ContourAttributes()
-
-    Attribute.legendFlag = 1
+    Attribute = ContourAttributes()  # Enables changing plot attributes.
 
     if File is not None:
         File = list(File)
@@ -93,8 +93,9 @@ def PlotContour(File, ObjectSequence):
         for item in File:
             if item[1].title() == "Contour":
 
-                # Check for optional inputs in Dictionary input.
+                # Check for optional inputs.
                 try:
+                    # Change the options for line style.
                     Attribute.lineStyle = eval(
                                                "Attribute." +
                                                str(item[3]).upper()
@@ -102,4 +103,4 @@ def PlotContour(File, ObjectSequence):
                 except Exception:
                     pass
 
-    SetPlotOptions(Attribute)
+    SetPlotOptions(Attribute)  # Apply changed attributes.

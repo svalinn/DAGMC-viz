@@ -41,7 +41,6 @@ def MultiSlice(File, myList):
     zIncrement = zRange/float(Number)
 
     for i in range(len(myList[0])):
-        Vi.RemoveAllOperators()
         Axis = myList[0][i]
 
         # For adding slices of and between maximum and minimum dimensions.
@@ -77,6 +76,6 @@ def MultiSlice(File, myList):
         for item in SliceList:
             Operator = item[0]
             List = item[1]
-            Vi.RemoveAllOperators(all)
+            Vi.RemoveAllOperators(all)  # Removes previous slice in loop.
             Image.Operator(Operator, List)
             Image.Save()
