@@ -3,7 +3,7 @@ import os
 import visit as Vi
 
 try:
-    Vi.LaunchNowin()  # Here to allow import of other modules.
+    Vi.Launch()  # Here to allow import of other modules.
 except Exception:
     pass
 

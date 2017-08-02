@@ -1,8 +1,10 @@
 import visit as Vi
 
 # The next line can be commented to import and use in the VisIt GUI.
+# Warning: if Vi.LaunchNowin is used instead, then images will not
+# retain original window settings.
 try:
-    Vi.LaunchNowin()  # Here to allow import of other modules.
+    Vi.Launch()  # Here to allow import of other modules.
 except Exception:
     pass
 

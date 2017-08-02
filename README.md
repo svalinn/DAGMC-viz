@@ -64,16 +64,6 @@ mbconvert and mbgsets are used for bash options.
         python MakeImagesTerminal.py -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Log',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG','DASH'],]" -op "[{'Clip': {'oct': (1, 1, 1)}},{'Clip': {'oct': (-1, 1, 1)}}]" -or "['both',20]"
 
 
-
-
-
-----------------------------------------
-
-If the same plotting settings are to be used on another data set containing similar spatial dimensions, XmlEdit.py can be used to replace loaded data in generated session files. This allows for application of exact operators, plots, and settings to another data set. The following is an example of use:
-
-		python XmlEdit.py sample0.session dummy.stl dummy.vtk rmgrave.stl meshtal.vtk
-
-
 ----------------------------------------
 
 Bash scripts for removing a graveyard from an h5m file, extracting surfaces, extracting, curves, and substituting loaded datasets are under /BashTool.

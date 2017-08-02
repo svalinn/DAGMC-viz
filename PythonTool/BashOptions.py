@@ -6,72 +6,71 @@ class BashOptions(object):
     """Bash execution options."""
 
     def __init__(self, Options):
-        self.Options = Options
+        self.Options0 = ast.literal_eval(Options)[0]
+        self.Options1 = ast.literal_eval(Options)[1]
+
+        try:
+            self.Options2 = ast.literal_eval(Options)[2]
+        except Exception:
+            pass
 
     def DataConvert(self):
-        FileIn = ast.literal_eval(self.Options)[0]
-        FileOut = ast.literal_eval(self.Options)[1]
+        """Use mbconvert for data conversion."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/DataConvert.sh",
-                         str(FileIn),
-                         str(FileOut),
+                         str(self.Options0),
+                         str(self.Options1),
                          ])
 
     def GraveRemove(self):
-        h5mFile = ast.literal_eval(self.Options)[0]
-        stlFile = ast.literal_eval(self.Options)[1]
+        """Export an stl file without a graveyard."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/GraveRemove.sh",
-                         str(h5mFile),
-                         str(stlFile),
+                         str(self.Options0),
+                         str(self.Options1),
                          ])
 
-    def Surfaces(self):
-        h5mFile = ast.literal_eval(self.Options)[0]
-        stlFile = ast.literal_eval(self.Options)[1]
+    def SurfacesNoGrave(self):
+        """Export surfaces (stl) without a graveyard."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/SurfacesNoGrave.sh",
-                         str(h5mFile),
-                         str(stlFile),
+                         str(self.Options0),
+                         str(self.Options1),
                          ])
 
-    def Curves(self):
-        h5mFile = ast.literal_eval(self.Options)[0]
-        vtkFile = ast.literal_eval(self.Options)[1]
+    def CurvesNoGrave(self):
+        """Export curves (vtk) without a graveyard."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/CurvesNoGrave.sh",
-                         str(h5mFile),
-                         str(vtkFile),
+                         str(self.Options0),
+                         str(self.Options1),
                          ])
 
     def SessionReplaceSingle(self):
-        SessionFile = ast.literal_eval(self.Options)[0]
-        stlOld = ast.literal_eval(self.Options)[1]
-        stlNew = ast.literal_eval(self.Options)[2]
+        """Replace one loaded data source within a single session."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/SessionReplaceSingle.sh",
-                         str(SessionFile),
-                         str(stlOld),
-                         str(stlNew),
+                         str(self.Options0),
+                         str(self.Options1),
+                         str(self.Options2),
                          ])
 
     def SessionReplaceMultiple(self):
-        stlOld = ast.literal_eval(self.Options)[0]
-        stlNew = ast.literal_eval(self.Options)[1]
+        """Replace one loaded data source within all sessions."""
 
         subprocess.call([
                          "bash",
                          "../BashTool/SessionReplaceMultiple.sh",
-                         str(stlOld),
-                         str(stlNew),
+                         str(self.Options0),
+                         str(self.Options1),
                          ])

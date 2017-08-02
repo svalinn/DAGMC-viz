@@ -195,11 +195,11 @@ parser.add_argument("-gr", "--graveremove",
                     type=str,
                     help=helpgraveremove,
                     )
-parser.add_argument("-su", "--surfaces",
+parser.add_argument("-su", "--surfacesnograve",
                     type=str,
                     help=helpsurfaces,
                     )
-parser.add_argument("-cu", "--curves",
+parser.add_argument("-cu", "--curvesnograve",
                     type=str,
                     help=helpcurves,
                     )
@@ -273,15 +273,15 @@ if args.graveremove:
     FileBash = BashOptions(BashCommand)
     FileBash.GraveRemove()
 
-if args.surfaces:
-    BashCommand = args.surfaces
+if args.surfacesnograve:
+    BashCommand = args.surfacesnograve
     FileBash = BashOptions(BashCommand)
-    FileBash.Surfaces()
+    FileBash.SurfacesNoGrave()
 
-if args.curves:
-    BashCommand = args.curves
+if args.curvesnograve:
+    BashCommand = args.curvesnograve
     FileBash = BashOptions(BashCommand)
-    FileBash.Curves()
+    FileBash.CurvesNoGrave()
 
 if args.images:
     Options.Images()
