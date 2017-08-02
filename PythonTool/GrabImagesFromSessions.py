@@ -10,7 +10,7 @@ except Exception:
 
 def GrabImagesFromSessions():
     """
-    A function that loads a session file
+    A function that loads session files
     and grabs images from it.
     """
 

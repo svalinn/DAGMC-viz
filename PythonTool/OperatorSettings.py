@@ -1,9 +1,6 @@
 from visit import *
 
-from OperatorClip import OperatorClip
-from OperatorSlice import OperatorSlice
-from OperatorThreshold import OperatorThreshold
-from OperatorTransform import OperatorTransform
+from Operators import *
 
 
 class OperatorSettings(object):

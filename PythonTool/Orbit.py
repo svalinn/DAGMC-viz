@@ -5,11 +5,11 @@ import PathCreator as Pa
 import MakeImagesPython as Mk
 
 
-def Orbit(Files, myList, OperatorSet=False):
+def Orbit(Files, OrbitOptions, OperatorSet=False):
     """
     Take multiple views around vertically, horizontally, or both.
     Views are evenly spaced.
-    myList = (<axis>, <number of views>).
+    OrbitOptions = (<axis>, <number of views>).
 
     The higher the number of views the smoother the rotation.
 
@@ -21,10 +21,10 @@ def Orbit(Files, myList, OperatorSet=False):
 
     Pa.PathCreator()  # Creates necessary folders.
 
-    myList = tuple(myList)
+    OrbitOptions = tuple(OrbitOptions)
 
-    Line = str(myList[0])
-    Number = int(myList[1])
+    Line = str(OrbitOptions[0])
+    Number = int(OrbitOptions[1])
 
     Increment = 360.0/float(Number)  # Degrees
 
@@ -55,53 +55,29 @@ def Orbit(Files, myList, OperatorSet=False):
         pass
 
     # Choose which orbits to do.
-    if myList[0].lower() == "both":
-        newList = ["vertical", "horizontal"]
-    elif myList[0].lower() == "vertical":
-        newList = ["vertical", "NaN"]
-    elif myList[0].lower() == "horizontal":
-        newList = ["NaN", "horizontal"]
+    orbitSettings = {}
+    orbitSettings['vertical'] = {'Line': 0}
+    orbitSettings['horizontal'] = {'Line': 1}
 
-    # Vertical orbit.
-    Vi.ResetView()
-    try:
-        if newList[0].lower() == "vertical":
-            LineV = 0
-            ViewNV = (0, 0, 1)
-            ViewUV = (0, 1, 0)
+    if OrbitOptions[0].lower() == 'both':
+        OrbitOptions = ['vertical', 'horizontal']
+
+    for orbit in OrbitOptions:
+        Vi.ResetView()
+        try:
+            Line = orbitSettings[orbit]["Line"]
 
             v = Vi.GetView3D()
-            v.viewNormal = ViewNV
-            v.viewUp = ViewUV
+            v.viewNormal = (0, 0, 1)
+            v.viewUp = (0, 1, 0)
 
             Degrees = 0
             while 360.0 > Degrees:
                 # Turning shading False yields black images.
                 Image.Save(Shading=True)
-                v.RotateAxis(LineV, Increment)
+                v.RotateAxis(Line, Increment)
                 Vi.SetView3D(v)
                 Degrees += Increment
-    except Exception:
-        pass
 
-    # Horizontal orbit.
-    Vi.ResetView()
-    try:
-        if newList[1].lower() == "horizontal":
-            LineH = 1
-            ViewNH = (0, 0, 1)
-            ViewUH = (0, 1, 0)
-
-            v = Vi.GetView3D()
-            v.viewNormal = ViewNH
-            v.viewUp = ViewUH
-
-            Degrees = 0
-            while 360.0 > Degrees:
-                # Turning shading False yields black images.
-                Image.Save(Shading=True)
-                v.RotateAxis(LineH, Increment)
-                Vi.SetView3D(v)
-                Degrees += Increment
-    except Exception:
-        pass
+        except Exception:
+            pass

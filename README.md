@@ -80,8 +80,8 @@ Bash scripts for removing a graveyard from an h5m file, extracting surfaces, ext
 
 To convert an h5m file to stl or a meshtal file to vtk, the following examples can be used:
 
-        python MakeImagesTerminal.py -ds "['meshtal','test.vtk']"
-        python MakeImagesTerminal.py -dv "['fng_zip.h5m','test.stl']"  
+        python MakeImagesTerminal.py -d1 "['meshtal','test.vtk']"
+        python MakeImagesTerminal.py -d2 "['fng_zip.h5m','test.stl']"  
 
 To remove a graveyard, the following example can be used:
 
@@ -93,7 +93,7 @@ To extract surfaces, the following example can be used:
 
 To extract curves, the following example can be used:
 
-        python MakeImagesTerminal.py -cu "['fng_zip.h5m','test.stl']"
+        python MakeImagesTerminal.py -cu "['fng_zip.h5m','test.vtk']"
 
 To replace data to be loaded in a single session file, the following example can be used:
 
@@ -111,4 +111,4 @@ Images from edited session files can be gathered by running the following:
 
 Bash options can be used in conjunction with python scripts to remove a graveyard, load data, replace the loaded data, and get images from replaced loaded data file. An example is shown below.
 
-        python MakeImagesTerminal.py -ds "['fng_zip.h5m','test.stl']" -dv "['meshtal','test.vtk']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Log',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG','DASH'], ['test.stl','Mesh','STL_mesh']]" -op "[{'Clip': {'oct': (1, 1, 1), 'rot': (30, 30, 30), 'loc':(0,0,0)}},['Slice', ['y', 10]], [{'Clip': {'oct': (1, 1, 1)}}, ['Slice', ['x', 10]]],['Threshold', ['Pseudocolor', '=', '(5.14*10**-05,0.00011)']]]" -im -gr "['fng_zip.h5m','rmgrave.stl']" -sm "['test.stl','rmgrave.stl']" -gi
+        python MakeImagesTerminal.py -d1 "['fng_zip.h5m','test.stl']" -d2 "['meshtal','test.vtk']" -pl "[['test.vtk','Pseudocolor','TALLY_TAG','Log',('Min',0.00001),('Max',0.0001)], ['test.vtk','Contour','ERROR_TAG','DASH'], ['test.stl','Mesh','STL_mesh']]" -op "[{'Clip': {'oct': (1, 1, 1), 'rot': (30, 30, 30), 'loc':(0,0,0)}},['Slice', ['y', 10]], [{'Clip': {'oct': (1, 1, 1)}}, ['Slice', ['x', 10]]],['Threshold', ['Pseudocolor', '=', '(5.14*10**-05,0.00011)']]]" -im -gr "['fng_zip.h5m','rmgrave.stl']" -sm "['test.stl','rmgrave.stl']" -gi

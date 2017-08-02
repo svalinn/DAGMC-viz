@@ -18,7 +18,8 @@ def Iterator(Files, OperatorSet=None, SliceProject=1):
     Image.Plot()
 
     if OperatorSet is None:
-
+        # If no operators are defined, the image of plots
+        # without operators is saved.
         Image.Save()
 
     else:
