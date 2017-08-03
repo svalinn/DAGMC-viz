@@ -1,27 +1,22 @@
 from visit import *
 
+from GeneratePlotAttributes import *
 
-def PlotMesh(File, ObjectSequence):
+
+def PlotMesh(File):
     # Mesh plot attributes.
 
     Attribute = MeshAttributes()  # Enables changing plot attributes.
 
-    if File is not None:
-        File = list(File)
+    Attribute.showInternal = 1  # Show internal geometry of a mesh.
 
-        Attribute.showInternal = 1  # Show internal geometry of a mesh.
+    # Check for optional inputs in Dictionary input.
+    try:
+        # Change the options for line style.
+        exec(GeneratePlotAttributes(File)["Mesh"])
 
-        for item in File:
-            if item[1].title() == "Mesh":
-                # Check for optional inputs in Dictionary input.
-                try:
-                    # Change the options for line style.
-                    Attribute.lineStyle = eval(
-                                               "Attribute." +
-                                               str(item[3]).upper()
-                                               )
-                except Exception:
-                    pass
+    except Exception:
+        pass
 
     SetPlotOptions(Attribute)  # Apply changed attributes.
 
@@ -90,20 +85,12 @@ def PlotContour(File, ObjectSequence):
 
     Attribute = ContourAttributes()  # Enables changing plot attributes.
 
-    if File is not None:
-        File = list(File)
+    # Check for optional inputs in Dictionary input.
+    try:
+        # Change the options for line style.
+        exec(GeneratePlotAttributes(File)["Contour"])
 
-        for item in File:
-            if item[1].title() == "Contour":
-
-                # Check for optional inputs.
-                try:
-                    # Change the options for line style.
-                    Attribute.lineStyle = eval(
-                                               "Attribute." +
-                                               str(item[3]).upper()
-                                               )
-                except Exception:
-                    pass
+    except Exception:
+        pass
 
     SetPlotOptions(Attribute)  # Apply changed attributes.

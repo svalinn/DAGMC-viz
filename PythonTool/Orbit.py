@@ -56,12 +56,12 @@ def Orbit(Files, OrbitOptions, OperatorSet=False):
 
     # Define which orbits to do.
     orbitSettings = {}
-    orbitSettings['vertical'] = {'Line': 0}
-    orbitSettings['horizontal'] = {'Line': 1}
+    orbitSettings["vertical"] = {"Line": 0}
+    orbitSettings["horizontal"] = {"Line": 1}
 
     # Choose which orbits to do.
-    if OrbitOptions[0].lower() == 'both':
-        OrbitOptions = ['vertical', 'horizontal']
+    if OrbitOptions[0].lower() == "both":
+        OrbitOptions = ["vertical", "horizontal"]
 
     for orbit in OrbitOptions:
         Vi.ResetView()

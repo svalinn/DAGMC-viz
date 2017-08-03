@@ -17,4 +17,4 @@ class PlotSettings(object):
         PlotContour(self.File, self.ObjectSequence)
 
     def Mesh(self):
-        PlotMesh(self.File, self.ObjectSequence)
+        PlotMesh(self.File)
