@@ -12,7 +12,8 @@ tag_category=mb.tag_get_handle("CATEGORY")
 root=mb.get_root_set()
 
 #Retrieve all EntitySets with a Category tag with a value of "Group".
-group_es=list(mb.get_entities_by_type_and_tag(root,types.MBENTITYSET,tag_category, np.array(["Group"])))
+group_es=list(mb.get_entities_by_type_and_tag(root,types.MBENTITYSET,
+                                              tag_category, np.array(["Group"])))
 
 #Retrieve all EntitySets with a Name tag.
 group_names=mb.tag_get_data(tag_name,group_es,flat=True)
