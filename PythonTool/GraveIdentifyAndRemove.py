@@ -16,11 +16,12 @@ group_categories = list(mb.get_entities_by_type_and_tag(root, types.MBENTITYSET,
                                                         tag_category, np.array(["Group"])))
 
 #Retrieve all EntitySets with a Name tag.
-group_names = mb.tag_get_data(tag_name, group_categories, flat = True)
+group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
 
 #Find the EntitySet with the "graveyard" Name tag value.
 graveyard_sets = [group_set for group_set, name in zip(group_categories, group_names) 
                   if name.lower() == b'graveyard']
+#Print the EntityHandle of the EntitySet(s) with the "graveyard" Name tag value.
 print(graveyard_sets)
 
 if len(graveyard_sets) > 1:
@@ -28,4 +29,4 @@ if len(graveyard_sets) > 1:
 
 #Remove the graveyard EntitySet from the data.
 groups_to_write = [group_set for group_set in group_categories if group_set not in graveyard_sets]
-mb.write_file("no_graveyard.h5m", output_sets = groups_to_write)
+mb.write_file("no_graveyard.h5m", output_sets=groups_to_write)
