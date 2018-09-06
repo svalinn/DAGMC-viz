@@ -1,5 +1,6 @@
 import numpy as np
 from pymoab import core, types, tag
+from pymoab.types import MBENTITYSET
 from sys import argv
 
 mb = core.Core()
@@ -11,9 +12,12 @@ tag_name = mb.tag_get_handle("NAME")
 tag_category = mb.tag_get_handle("CATEGORY")
 root = mb.get_root_set()
 
+#An array of Tag values to be matched for entities returned by the following call.
+group_tag_values = np.array(["Group"])
+
 #Retrieve all EntitySets with a Category tag with a value of "Group".
-group_categories = list(mb.get_entities_by_type_and_tag(root, types.MBENTITYSET,
-                                                        tag_category, np.array(["Group"])))
+group_categories = list(mb.get_entities_by_type_and_tag(root, MBENTITYSET, 
+                                                        tag_category, group_tag_values))
 
 #Retrieve all EntitySets with a Name tag.
 group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
@@ -21,6 +25,7 @@ group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
 #Find the EntitySet with the "graveyard" Name tag value.
 graveyard_sets = [group_set for group_set, name in zip(group_categories, group_names) 
                   if name.lower() == b'graveyard']
+
 #Print the EntityHandle of the EntitySet(s) with the "graveyard" Name tag value.
 print(graveyard_sets)
 
