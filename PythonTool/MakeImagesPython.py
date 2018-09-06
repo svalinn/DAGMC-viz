@@ -54,10 +54,10 @@ class MakeImages(object):
         Sa.SaveSessions()  # Save incrementally a session.
         Vi.SaveWindow()  # Save incrementally the wanted image.
 
-        print "Plot order is:\n"+str(self.PlottingSequence)
-        print "Centroids are:\n"+str(self.PlottingCentroids)
-        print "Bounds are:\n"+str(self.PlottingSpatialExtents)
-        print "Plot object names:\n"+str(self.ObjectSequence)
+        print("Plot order is:\n"+str(self.PlottingSequence))
+        print("Centroids are:\n"+str(self.PlottingCentroids))
+        print("Bounds are:\n"+str(self.PlottingSpatialExtents))
+        print("Plot object names:\n"+str(self.ObjectSequence))
 
     def get_list(self):
         """Return acquired data. """

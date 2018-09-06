@@ -313,4 +313,4 @@ if args.grabimagesfromsessions:
 
 toc = timeit.default_timer()  # End timer.
 ElapsedTime = toc - tic
-print "Elapsed time was "+str(ElapsedTime)+" seconds."
+print("Elapsed time was " + str(ElapsedTime) + " seconds.")

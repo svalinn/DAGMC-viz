@@ -18,4 +18,4 @@ do
 
 done
 
-printf "Session files where changed.\n"
+printf "Session files were changed.\n"
