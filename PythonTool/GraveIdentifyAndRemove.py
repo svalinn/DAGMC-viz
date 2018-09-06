@@ -5,6 +5,10 @@ from sys import argv
 
 mb = core.Core()
 
+if len(argv) == 1:
+    print("WARNING: A data file was not provided.")
+    exit()
+
 #Read the data file with the graveyard to be removed.
 mb.load_file(argv[1])
 
@@ -12,10 +16,10 @@ tag_name = mb.tag_get_handle("NAME")
 tag_category = mb.tag_get_handle("CATEGORY")
 root = mb.get_root_set()
 
-#An array of Tag values to be matched for entities returned by the following call.
+#An array of tag values to be matched for entities returned by the following call.
 group_tag_values = np.array(["Group"])
 
-#Retrieve all EntitySets with a Category tag with a value of "Group".
+#Retrieve all EntitySets with a Category tag with the value of "Group".
 group_categories = list(mb.get_entities_by_type_and_tag(root, MBENTITYSET, 
                                                         tag_category, group_tag_values))
 
