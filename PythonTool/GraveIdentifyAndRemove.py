@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 from pymoab import core, types, tag
 from pymoab.types import MBENTITYSET
@@ -5,9 +6,10 @@ from sys import argv
 
 mb = core.Core()
 
-if len(argv) == 1:
-    print("WARNING: A data file was not provided.")
-    exit()
+#Ensure the user has supplied a data file.
+parser = argparse.ArgumentParser()
+parser.add_argument("h5m_file", help='provide a path to the data file')
+parser.parse_args()
 
 #Read the data file with the graveyard to be removed.
 mb.load_file(argv[1])
