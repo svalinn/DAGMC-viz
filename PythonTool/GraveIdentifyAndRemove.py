@@ -2,12 +2,20 @@ import argparse
 import numpy as np
 from pymoab import core, types, tag
 from pymoab.types import MBENTITYSET
-from sys import argv
 
 mb = core.Core()
 
 parser = argparse.ArgumentParser(usage="Remove graveyard from a data file.")
-parser.add_argument("h5mfile", help='provide a path to the data file')
+
+parser.add_argument("h5mfile",
+                    type=str, 
+                    help='provide a path to the data file'
+                    )
+parser.add_argument("outputfile",
+                    type=str, 
+                    help='provide a name and extension for the output file'
+                    )
+
 args = parser.parse_args()
 
 #Read the data file with the graveyard to be removed.
@@ -40,4 +48,4 @@ if len(graveyard_sets) > 1:
 #Remove the graveyard EntitySet from the data.
 groups_to_write = [group_set for group_set in group_categories 
                    if group_set not in graveyard_sets]
-mb.write_file("no_graveyard.h5m", output_sets=groups_to_write)
+mb.write_file(args.outputfile, output_sets=groups_to_write)
