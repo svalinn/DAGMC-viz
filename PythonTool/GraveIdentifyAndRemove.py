@@ -6,13 +6,12 @@ from sys import argv
 
 mb = core.Core()
 
-#Ensure the user has supplied a data file.
-parser = argparse.ArgumentParser()
-parser.add_argument("h5m_file", help='provide a path to the data file')
-parser.parse_args()
+parser = argparse.ArgumentParser(usage="Remove graveyard from a data file.")
+parser.add_argument("h5mfile", help='provide a path to the data file')
+args = parser.parse_args()
 
 #Read the data file with the graveyard to be removed.
-mb.load_file(argv[1])
+mb.load_file(args.h5mfile)
 
 tag_name = mb.tag_get_handle("NAME")
 tag_category = mb.tag_get_handle("CATEGORY")
@@ -39,5 +38,6 @@ if len(graveyard_sets) > 1:
     print("WARNING: More than one graveyard set found.")
 
 #Remove the graveyard EntitySet from the data.
-groups_to_write = [group_set for group_set in group_categories if group_set not in graveyard_sets]
+groups_to_write = [group_set for group_set in group_categories 
+                   if group_set not in graveyard_sets]
 mb.write_file("no_graveyard.h5m", output_sets=groups_to_write)
