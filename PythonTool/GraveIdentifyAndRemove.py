@@ -42,8 +42,13 @@ graveyard_sets = [group_set for group_set, name in zip(group_categories, group_n
 #Print the EntityHandle of the EntitySet(s) with the "graveyard" Name tag value.
 print(graveyard_sets)
 
+#Warn the user if there was more than one EntitySet with the "graveyard" Name tag value.
 if len(graveyard_sets) > 1:
     print("WARNING: More than one graveyard set found.")
+
+#Warn the user if the file they provided did not contain a graveyard.
+if len(graveyard_sets) < 1:
+    print("WARNING: This file did not contain a graveyard.")
     exit()
 
 #Remove the graveyard EntitySet from the data.
