@@ -5,11 +5,11 @@ from pymoab.types import MBENTITYSET
 
 mb = core.Core()
 
-parser = argparse.ArgumentParser(description="Remove graveyard from a data file.")
+parser = argparse.ArgumentParser(description="Remove graveyard from an h5m data file.")
 
 parser.add_argument("h5mfile",
                     type=str, 
-                    help='provide a path to the data file'
+                    help='provide a path to the h5m data file'
                     )
 parser.add_argument("-of", "--outputfile",
                     type=str, 
@@ -44,13 +44,21 @@ print(graveyard_sets)
 
 if len(graveyard_sets) > 1:
     print("WARNING: More than one graveyard set found.")
+    exit()
 
 #Remove the graveyard EntitySet from the data.
 groups_to_write = [group_set for group_set in group_categories 
                    if group_set not in graveyard_sets]
 
-#Check if the user specified an output file name and then write the file.
+"""Check if the user specified an output file name.
+If so, write the file with that name. If not, append onto 
+the original input file name to indicate the graveyard has been removed.
+"""
+
 if args.outputfile is not None:
     mb.write_file(args.outputfile, output_sets=groups_to_write)
 else:
-    mb.write_file("no_graveyard.h5m", output_sets=groups_to_write)
+    input_array = args.h5mfile.split("/")
+    input_file = input_array[-1]
+    input_file_name = input_file[:-4]    
+    mb.write_file(input_file_name + "_no_grave.h5m", output_sets=groups_to_write)
