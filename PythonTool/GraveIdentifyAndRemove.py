@@ -40,7 +40,7 @@ def remove_graveyard(args):
 
     Input:
     ______
-       agrs: Input file location and possible output file name.
+       args: Input file location and possible output file name.
 
     Returns:
     ________
@@ -86,7 +86,8 @@ def remove_graveyard(args):
     groups_to_write = [group_set for group_set in group_categories
                        if group_set not in graveyard_sets]
 
-    """ Check if the user specified an output file name.
+    """ 
+    Check if the user specified an output file name.
     If so, write the file with that name. If not, append onto
     the original input file name to indicate the graveyard has been removed.
     """
