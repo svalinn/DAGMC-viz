@@ -37,7 +37,12 @@ def parse_arguments():
 
 def remove_graveyard(args):
     """
-    Remove the graveyard EntitySet from the data file.
+    Remove the graveyard volume EntitySet from the data file and write the
+    result out to disk with a default input name or specified output name.
+
+    If the user has specified an output file name and extension, use this to
+    write the file. If they haven't, append "_no_grave" onto the name of the
+    input file and add the .h5m extension.
 
     Input:
     ______
