@@ -7,7 +7,7 @@ from pymoab.types import MBENTITYSET
 def parse_arguments():
     """
     Parse the argument list and return
-    an input file location and possible output file name.
+    an input file location and optional output file name.
 
     Input:
     ______
@@ -15,8 +15,8 @@ def parse_arguments():
 
     Returns:
     ________
-       args: Namespace object, includes user supplied input file location
-           and optional output file name.
+       args: Namespace
+           User supplied input file location and optional output file name.
     """
 
     parser = argparse.ArgumentParser(description="Remove graveyard from an h5m data file.")
@@ -35,7 +35,7 @@ def parse_arguments():
     return args
 
 
-def remove_graveyard(args):
+def remove_graveyard(input_file, output_file = None):
     """
     Remove the graveyard volume EntitySet from the data file and write the
     result out to disk with a default input name or specified output name.
@@ -46,8 +46,10 @@ def remove_graveyard(args):
 
     Input:
     ______
-       args: Namespace object, includes user supplied input file location
-           and optional output file name.
+       input_file: str
+           User supplied data file location.
+       output_file: str
+           Optional user supplied output file name and extension.
 
     Returns:
     ________
@@ -57,7 +59,7 @@ def remove_graveyard(args):
     mb = core.Core()
 
     # Read the data file with the graveyard to be removed.
-    mb.load_file(args.h5mfile)
+    mb.load_file(input_file)
 
     tag_name = mb.tag_get_handle("NAME")
     tag_category = mb.tag_get_handle("CATEGORY")
@@ -99,10 +101,10 @@ def remove_graveyard(args):
     the original input file name to indicate the graveyard has been removed.
     """
 
-    if args.outputfile is not None:
-        mb.write_file(args.outputfile, output_sets=groups_to_write)
+    if output_file is not None:
+        mb.write_file(output_file, output_sets=groups_to_write)
     else:
-        input_array = args.h5mfile.split("/")
+        input_array = input_file.split("/")
         input_file = input_array[-1]
         base_file_name = input_file[:-4]
         mb.write_file(base_file_name + "_no_grave.h5m", output_sets=groups_to_write)
@@ -111,10 +113,10 @@ def remove_graveyard(args):
 def main():
 
     # Parse arguments.
-    io_files = parse_arguments()
+    args = parse_arguments()
 
     # Remove the graveyard from the data file.
-    remove_graveyard(io_files)
+    remove_graveyard(args.h5mfile, args.outputfile)
 
 if __name__ == "__main__":
     main()
