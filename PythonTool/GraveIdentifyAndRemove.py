@@ -15,7 +15,8 @@ def parse_arguments():
 
     Returns:
     ________
-       args: User supplied input file location and optional output file name.
+       args: Namespace object, includes user supplied input file location
+           and optional output file name.
     """
 
     parser = argparse.ArgumentParser(description="Remove graveyard from an h5m data file.")
@@ -40,7 +41,8 @@ def remove_graveyard(args):
 
     Input:
     ______
-       args: Input file location and possible output file name.
+       args: Namespace object, includes user supplied input file location
+           and optional output file name.
 
     Returns:
     ________
@@ -86,7 +88,7 @@ def remove_graveyard(args):
     groups_to_write = [group_set for group_set in group_categories
                        if group_set not in graveyard_sets]
 
-    """ 
+    """
     Check if the user specified an output file name.
     If so, write the file with that name. If not, append onto
     the original input file name to indicate the graveyard has been removed.
