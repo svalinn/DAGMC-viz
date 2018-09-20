@@ -75,9 +75,10 @@ def remove_graveyard(input_file, output_file = None):
     # Retrieve all EntitySets with a Name tag.
     group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
 
-    # Find the EntitySet with the "graveyard" Name tag value.
+    # Find the EntitySet whose Name tag value contains "graveyard".
+    substring = "graveyard"
     graveyard_sets = [group_set for group_set, name in zip(group_categories, group_names)
-                      if name.lower() == b'graveyard']
+                      if substring in str(name.lower())]
 
     # Warn the user if there was more than one EntitySet with the "graveyard" Name tag value.
     if len(graveyard_sets) > 1:
