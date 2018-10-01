@@ -35,6 +35,44 @@ def parse_arguments():
     return args
 
 
+def get_sets_by_category(input_file,category_name):
+
+    """
+    Identify the Curve, Surface, or Volume entity sets in the given geometry.
+
+    Input:
+    ______
+       input_file: str
+           User supplied data file location.
+       category_name: str
+           The category tag value of the entity sets to identify. The value of this
+           tag should be Curves, Surfaces, or Volumes.
+
+    Returns:
+    ________
+       entity_set_ids: list
+           The ID list of the entity sets specific to the chosen category tag value.
+    """
+
+    mb = core.Core()
+
+    # Read the data file with the entity sets to be identified.
+    mb.load_file(input_file)
+
+    tag_name = mb.tag_get_handle("NAME")
+    tag_category = mb.tag_get_handle("CATEGORY")
+    root = mb.get_root_set()
+
+    # An array of tag values to be matched for entities returned by the following call.
+    group_tag_values = np.array([category_name])
+
+    # Retrieve all EntitySets with a Category tag of the user input value.
+    group_categories = list(mb.get_entities_by_type_and_tag(root, MBENTITYSET,
+                                                            tag_category, group_tag_values))
+
+    return group_categories
+
+
 def remove_graveyard(input_file, output_file = None):
     """
     Remove the graveyard volume EntitySet from the data file and write the
