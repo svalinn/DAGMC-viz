@@ -38,15 +38,14 @@ def parse_arguments():
 def get_sets_by_category(input_file,category_name):
 
     """
-    Identify the Curve, Surface, or Volume entity sets in the given geometry.
+    Identify entity sets in the given geometry based on a Category Tag value.
 
     Input:
     ______
        input_file: str
            User supplied data file location.
        category_name: str
-           The category tag value of the entity sets to identify. The value of this
-           tag should be Curves, Surfaces, or Volumes.
+           The category tag value of the entity sets to identify.
 
     Returns:
     ________
@@ -106,9 +105,8 @@ def remove_graveyard(input_file, output_file = None):
     # An array of tag values to be matched for entities returned by the following call.
     group_tag_values = np.array(["Group"])
 
-    # Retrieve all EntitySets with a Category tag with the value of "Group".
-    group_categories = list(mb.get_entities_by_type_and_tag(root, MBENTITYSET,
-                                                            tag_category, group_tag_values))
+    # Gather all entities with a Category Tag value of "Group".
+    group_categories = get_sets_by_category(input_file,"Group")
 
     # Retrieve all EntitySets with a Name tag.
     group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
@@ -156,6 +154,7 @@ def main():
 
     # Remove the graveyard from the data file.
     remove_graveyard(args.h5mfile, args.outputfile)
+
 
 if __name__ == "__main__":
     main()
