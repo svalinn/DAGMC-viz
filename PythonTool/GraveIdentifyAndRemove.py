@@ -36,7 +36,6 @@ def parse_arguments():
 
 
 def get_sets_by_category(mb_core,category_name):
-
     """
     Identify entity sets in the given geometry based on a category tag value.
 
