@@ -23,11 +23,11 @@ def parse_arguments():
 
     parser.add_argument("h5mfile",
                         type=str,
-                        help='provide a path to the h5m data file'
+                        help="Provide a path to the h5m data file."
                         )
     parser.add_argument("-o", "--outputfile",
                         type=str,
-                        help='provide a name and extension for the output file'
+                        help="Provide a name and extension for the output file."
                         )
 
     args = parser.parse_args()
@@ -35,21 +35,21 @@ def parse_arguments():
     return args
 
 
-def get_sets_by_category(mb_core,category_name):
+def get_sets_by_category(mb_core, category_name):
     """
-    Identify entity sets in the given geometry based on a category tag value.
+    Identify EntitySets in the given geometry based on a Category tag value.
 
     Input:
     ______
        mb_core: Core
            A PyMOAB core instance with a loaded data file.
        category_name: str
-           The category tag value of the entity sets to identify.
+           The Category tag value of the EntitySets to identify.
 
     Returns:
     ________
        entity_set_ids: list
-           The ID list of the entity sets specific to the chosen category tag value.
+           The ID list of the EntitySets specific to the chosen Category tag value.
     """
 
     tag_category = mb_core.tag_get_handle("CATEGORY")
@@ -58,16 +58,17 @@ def get_sets_by_category(mb_core,category_name):
     # An array of tag values to be matched for entities returned by the following call.
     group_tag_values = np.array([category_name])
 
-    # Retrieve all EntitySets with a category tag of the user input value.
-    group_categories = list(mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
-                                                                 tag_category, group_tag_values))
+    # Retrieve all EntitySets with a Category tag of the user input value.
+    group_categories = mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
+                                                            tag_category, group_tag_values))
+    group_categories = list(group_categories)
 
     return group_categories
 
 
 def remove_graveyard(input_file, output_file = None):
     """
-    Remove the graveyard volume entity set from the data file and write the
+    Remove the graveyard volume EntitySet from the data file and write the
     result out to disk with a default input name or specified output name.
 
     If the user has specified an output file name and extension, use this to
@@ -93,18 +94,18 @@ def remove_graveyard(input_file, output_file = None):
 
     tag_name = mb.tag_get_handle("NAME")
 
-    # Gather all entities with a category tag value of "Group".
-    group_categories = get_sets_by_category(mb,"Group")
+    # Gather all entities with a Category tag value of "Group".
+    group_categories = get_sets_by_category(mb, "Group")
 
-    # Retrieve all entity sets with a name tag.
+    # Retrieve all EntitySets with a Name tag.
     group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
 
-    # Find the entity set whose name tag value contains "graveyard".
+    # Find the EntitySet whose Name tag value contains "graveyard".
     substring = "graveyard"
     graveyard_sets = [group_set for group_set, name in zip(group_categories, group_names)
                       if substring in str(name.lower())]
 
-    # Warn the user if there was more than one entity set with the "graveyard" name tag value.
+    # Warn the user if there was more than one EntitySet with the "graveyard" Name tag value.
     if len(graveyard_sets) > 1:
         print("WARNING: More than one graveyard set found.")
 
@@ -113,10 +114,10 @@ def remove_graveyard(input_file, output_file = None):
         print("WARNING: This file did not contain a graveyard.")
         exit()
 
-    # Print the entity handle of the entity set(s) with the "graveyard" name tag value.
+    # Print the entity handle of the EntitySet(s) with the "graveyard" Name tag value.
     print(graveyard_sets)
 
-    # Remove the graveyard entity set from the data.
+    # Remove the graveyard EntitySet from the data.
     groups_to_write = [group_set for group_set in group_categories
                        if group_set not in graveyard_sets]
 
