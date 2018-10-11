@@ -52,7 +52,7 @@ def get_sets_by_category(mb_core, category_name):
            The ID list of the EntitySets specific to the chosen Category tag value.
     """
 
-    tag_category = mb_core.tag_get_handle("CATEGORY")
+    tag_category = mb_core.tag_get_handle(str(types.CATEGORY_TAG_NAME)[2:-1])
     root = mb_core.get_root_set()
 
     # An array of tag values to be matched for entities returned by the following call.
@@ -60,7 +60,7 @@ def get_sets_by_category(mb_core, category_name):
 
     # Retrieve all EntitySets with a Category tag of the user input value.
     group_categories = mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
-                                                            tag_category, group_tag_values))
+                                                            tag_category, group_tag_values)
     group_categories = list(group_categories)
 
     return group_categories
@@ -92,7 +92,7 @@ def remove_graveyard(input_file, output_file = None):
     # Read the data file with the graveyard to be removed.
     mb.load_file(input_file)
 
-    tag_name = mb.tag_get_handle("NAME")
+    tag_name = mb.tag_get_handle(str(types.NAME_TAG_NAME)[2:-1])
 
     # Gather all entities with a Category tag value of "Group".
     group_categories = get_sets_by_category(mb, "Group")
