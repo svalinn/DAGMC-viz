@@ -23,16 +23,47 @@ def parse_arguments():
 
     parser.add_argument("h5mfile",
                         type=str,
-                        help='provide a path to the h5m data file'
+                        help="Provide a path to the h5m data file."
                         )
     parser.add_argument("-o", "--outputfile",
                         type=str,
-                        help='provide a name and extension for the output file'
+                        help="Provide a name and extension for the output file."
                         )
 
     args = parser.parse_args()
 
     return args
+
+
+def get_sets_by_category(mb_core, category_name):
+    """
+    Identify EntitySets in the given geometry based on a Category tag value.
+
+    Input:
+    ______
+       mb_core: Core
+           A PyMOAB core instance with a loaded data file.
+       category_name: str
+           The Category tag value of the EntitySets to identify.
+
+    Returns:
+    ________
+       entity_set_ids: list
+           The ID list of the EntitySets specific to the chosen Category tag value.
+    """
+
+    tag_category = mb_core.tag_get_handle(str(types.CATEGORY_TAG_NAME)[2:-1])
+    root = mb_core.get_root_set()
+
+    # An array of tag values to be matched for entities returned by the following call.
+    group_tag_values = np.array([category_name])
+
+    # Retrieve all EntitySets with a Category tag of the user input value.
+    group_categories = mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
+                                                            tag_category, group_tag_values)
+    group_categories = list(group_categories)
+
+    return group_categories
 
 
 def remove_graveyard(input_file, output_file = None):
@@ -61,16 +92,10 @@ def remove_graveyard(input_file, output_file = None):
     # Read the data file with the graveyard to be removed.
     mb.load_file(input_file)
 
-    tag_name = mb.tag_get_handle("NAME")
-    tag_category = mb.tag_get_handle("CATEGORY")
-    root = mb.get_root_set()
+    tag_name = mb.tag_get_handle(str(types.NAME_TAG_NAME)[2:-1])
 
-    # An array of tag values to be matched for entities returned by the following call.
-    group_tag_values = np.array(["Group"])
-
-    # Retrieve all EntitySets with a Category tag with the value of "Group".
-    group_categories = list(mb.get_entities_by_type_and_tag(root, MBENTITYSET,
-                                                            tag_category, group_tag_values))
+    # Gather all entities with a Category tag value of "Group".
+    group_categories = get_sets_by_category(mb, "Group")
 
     # Retrieve all EntitySets with a Name tag.
     group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
@@ -89,7 +114,7 @@ def remove_graveyard(input_file, output_file = None):
         print("WARNING: This file did not contain a graveyard.")
         exit()
 
-    # Print the EntityHandle of the EntitySet(s) with the "graveyard" Name tag value.
+    # Print the entity handle of the EntitySet(s) with the "graveyard" Name tag value.
     print(graveyard_sets)
 
     # Remove the graveyard EntitySet from the data.
@@ -118,6 +143,7 @@ def main():
 
     # Remove the graveyard from the data file.
     remove_graveyard(args.h5mfile, args.outputfile)
+
 
 if __name__ == "__main__":
     main()
