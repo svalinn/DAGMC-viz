@@ -13,7 +13,7 @@ Note: Python 2.7, VisIt, and MOAB are required. The Python path should be set fo
        4) YZ plane slice through the center.
 Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot with the "TALLY_TAG" variable, and the second, third, and fourth windows have Contour plots with the "ERROR_TAG" variable. The user may indicate whether or not they would like each window to be saved as a png file in their current directory.
 
-		python DataLoading.py [geometry_file] [data_file] -i 
+    python DataLoading.py [geometry_file] [data_file] -i 
 
 ----------------------------------------
 
