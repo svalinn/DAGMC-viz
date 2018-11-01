@@ -3,6 +3,8 @@ DAGMC-viz Documentation
 
 Note: Python 2.7, ViSit, and MOAB are required.
 Python path should be set for VisIt and MOAB.
+Lane's work can be viewed in the lane_progress branch of this repository.
+Functionality allowing the user to completely determine the VisIt output is on the way.
 
 ----------------------------------------
 
