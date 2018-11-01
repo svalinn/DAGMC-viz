@@ -6,6 +6,7 @@ Note: Python 2.7, VisIt, and MOAB are required. The Python path should be set fo
 ----------------------------------------
 
 1. DataLoading.py can be used to create a default output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
+
        1) A cube with a slice through an octant in order to see the center.
        2) XY plane slice through the center.
        3) XZ plane slice through the center.
