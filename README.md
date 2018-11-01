@@ -14,7 +14,7 @@ Python path should be set for VisIt and MOAB.
 
 2. GraveIdentifyAndRemove.py can be used to remove the graveyard EntitySet from an h5m geometry file. The user may specify a specific output file name and extension. It can also extract curve, surface, and volume EntitySets.
  
-          python GraveIdentifyAndRemove.py [h5m file] -o [output file] 
+        python GraveIdentifyAndRemove.py [h5m file] -o [output file] 
 		
 ----------------------------------------
 
