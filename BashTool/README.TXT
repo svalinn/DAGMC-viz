@@ -1,10 +1,3 @@
-Data generated from bash scripts are stored here.
+1. DataConvert.sh can be used to convert a file into another format. (Supported extensions include h5m, stl, and vtk.)
 
-Useful notes follow:
-
-The structure of data is from higher to lower dimension as follows:
-	1) Material
-	2) Volume
-	3) Surface
-	4) Curve
-	5) Vertex
+2. SessionReplaceSingle.sh and SessionReplaceMultiple.sh can be used to load previous data into VisIt.
