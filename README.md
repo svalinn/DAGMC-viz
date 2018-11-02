@@ -1,7 +1,7 @@
 DAGMC-viz Documentation
 =======================
 
-The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt, and MOAB, and the inclusion of VisIt and MOAB in the Python path. A user can input a geometry file and a data file and produce default interactive output in VisIt, with the option to save images of the plot windows as well. Functionality allowing the user to have full control of determining the output will be implemented in the future.
+The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt, and MOAB, as well as the inclusion of VisIt and MOAB in the Python path. A user can input a geometry file and a data file and produce default interactive output in VisIt, with the option to save images of the plot windows as well. Functionality allowing the user to have full control of determining the output will be implemented in the future.
 
 ----------------------------------------
 
