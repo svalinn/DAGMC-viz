@@ -43,4 +43,4 @@ Bash scripts for converting a file to another format and substituting loaded dat
 
 ----------------------------------------
 
-NOTE: This is based on `previous work <https://github.com/piperlincoln/DAGMC-viz/tree/lane_progress>` done by Lane Schultz.
+NOTE: This is based on [previous work](https://github.com/piperlincoln/DAGMC-viz/tree/lane_progress) done by Lane Schultz.
