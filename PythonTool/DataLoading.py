@@ -1,4 +1,5 @@
 import argparse
+import os
 import visit as Vi
 from GraveIdentifyAndRemove import remove_graveyard
 from pymoab import core, types, tag
@@ -72,7 +73,7 @@ def py_mb_convert(file_location, file_extension):
    # Write the new file with the user supplied extension.
    mb.write_file(new_file_name)
 
-   return(new_file_name)
+   return new_file_name
 
 
 def plane_slice_plotting(window_number, axis_number, label, images):
@@ -97,6 +98,8 @@ def plane_slice_plotting(window_number, axis_number, label, images):
     # Open a new window with all three plots active.
     Vi.AddWindow()
     Vi.CopyPlotsToWindow(1, window_number)
+
+    # Create the plane slice plot by activating the mesh, pseudocolor, and contour plots.
     Vi.SetActivePlots((0,1,2))
 
     # Add a slice through the proper axis.
@@ -142,30 +145,25 @@ def data_loading(geometry_file, data_file, images):
    """
 
    # Remove the graveyard from the geometry file.
-   remove_graveyard(geometry_file)
+   geometry_file = remove_graveyard(geometry_file)
 
-   # Isolate the name of the geometry file produced from removing the graveyard.
-   input_array = geometry_file.split("/")
-   input_file_name = input_array[-1]
-   base_file_name = input_file_name[:-4]
-   geometry_file = base_file_name + "_no_grave.h5m"
-
+   # Convert the geometry file and data file to the proper format.
    geometry_file = py_mb_convert(geometry_file, ".stl")
    data_file = py_mb_convert(data_file, ".vtk")
 
-   # Create a file indicating the data, plot, and variable for VisIt.
-   Files = {
-       "Plot_1" : [geometry_file]+["Mesh"]+["STL_mesh"],
-       "Plot_2" : [data_file]+["Pseudocolor"]+["TALLY_TAG"],
-       "Plot_3" : [data_file]+["Contour"]+["ERROR_TAG"],
-           }
+   # Create a list of dictionaries indicating the data, plot, and variable in VisIt.
+   Files = [
+       {"file_name" : geometry_file, "plot_type" : "Mesh", "data_tag" : "STL_mesh"},
+       {"file_name" : data_file, "plot_type" : "Pseudocolor", "data_tag" : "TALLY_TAG"},
+       {"file_name" : data_file, "plot_type" : "Contour", "data_tag" : "ERROR_TAG"}
+       ]
 
-   Vi.Launch()
-   for key in Files:
-       Vi.OpenDatabase(Files[key][0])
-       Vi.AddPlot(Files[key][1], Files[key][2])
+   Vi.LaunchNowin()
+   for file in Files:
+       Vi.OpenDatabase(file["file_name"])
+       Vi.AddPlot(file["plot_type"],file["data_tag"])
 
-   # Create the first plot of the cube.
+   # Create the first plot of the cube by activating the mesh and pseudocolor plots.
    Vi.SetActivePlots((0,1))
 
    # Set the view normal to the first octant.
@@ -185,7 +183,6 @@ def data_loading(geometry_file, data_file, images):
 
    # Create the fourth plot of the YZ plane slice.
    plane_slice_plotting(4, 0, "ZY Plane", images)
-   # TODO: Change orientation from ZY to YZ.
 
    # Display the four windows in a 2x2 grid.
    Vi.SetWindowLayout(4)
@@ -199,9 +196,15 @@ def main():
   # Create the default VisIt output.
   data_loading(args.geofile, args.datafile, args.images)
 
-  # Keeps VisIt plot windows open for user interaction. Hit enter key to exit.
-  raw_input()
-  # TODO: Keep VisIt running in the background and open the GUI.
+  # Save the session file with the default VisIt output to the current directory.
+  visitOutput = "visitOutput.session"
+  Vi.SaveSession(visitOutput)
+
+  Vi.Close()
+
+  # Determine the absolute path to the session file and open it with the VisIt GUI.
+  curDir = os.getcwd()
+  os.system("visit -sessionfile {} &".format(curDir + "/" + visitOutput))
 
 
 if __name__ == "__main__":
