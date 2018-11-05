@@ -84,7 +84,8 @@ def remove_graveyard(input_file, output_file = None):
 
     Returns:
     ________
-       none
+       output_file: str
+           The name of the file written to the disk.
     """
 
     mb = core.Core()
@@ -133,7 +134,10 @@ def remove_graveyard(input_file, output_file = None):
         input_array = input_file.split("/")
         input_file = input_array[-1]
         base_file_name = input_file[:-4]
-        mb.write_file(base_file_name + "_no_grave.h5m", output_sets=groups_to_write)
+        output_file = base_file_name + "_no_grave.h5m"
+        mb.write_file(output_file, output_sets=groups_to_write)
+
+    return output_file
 
 
 def main():
@@ -142,7 +146,7 @@ def main():
     args = parse_arguments()
 
     # Remove the graveyard from the data file.
-    remove_graveyard(args.h5mfile, args.outputfile)
+    output_file = remove_graveyard(args.h5mfile, args.outputfile)
 
 
 if __name__ == "__main__":
