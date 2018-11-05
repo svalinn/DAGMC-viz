@@ -121,7 +121,7 @@ def plane_slice_plotting(window_number, axis_number, label, images):
 def data_loading(geometry_file, data_file, images):
    """
    Convert geometry file to stl, convert data file to vtk, load each file
-   into VisIt, and display four interactive plot windows.
+   into VisIt, and create and load a session file containing the four plot windows.
        1) A cube with a slice through an octant in order to see the center.
        2) XY plane slice through the center.
        3) XZ plane slice through the center.
@@ -187,6 +187,15 @@ def data_loading(geometry_file, data_file, images):
    # Display the four windows in a 2x2 grid.
    Vi.SetWindowLayout(4)
 
+   # Save the session file with the default VisIt output to the current directory.
+   visitOutput = "visitOutput.session"
+   Vi.SaveSession(visitOutput)
+   Vi.Close()
+
+   # Determine the absolute path to the session file and open it with the VisIt GUI.
+   curDir = os.getcwd()
+   os.system("visit -sessionfile {} &".format(curDir + "/" + visitOutput))
+
 
 def main():
 
@@ -195,16 +204,6 @@ def main():
 
   # Create the default VisIt output.
   data_loading(args.geofile, args.datafile, args.images)
-
-  # Save the session file with the default VisIt output to the current directory.
-  visitOutput = "visitOutput.session"
-  Vi.SaveSession(visitOutput)
-
-  Vi.Close()
-
-  # Determine the absolute path to the session file and open it with the VisIt GUI.
-  curDir = os.getcwd()
-  os.system("visit -sessionfile {} &".format(curDir + "/" + visitOutput))
 
 
 if __name__ == "__main__":
