@@ -1,7 +1,7 @@
 DAGMC-viz Documentation
 =======================
 
-The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt, and MOAB, as well as the inclusion of VisIt and MOAB in the Python path. A user can input a geometry file and a data file and produce default interactive output in VisIt, with the option to save images of the plot windows as well. Functionality allowing the user to have full control of determining the output will be implemented in the future.
+The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt, and MOAB. The inclusion of VisIt and MOAB in the PYTHONPATH and the VisIt executable in the PATH is required. A user can input a geometry file and a data file to produce default interactive output in VisIt, with the option to save images of the plot windows as well. Functionality allowing the user to have full control of determining the output will be implemented in the future.
 
 ----------------------------------------
 
@@ -17,7 +17,7 @@ Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot wit
 ```
 python DataLoading.py [geometry_file] [data_file] 
 ```
-The user may indicate whether or not they would like each window to be saved as a png file in their current directory.
+The user may indicate whether or not they would like each window to be saved as a png file in their current directory by adding the ```-i``` option to the command.
 
 ```
 python DataLoading.py [geometry_file] [data_file] -i 
