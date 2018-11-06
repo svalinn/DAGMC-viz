@@ -109,9 +109,9 @@ def plane_slice_plotting(window_number, axis_number, label, images):
     Vi.SetOperatorOptions(s)
 
     banner = Vi.CreateAnnotationObject("Text2D")
-    banner.position = (0.37, 0.92)
+    banner.position = (0.45, 0.92)
     banner.text = label
-    banner.height = 0.03
+    banner.height = 0.05
 
     Vi.DrawPlots()
     if images:
