@@ -31,7 +31,7 @@ A sample output from an h5m geometry file and a vtk data file can be seen below.
 
 ----------------------------------------
 
-2. GraveIdentifyAndRemove.py can be used to remove the graveyard EntitySet from an h5m geometry file. The user may specify a specific output file name and extension. It can also extract curve, surface, and volume EntitySets.
+2. GraveIdentifyAndRemove.py can be used to remove the graveyard volume/group from an h5m geometry file. The user may specify a specific output file name and extension. It can also extract curve, surface, and volume EntitySets.
  
 ```
 python GraveIdentifyAndRemove.py [h5m file] -o [output file] 
