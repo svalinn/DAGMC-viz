@@ -108,10 +108,18 @@ def plane_slice_plotting(window_number, axis_number, label, images):
     s.axisType = axis_number
     Vi.SetOperatorOptions(s)
 
+    # Include label for each plane slice plot.
     banner = Vi.CreateAnnotationObject("Text2D")
     banner.position = (0.45, 0.92)
     banner.text = label
     banner.height = 0.05
+
+    # Include the CNERG logo in the bottom left corner of the plot.
+    image = Vi.CreateAnnotationObject("Image")
+    image.image = "cnerg.jpg"
+    image.position = (0.02, 0.02)
+    image.width = 10
+    image.height = 10
 
     Vi.DrawPlots()
     if images:
@@ -170,6 +178,13 @@ def data_loading(geometry_file, data_file, images):
    v = Vi.GetView3D()
    v.viewNormal = (1,1,1)
    Vi.SetView3D(v)
+
+   # Include the CNERG logo in the bottom left corner of the plot.
+   image = Vi.CreateAnnotationObject("Image")
+   image.image = "cnerg.jpg"
+   image.position = (0.02, 0.02)
+   image.width = 10
+   image.height = 10
 
    Vi.DrawPlots()
    if images:
