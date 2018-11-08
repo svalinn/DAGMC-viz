@@ -26,7 +26,7 @@ python DataLoading.py [geometry_file] [data_file] -i
 A sample output from an h5m geometry file and a vtk data file can be seen below.
 
 <p align="center">
-<img src="https://i.postimg.cc/Fzb5jM6t/Screenshot-from-2018-11-02-13-37-55.png" width="400" height="400"/>
+<img src="https://i.postimg.cc/7ZJMPNCB/Screenshot-from-2018-11-08-13-01-26.png" width="400" height="400"/>
 </p>
 
 ----------------------------------------
