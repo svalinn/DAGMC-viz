@@ -203,7 +203,7 @@ def data_loading(geometry_file, data_file, images):
    Vi.SetWindowLayout(4)
 
    # Save the session file with the default VisIt output to the current directory.
-   visitOutput = "visitOutput.session"
+   visitOutput = "visitDefaultOutput.session"
    Vi.SaveSession(visitOutput)
    Vi.Close()
 
