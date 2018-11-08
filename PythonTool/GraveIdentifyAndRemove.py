@@ -6,8 +6,8 @@ from pymoab.types import MBENTITYSET
 
 def parse_arguments():
     """
-    Parse the argument list and return
-    an input file location and optional output file name.
+    Parse the argument list and return an input file location and optional
+    output file name.
 
     Input:
     ______
@@ -68,8 +68,8 @@ def get_sets_by_category(mb_core, category_name):
 
 def remove_graveyard(input_file, output_file = None):
     """
-    Remove the graveyard volume EntitySet from the data file and write the
-    result out to disk with a default input name or specified output name.
+    Remove the graveyard volume from the data file and write the result
+    out to disk with a default input name or specified output name.
 
     If the user has specified an output file name and extension, use this to
     write the file. If they haven't, append "_no_grave" onto the name of the
