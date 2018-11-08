@@ -22,6 +22,11 @@ The user may indicate whether or not they would like each window to be saved as 
 ```
 python DataLoading.py [geometry_file] [data_file] -i 
 ```
+The user may indicate whether or not they would like the VisIt session file to be saved in their current directory by adding the ```-s``` option to the command.
+
+```
+python DataLoading.py [geometry_file] [data_file] -s 
+```
 
 A sample output from an h5m geometry file and a vtk data file can be seen below.
 
