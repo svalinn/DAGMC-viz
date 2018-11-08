@@ -155,6 +155,8 @@ def data_loading(geometry_file, data_file, images, session_file):
           User supplied file containing data of interest.
       images: boolean
           Whether or not to save images of the plot windows.
+      session_file: boolean
+          Whether or not to save VisIt session file.
 
    Returns:
    ________
