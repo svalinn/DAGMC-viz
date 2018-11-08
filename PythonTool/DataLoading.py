@@ -9,7 +9,8 @@ def parse_arguments():
     """
     Parse the argument list and return the location of a geometry file, the
     location of a data file, and indication if the user wants images of the
-    four default plot windows saved or not in the current directory.
+    four default plot windows and the VisIt session file saved or not in the
+    current directory.
 
     Input:
     ______
@@ -19,7 +20,8 @@ def parse_arguments():
     ________
        args: Namespace
            User supplied geometry file location, data file location, and
-           indication if the user wants images of the plot windows saved.
+           indication if the user wants images of the plot windows and the
+           session file saved.
     """
 
     parser = argparse.ArgumentParser(description="Create default VisIt output.")
@@ -36,6 +38,11 @@ def parse_arguments():
     parser.add_argument("-i", "--images",
                         action="store_true",
                         help="Indicate whether or not to save images of plot windows."
+                        )
+
+    parser.add_argument("-s", "--sessionfile",
+                        action="store_false",
+                        help="Indicate whether or not to save the VisIt session file."
                         )
 
     args = parser.parse_args()
@@ -87,6 +94,8 @@ def plane_slice_plotting(window_number, axis_number, label, images):
           The number of the window to open (2,3, or 4).
       axis_number: int
           The number of the axis to slice through (0 for X, 1 for Y, 2 for Z).
+      label: str
+          The title of the plane slice.
       images: boolean
           Whether or not to save images of the plot windows.
 
@@ -126,7 +135,7 @@ def plane_slice_plotting(window_number, axis_number, label, images):
         Vi.SaveWindow()
 
 
-def data_loading(geometry_file, data_file, images):
+def data_loading(geometry_file, data_file, images, session_file):
    """
    Convert geometry file to stl, convert data file to vtk, load each file
    into VisIt, and create and load a session file containing the four plot windows.
@@ -203,13 +212,17 @@ def data_loading(geometry_file, data_file, images):
    Vi.SetWindowLayout(4)
 
    # Save the session file with the default VisIt output to the current directory.
-   visitOutput = "visitDefaultOutput.session"
-   Vi.SaveSession(visitOutput)
+   visit_output = "visitDefaultOutput.session"
+   Vi.SaveSession(visit_output)
    Vi.Close()
 
    # Determine the absolute path to the session file and open it with the VisIt GUI.
-   curDir = os.getcwd()
-   os.system("visit -sessionfile {} &".format(curDir + "/" + visitOutput))
+   session_file_path = os.getcwd() + "/" + visit_output
+   os.system("visit -sessionfile {} &".format(session_file_path))
+
+   # If the user would like to remove the session file, do so after VisIt has opened.
+   if session_file:
+       os.system("sleep 10; rm {}".format(session_file_path))
 
 
 def main():
@@ -218,7 +231,7 @@ def main():
   args = parse_arguments()
 
   # Create the default VisIt output.
-  data_loading(args.geofile, args.datafile, args.images)
+  data_loading(args.geofile, args.datafile, args.images, args.sessionfile)
 
 
 if __name__ == "__main__":
