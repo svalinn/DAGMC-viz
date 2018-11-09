@@ -44,8 +44,4 @@ python GraveIdentifyAndRemove.py [h5m file] -o [output file]
 
 ----------------------------------------
 
-Bash scripts for converting a file to another format and altering VisIt session file names are under /BashTool.
-
-----------------------------------------
-
 NOTE: This is based on [previous work](https://github.com/piperlincoln/DAGMC-viz/tree/lane_progress) done by Lane Schultz.
