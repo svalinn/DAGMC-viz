@@ -44,7 +44,7 @@ python GraveIdentifyAndRemove.py [h5m file] -o [output file]
 
 ----------------------------------------
 
-Bash scripts for converting a file to another format and substituting loaded datasets into VisIt are under /BashTool.
+Bash scripts for converting a file to another format and altering VisIt session file names are under /BashTool.
 
 ----------------------------------------
 
