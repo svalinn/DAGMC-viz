@@ -104,12 +104,16 @@ def plane_slice_plotting(window_number, axis_number, label, images):
       none
     """
 
-    # Open a new window with all three plots active.
+    # Open a new window with all three plots.
     Vi.AddWindow()
     Vi.CopyPlotsToWindow(1, window_number)
 
     # Create the plane slice plot by activating the mesh, pseudocolor, and contour plots.
+    Vi.SetActiveWindow(window_number)
     Vi.SetActivePlots((0,1,2))
+
+    # Remove the clip and slice operators from previous plot windows.
+    Vi.RemoveAllOperators()
 
     # Add a slice through the proper axis.
     Vi.AddOperator("Slice", 1)
@@ -117,7 +121,7 @@ def plane_slice_plotting(window_number, axis_number, label, images):
     s.axisType = axis_number
     Vi.SetOperatorOptions(s)
 
-    # Include label for each plane slice plot.
+    # Include a label for each plane slice plot.
     banner = Vi.CreateAnnotationObject("Text2D")
     banner.position = (0.45, 0.92)
     banner.text = label
@@ -182,13 +186,24 @@ def data_loading(geometry_file, data_file, images, session_file):
        Vi.OpenDatabase(file["file_name"])
        Vi.AddPlot(file["plot_type"],file["data_tag"])
 
-   # Create the first plot of the cube by activating the mesh and pseudocolor plots.
+   # Hide the contour plot in the first plot window.
+   Vi.SetActivePlots(2)
+   Vi.HideActivePlots()
+
+   # Create the plot of the cube by activating the mesh and pseudocolor plots.
    Vi.SetActivePlots((0,1))
 
    # Set the view normal to the first octant.
    v = Vi.GetView3D()
    v.viewNormal = (1,1,1)
    Vi.SetView3D(v)
+
+   # Apply a clip through the first octant.
+   Vi.AddOperator("Clip")
+   c = Vi.ClipAttributes()
+   c.plane1Origin = (40,40,40)
+   c.plane1Normal = (1,1,1)
+   Vi.SetOperatorOptions(c)
 
    # Include the CNERG logo in the bottom left corner of the plot.
    image = Vi.CreateAnnotationObject("Image")
