@@ -8,9 +8,9 @@ The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Pytho
 1. DataLoading.py can be used to create a default output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
 
       1. A cube with a clip through the first octant.
-      2. XY plane slice through the center.
-      3. XZ plane slice through the center.
-      4. ZY plane slice through the center.
+      2. XY plane slice through the centroid.
+      3. XZ plane slice through the centroid.
+      4. ZY plane slice through the centroid.
       
 Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot with the "TALLY_TAG" variable, and the second, third, and fourth windows have Contour plots with the "ERROR_TAG" variable. 
 
