@@ -1,12 +1,12 @@
 import argparse
 import numpy as np
-from pymoab import core, types, tag
+from pymoab import core, tag, types
 from pymoab.types import MBENTITYSET
 
 
 def parse_arguments():
     """
-    Parse the argument list and return an input file location and optional
+    Parse the argument list and return an input file location and an optional
     output file name.
 
     Input:
@@ -48,7 +48,7 @@ def get_sets_by_category(mb_core, category_name):
 
     Returns:
     ________
-       entity_set_ids: list
+       entity_set_ids: List
            The ID list of the EntitySets specific to the chosen Category tag value.
     """
 
@@ -86,6 +86,10 @@ def remove_graveyard(input_file, output_file = None):
     ________
        output_file: str
            The name of the file written to the disk.
+
+    Raises:
+    _______
+       Exception: If no graveyard EntitySet is found.
     """
 
     mb = core.Core()
@@ -110,12 +114,11 @@ def remove_graveyard(input_file, output_file = None):
     if len(graveyard_sets) > 1:
         print("WARNING: More than one graveyard set found.")
 
-    # Warn the user if the file they provided did not contain a graveyard.
+    # Raise an exception if there was no graveyard EntitySet found.
     if len(graveyard_sets) < 1:
-        print("WARNING: This file did not contain a graveyard.")
-        exit()
+        raise Exception()
 
-    # Print the entity handle of the EntitySet(s) with the "graveyard" Name tag value.
+    # Print the entity handle of the EntitySet with the "graveyard" Name tag value.
     print(graveyard_sets)
 
     # Remove the graveyard EntitySet from the data.
@@ -146,7 +149,10 @@ def main():
     args = parse_arguments()
 
     # Remove the graveyard from the data file.
-    output_file = remove_graveyard(args.h5mfile, args.outputfile)
+    try:
+        output_file = remove_graveyard(args.h5mfile, args.outputfile)
+    except Exception:
+        print("WARNING: This file did not contain a graveyard. No new file was written.")
 
 
 if __name__ == "__main__":

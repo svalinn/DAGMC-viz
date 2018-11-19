@@ -2,7 +2,7 @@ import argparse
 import os
 import visit as Vi
 from GraveIdentifyAndRemove import remove_graveyard
-from pymoab import core, types, tag
+from pymoab import core, tag, types
 
 
 def parse_arguments():
@@ -144,9 +144,9 @@ def data_loading(geometry_file, data_file, images, session_file):
    Convert geometry file to stl, convert data file to vtk, load each file
    into VisIt, and create and load a session file containing the four plot windows.
        1) A cube with a slice through an octant in order to see the center.
-       2) XY plane slice through the center.
-       3) XZ plane slice through the center.
-       4) YZ plane slice through the center.
+       2) XY plane slice through the centroid.
+       3) XZ plane slice through the centroid.
+       4) YZ plane slice through the centroid.
    Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot
    with the "TALLY_TAG" variable, and the second, third, and fourth windows have
    Contour plots with the "ERROR_TAG" variable.
@@ -168,7 +168,10 @@ def data_loading(geometry_file, data_file, images, session_file):
    """
 
    # Remove the graveyard from the geometry file.
-   geometry_file = remove_graveyard(geometry_file)
+   try:
+       geometry_file = remove_graveyard(geometry_file)
+   except Exception:
+       pass
 
    # Convert the geometry file and data file to the proper format.
    geometry_file = py_mb_convert(geometry_file, ".stl")
