@@ -116,7 +116,7 @@ def remove_graveyard(input_file, output_file = None):
 
     # Raise an exception if there was no graveyard EntitySet found.
     if len(graveyard_sets) < 1:
-        raise Exception()
+        raise LookupError("WARNING: The geometry file did not contain a graveyard.")
 
     # Print the entity handle of the EntitySet with the "graveyard" Name tag value.
     print(graveyard_sets)
@@ -151,8 +151,8 @@ def main():
     # Remove the graveyard from the data file.
     try:
         output_file = remove_graveyard(args.h5mfile, args.outputfile)
-    except Exception:
-        print("WARNING: This file did not contain a graveyard. No new file was written.")
+    except LookupError, e:
+        print(e.message)
 
 
 if __name__ == "__main__":

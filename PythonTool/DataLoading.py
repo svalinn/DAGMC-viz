@@ -170,8 +170,8 @@ def data_loading(geometry_file, data_file, images, session_file):
    # Remove the graveyard from the geometry file.
    try:
        geometry_file = remove_graveyard(geometry_file)
-   except Exception:
-       print("WARNING: The geometry file did not contain a graveyard.")
+   except LookupError, e:
+       print(e.message)
        pass
 
    # Convert the geometry file and data file to the proper format.
