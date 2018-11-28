@@ -8,7 +8,7 @@ def parse_arguments():
     """
     Parse the argument list and return an input file location, an optional
     output file name, and indication of whether or not to print the entity handle
-    of the EntitySet with a "graveyard" Name tag value.
+    of the EntitySet with the "graveyard" Name tag value.
 
     Input:
     ______
@@ -82,7 +82,7 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
     input file and add the .h5m extension.
 
     If the user has indicated to, print the entity handle of the EntitySet with
-    the ""graveyard" Name tag value.
+    the "graveyard" Name tag value.
 
     Input:
     ______
