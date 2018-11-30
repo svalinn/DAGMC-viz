@@ -1,13 +1,14 @@
 import argparse
 import numpy as np
-from pymoab import core, types, tag
+from pymoab import core, tag, types
 from pymoab.types import MBENTITYSET
 
 
 def parse_arguments():
     """
-    Parse the argument list and return an input file location and optional
-    output file name.
+    Parse the argument list and return an input file location, an optional
+    output file name, and indication of whether or not to print the entity handle
+    of the EntitySet with the "graveyard" Name tag value.
 
     Input:
     ______
@@ -16,7 +17,8 @@ def parse_arguments():
     Returns:
     ________
        args: Namespace
-           User supplied input file location and optional output file name.
+           User supplied input file location, optional output file name, and
+           indication of whether or not to print the graveyard entity handle.
     """
 
     parser = argparse.ArgumentParser(description="Remove graveyard from an h5m data file.")
@@ -28,6 +30,10 @@ def parse_arguments():
     parser.add_argument("-o", "--outputfile",
                         type=str,
                         help="Provide a name and extension for the output file."
+                        )
+    parser.add_argument("-p", "--printhandle",
+                        action="store_true",
+                        help="Indicates whether or not to print the graveyard entity handle."
                         )
 
     args = parser.parse_args()
@@ -48,7 +54,7 @@ def get_sets_by_category(mb_core, category_name):
 
     Returns:
     ________
-       entity_set_ids: list
+       entity_set_ids: List
            The ID list of the EntitySets specific to the chosen Category tag value.
     """
 
@@ -66,7 +72,7 @@ def get_sets_by_category(mb_core, category_name):
     return group_categories
 
 
-def remove_graveyard(input_file, output_file = None):
+def remove_graveyard(input_file, output_file = None, print_handle = None):
     """
     Remove the graveyard volume from the data file and write the result
     out to disk with a default input name or specified output name.
@@ -75,17 +81,26 @@ def remove_graveyard(input_file, output_file = None):
     write the file. If they haven't, append "_no_grave" onto the name of the
     input file and add the .h5m extension.
 
+    If the user has indicated to, print the entity handle of the EntitySet with
+    the "graveyard" Name tag value.
+
     Input:
     ______
        input_file: str
            User supplied data file location.
        output_file: str
            Optional user supplied output file name and extension.
+       print_handle: boolean
+           Indicates whether or not to print the graveyard entity handle.
 
     Returns:
     ________
        output_file: str
            The name of the file written to the disk.
+
+    Raises:
+    _______
+       LookupError: If no graveyard EntitySet is found.
     """
 
     mb = core.Core()
@@ -110,13 +125,14 @@ def remove_graveyard(input_file, output_file = None):
     if len(graveyard_sets) > 1:
         print("WARNING: More than one graveyard set found.")
 
-    # Warn the user if the file they provided did not contain a graveyard.
+    # Raise an exception if there was no graveyard EntitySet found.
     if len(graveyard_sets) < 1:
-        print("WARNING: This file did not contain a graveyard.")
-        exit()
+        raise LookupError("WARNING: The geometry file did not contain a graveyard.")
 
-    # Print the entity handle of the EntitySet(s) with the "graveyard" Name tag value.
-    print(graveyard_sets)
+    # If the user would like, print the graveyard entity handle.
+    if print_handle:
+        print("The entity handle(s) of the graveyard EntitySet(s): ")
+        print(graveyard_sets)
 
     # Remove the graveyard EntitySet from the data.
     groups_to_write = [group_set for group_set in group_categories
@@ -146,7 +162,10 @@ def main():
     args = parse_arguments()
 
     # Remove the graveyard from the data file.
-    output_file = remove_graveyard(args.h5mfile, args.outputfile)
+    try:
+        output_file = remove_graveyard(args.h5mfile, args.outputfile, args.printhandle)
+    except LookupError, e:
+        print(e.message)
 
 
 if __name__ == "__main__":
