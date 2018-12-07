@@ -1,4 +1,5 @@
 import argparse
+import os
 from pymoab import core, tag, types
 
 
@@ -86,7 +87,7 @@ def tag_expansion(mesh_file, output_file = None, tag_list = None):
                 if output_file:
                     base_file_name = output_file + "_"
                 else:
-                    base_file_name = "vector_data_"
+                    base_file_name = tag.get_name()
 
                 # Write a file with the scalar values from each vector tag expansion.
                 file = open(base_file_name + str(i) + ".vtk","w")
