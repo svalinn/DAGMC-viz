@@ -147,9 +147,9 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
     if output_file is not None:
         mb.write_file(output_file, output_sets=groups_to_write)
     else:
-        input_array = input_file.split("/")
-        input_file = input_array[-1]
-        base_file_name = input_file[:-4]
+        input_list = input_file.split("/")
+        file_name = str(input_list[-1]).split(".")
+        base_file_name = file_name[0]
         output_file = base_file_name + "_no_grave.h5m"
         mb.write_file(output_file, output_sets=groups_to_write)
 
