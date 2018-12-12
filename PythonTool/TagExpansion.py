@@ -110,7 +110,7 @@ def tag_expansion(mesh_file, output_file = None, tag_list = None):
     dir_name = file_name[0] + "_database"
 
     # Ensure an existing dictionary is not written over.
-    dict_number = 0
+    dict_number = 1
     while os.path.isdir(dir_name):
         dir_name = file_name[0] + "_database" + str(dict_number)
         dict_number += 1
