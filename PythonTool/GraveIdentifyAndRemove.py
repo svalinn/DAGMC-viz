@@ -96,7 +96,7 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
     Returns:
     ________
        output_file: str
-           The name of the file written to the disk.
+           The name of the file written to disk.
 
     Raises:
     _______
@@ -123,7 +123,7 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
 
     # Warn the user if there was more than one EntitySet with the "graveyard" Name tag value.
     if len(graveyard_sets) > 1:
-        print("WARNING: More than one graveyard set found.")
+        print("WARNING: More than one graveyard set was found.")
 
     # Raise an exception if there was no graveyard EntitySet found.
     if len(graveyard_sets) < 1:
@@ -149,8 +149,7 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
     else:
         input_list = input_file.split("/")
         file_name = str(input_list[-1]).split(".")
-        base_file_name = file_name[0]
-        output_file = base_file_name + "_no_grave.h5m"
+        output_file = file_name[0] + "_no_grave.h5m"
         mb.write_file(output_file, output_sets=groups_to_write)
 
     return output_file
