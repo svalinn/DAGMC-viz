@@ -4,7 +4,7 @@ About: Create a report to help us improve.
 
 ---
 
-**Describe the bug**<br/>
+**Describe the Bug**<br/>
 A clear and concise description of what the bug is.
 
 **To Reproduce**<br/>
@@ -22,9 +22,9 @@ If applicable, add screenshots or snippets of code and error messages to help ex
 
 **Desktop (please complete the following information):**<br/>
  - OS: [e.g. iOS]
- - Python Version [e.g. 3]
- - MOAB Version [e.g. 5.0]
- - VisIt Version [e.g. 2.13.3]
+ - Python Version: [e.g. 3]
+ - MOAB Version: [e.g. 5.0]
+ - VisIt Version: [e.g. 2.13.3]
 
 **Additional Context**<br/>
 Add any other context about the problem here.
