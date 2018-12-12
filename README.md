@@ -50,4 +50,11 @@ python GraveIdentifyAndRemove.py [h5m file] -o [output file]
 
 ----------------------------------------
 
+3. TagExpansion.py can be used to expand vector tags on a mesh and generate a data file for each time state. VisIt will recognize the collection of these data files as a database, and permit stepping through them in an animation.
+
+```
+python TagExpansion.py [meshfile]
+```
+----------------------------------------
+
 NOTE: This is based on [previous work](https://github.com/piperlincoln/DAGMC-viz/tree/lane_progress) done by Lane Schultz.
