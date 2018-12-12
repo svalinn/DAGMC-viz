@@ -117,7 +117,7 @@ def tag_expansion(mesh_file):
             data = mb1.tag_get_data(tag, hexes1)
             scalar_data = np.copy(data[:,time_state])
             data_type = tag.get_data_type()
-            scalar_tag = mb2.tag_get_handle("SCALAR_DATA", 1, data_type,
+            scalar_tag = mb2.tag_get_handle(tag.get_name(), 1, data_type,
                                             types.MB_TAG_SPARSE, create_if_missing = True)
             mb2.tag_set_data(scalar_tag, hexes2, scalar_data)
         file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(time_state) + ".vtk"
