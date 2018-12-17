@@ -30,6 +30,47 @@ def parse_arguments():
     return args
 
 
+def get_vector_tags(mb, element):
+    """
+    Create a list of each vector tag in the mesh file by identifying each tag on
+    a specific mesh element and determining if it is vector or scalar.
+
+    Input:
+    ______
+       mb: Core
+           A PyMOAB core instance with a loaded data file.
+       element: int
+           The type of MOAB element from which to extract the tag list.
+
+    Returns:
+    ________
+       element_list: List
+           The list of all specific elements in the mesh.
+       vector_tags: List
+           A list of all vector tags in the mesh.
+    """
+
+    # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
+    root = mb.get_root_set()
+    element_list = mb.get_entities_by_type(root, element)
+
+    # If there are none of the specified mesh elements, print a warning and exit.
+    if len(element_list) == 0:
+        print("WARNING: No hex elements were found in this data file.")
+        exit()
+
+    tag_list = mb.tag_get_tags_on_entity(element_list[0])
+
+    # Check if each tag is a vector. If so, append it to the list.
+    vector_tags = []
+    for tag in tag_list:
+        tag_length = mb.tag_get_length(tag)
+        if tag_length > 1:
+            vector_tags.append(tag)
+
+    return element_list, vector_tags
+
+
 def tag_expansion(mesh_file):
     """
     Expand the vector tags in the given mesh data file. Write a file to disk
@@ -49,46 +90,32 @@ def tag_expansion(mesh_file):
     mb_ref = core.Core()
     mb_ref.load_file(mesh_file)
 
-    # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
-    root_ref = mb_ref.get_root_set()
-    hexes_ref = mb_ref.get_entities_by_type(root_ref, types.MBHEX)
+    # Retrieve the list of vector tags on the mesh.
+    hexes_ref, vec_tags_ref = get_vector_tags(mb_ref, types.MBHEX)
 
-    if len(hexes_ref) == 0:
-        print("WARNING: No hex elements were found in this data file.")
-        exit()
+    # Grab the length and name of the vector tag for later use.
+    reference_length = vec_tags_ref[0].get_length()
+    tag_name = vec_tags_ref[0].get_name()
 
-    tag_list_ref = mb_ref.tag_get_tags_on_entity(hexes_ref[0])
-
-    # Check if each tag is a vector. If so, delete it.
-    for tag in tag_list_ref:
-        tag_length = mb_ref.tag_get_length(tag)
-        if tag_length > 1:
-            # Grab the length and name of the vector tag for later use.
-            reference_length = tag_length
-            tag_name = tag.get_name()
-            mb_ref.tag_delete(tag)
+    # Delete each vector tag from the reference mesh.
+    for tag in vec_tags_ref:
+        mb_ref.tag_delete(tag)
 
     # Load the mesh file for extracting vector tag data.
     mb_ext = core.Core()
     mb_ext.load_file(mesh_file)
 
-    # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
-    root_ext = mb_ext.get_root_set()
-    hexes_ext = mb_ext.get_entities_by_type(root_ext, types.MBHEX)
-    tag_list_ext = mb_ext.tag_get_tags_on_entity(hexes_ext[0])
+    # Retrieve the list of vector tags on the mesh.
+    hexes_ext, vec_tags_ext = get_vector_tags(mb_ext, types.MBHEX)
 
     # Ensure each vector tag is the same length.
-    vector_tags = []
-    for tag in tag_list_ext:
-        tag_length = mb_ext.tag_get_length(tag)
-        if tag_length > 1:
-            vector_tags.append(tag)
-            if mb_ext.tag_get_length(tag) is not reference_length:
-                print("WARNING: Found a vector tag of different length.")
-                exit()
+    for tag in vec_tags_ext:
+        if mb_ext.tag_get_length(tag) is not reference_length:
+            print("WARNING: Found a vector tag of different length.")
+            exit()
 
     # Make sure the mesh file contains at least one vector tag.
-    if len(vector_tags) < 1:
+    if len(vec_tags_ext) < 1:
         print("WARNING: This mesh file did not contain any vector tags.")
         exit()
 
@@ -113,12 +140,12 @@ def tag_expansion(mesh_file):
     index = 0
     while index < reference_length:
         scalar_data = []
-        for tag in vector_tags:
+        for tag in vec_tags_ext:
             data = mb_ext.tag_get_data(tag, hexes_ext)
             scalar_data = np.copy(data[:,index])
             data_type = tag.get_data_type()
             scalar_tag = mb_ref.tag_get_handle(tag.get_name(), 1, data_type,
-                                            types.MB_TAG_SPARSE, create_if_missing = True)
+                                               types.MB_TAG_SPARSE, create_if_missing = True)
             mb_ref.tag_set_data(scalar_tag, hexes_ref, scalar_data)
         file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(index) + ".vtk"
         mb_ref.write_file(file_location)
