@@ -73,9 +73,8 @@ def py_mb_convert(file_location, file_extension):
 
    # Isolate file name from string containing the file location.
    input_file = file_location.split("/")
-   file_name = str(input_file[-1]).split(".")
-   base_file_name = file_name[0]
-   new_file_name = base_file_name + file_extension
+   file_name = '.'.join(input_file[-1].split(".")[:-1])
+   new_file_name = file_name + file_extension
 
    # Write the new file with the user supplied extension.
    mb.write_file(new_file_name)

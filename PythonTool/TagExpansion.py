@@ -121,8 +121,8 @@ def tag_expansion(mesh_file):
 
     # Create a directory for the vector tag expansion files.
     input_list = mesh_file.split("/")
-    file_name = str(input_list[-1]).split(".")
-    dir_name = file_name[0] + "_database"
+    file_name = '.'.join(input_list[-1].split(".")[:-1])
+    dir_name = file_name + "_database"
 
     # Ensure an existing dictionary is not written over.
     dict_number = 1
