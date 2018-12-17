@@ -105,26 +105,26 @@ def tag_expansion(mesh_file):
     os.mkdir(dir_name)
 
     """
-    For each vector tag, retrieve the scalar value at a specific time state and
+    For each vector tag, retrieve the scalar value at a specific index and
     create a scalar tag on the reference mesh. For each time state, write the
     scalar tag values to disk in a vtk file.
     """
 
-    time_state = 0
-    while time_state < reference_length:
+    index = 0
+    while index < reference_length:
         scalar_data = []
         for tag in vector_tags:
             data = mb_ext.tag_get_data(tag, hexes_ext)
-            scalar_data = np.copy(data[:,time_state])
+            scalar_data = np.copy(data[:,index])
             data_type = tag.get_data_type()
             scalar_tag = mb_ref.tag_get_handle(tag.get_name(), 1, data_type,
                                             types.MB_TAG_SPARSE, create_if_missing = True)
             mb_ref.tag_set_data(scalar_tag, hexes_ref, scalar_data)
-        file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(time_state) + ".vtk"
+        file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(index) + ".vtk"
         mb_ref.write_file(file_location)
-        time_state += 1
+        index += 1
 
-    print(str(time_state) + " files have been written to disk.")
+    print(str(index) + " files have been written to disk.")
 
 
 def main():
