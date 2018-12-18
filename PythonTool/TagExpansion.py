@@ -6,7 +6,8 @@ from pymoab import core, tag, types
 
 def parse_arguments():
     """
-    Parse the argument list and return a mesh file location.
+    Parse the argument list and return a mesh file location and an optional
+    output file name.
 
     Input:
     ______
@@ -15,7 +16,7 @@ def parse_arguments():
     Returns:
     ________
        args: Namespace
-           User supplied mesh file location.
+           User supplied mesh file location and optional output file name.
     """
 
     parser = argparse.ArgumentParser(description="Expand vector tags to scalar tags.")
@@ -23,6 +24,10 @@ def parse_arguments():
     parser.add_argument("meshfile",
                         type=str,
                         help="Provide a path to the mesh file."
+                        )
+    parser.add_argument("-o", "--outputfile",
+                        type=str,
+                        help="Provide a base name for the output files."
                         )
 
     args = parser.parse_args()
@@ -71,15 +76,17 @@ def get_vector_tags(mb, element):
     return element_list, vector_tags
 
 
-def tag_expansion(mesh_file):
+def tag_expansion(mesh_file, output_file = None):
     """
-    Expand the vector tags in the given mesh data file. Write a file to disk
-    for each time state with the corresponding scalar tag values from each vector tag.
+    Expand the vector tags on each element in the given mesh data file. Write a
+    file to disk for each index with the corresponding scalar tag values.
 
     Input:
     ______
        mesh_file: str
            User supplied mesh file location.
+       output_file: str
+           Optional user supplied output file name.
 
     Returns:
     ________
@@ -93,7 +100,7 @@ def tag_expansion(mesh_file):
     # Retrieve the list of vector tags on the mesh.
     hexes_ref, vec_tags_ref = get_vector_tags(mb_ref, types.MBHEX)
 
-    # Grab the length and name of the vector tag for later use.
+    # Retrieve the length and name of the vector tag.
     reference_length = vec_tags_ref[0].get_length()
     tag_name = vec_tags_ref[0].get_name()
 
@@ -108,16 +115,14 @@ def tag_expansion(mesh_file):
     # Retrieve the list of vector tags on the mesh.
     hexes_ext, vec_tags_ext = get_vector_tags(mb_ext, types.MBHEX)
 
-    # Ensure each vector tag is the same length.
-    for tag in vec_tags_ext:
-        if mb_ext.tag_get_length(tag) is not reference_length:
-            print("WARNING: Found a vector tag of different length.")
-            exit()
-
     # Make sure the mesh file contains at least one vector tag.
     if len(vec_tags_ext) < 1:
         print("WARNING: This mesh file did not contain any vector tags.")
         exit()
+
+    # Warn the user if the mesh file contains more than one type of vector tag.
+    if len(vec_tags_ext) < 1:
+        print("WARNING: This mesh file contains elements with more than one vector tag.")
 
     # Create a directory for the vector tag expansion files.
     input_list = mesh_file.split("/")
@@ -132,9 +137,9 @@ def tag_expansion(mesh_file):
     os.mkdir(dir_name)
 
     """
-    For each vector tag, retrieve the scalar value at a specific index and
-    create a scalar tag on the reference mesh. For each time state, write the
-    scalar tag values to disk in a vtk file.
+    For the vector tag on each element, retrieve the scalar value at a specific
+    index and create a scalar tag on the reference mesh. For each index,
+    write the scalar tag values to disk in a vtk file.
     """
 
     index = 0
@@ -147,7 +152,12 @@ def tag_expansion(mesh_file):
             scalar_tag = mb_ref.tag_get_handle(tag.get_name(), 1, data_type,
                                                types.MB_TAG_SPARSE, create_if_missing = True)
             mb_ref.tag_set_data(scalar_tag, hexes_ref, scalar_data)
-        file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(index) + ".vtk"
+
+        # Check if the user supplied a base output file name.
+        if(output_file):
+            file_location = os.getcwd() + "/" + dir_name + "/" + output_file + str(index) + ".vtk"
+        else:
+            file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(index) + ".vtk"
         mb_ref.write_file(file_location)
         index += 1
 
@@ -160,7 +170,7 @@ def main():
     args = parse_arguments()
 
     # Expand the vector tags from the mesh file.
-    tag_expansion(args.meshfile)
+    tag_expansion(args.meshfile, args.outputfile)
 
 
 if __name__ == "__main__":
