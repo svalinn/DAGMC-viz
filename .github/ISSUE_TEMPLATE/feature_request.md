@@ -1,6 +1,9 @@
 ---
-Name: Feature Request
-About: Suggest an idea for this project.
+name: 
+about: 
+title: 
+labels: 
+assignees: 
 
 ---
 
