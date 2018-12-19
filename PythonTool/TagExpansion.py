@@ -121,8 +121,9 @@ def tag_expansion(mesh_file, output_file = None):
         exit()
 
     # Warn the user if the mesh file contains more than one type of vector tag.
-    if len(vec_tags_ext) < 1:
+    if len(vec_tags_ext) > 1:
         print("WARNING: This mesh file contains elements with more than one vector tag.")
+        exit()
 
     # Create a directory for the vector tag expansion files.
     input_list = mesh_file.split("/")
