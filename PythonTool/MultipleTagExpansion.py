@@ -129,7 +129,7 @@ def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, 
         data = mb_exp.tag_get_data(vec_tag, hexes)
         scalar_data = np.copy(data[:,index])
         data_type = vec_tag.get_data_type()
-        scalar_tag = mb_ref.tag_get_handle(tag_name, 1, data_type, types.MB_TAG_SPARSE,
+        scalar_tag = mb_ref.tag_get_handle(name, 1, data_type, types.MB_TAG_SPARSE,
                                            create_if_missing = True)
         mb_ref.tag_set_data(scalar_tag, hexes, scalar_data)
 
@@ -137,7 +137,7 @@ def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, 
         scal_tags.append(scalar_tag)
 
         # Write the mesh file with the new scalar tag.
-        file_location = os.getcwd() + "/" + dir_name + "/" + tag_name + str(index) + ".vtk"
+        file_location = os.getcwd() + "/" + dir_name + "/" + name + str(index) + ".vtk"
         mb.write_file(file_location, tags = scal_tags)
 
         # Remove the new scalar tag from the original list to prepare to write the next.
