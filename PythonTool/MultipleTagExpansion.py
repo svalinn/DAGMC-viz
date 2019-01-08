@@ -138,7 +138,7 @@ def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, 
 
         # Write the mesh file with the new scalar tag.
         file_location = os.getcwd() + "/" + dir_name + "/" + name + str(index) + ".vtk"
-        mb.write_file(file_location, tags = scal_tags)
+        mb_ref.write_file(file_location, tags = scal_tags)
 
         # Remove the new scalar tag from the original list to prepare to write the next.
         scal_tags = scal_tags[:-1]
