@@ -161,7 +161,7 @@ def load_mesh(mesh_file):
     mb_ref.load_file(mesh_file)
 
     # Retrieve the lists of scalar and vector tags on the mesh.
-    hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBTET)
+    hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
 
     # Make sure the mesh file contains at least one vector tag.
     if len(vec_tags_ref) < 1:
@@ -177,7 +177,7 @@ def load_mesh(mesh_file):
     mb_exp.load_file(mesh_file)
 
     # Retrieve the list of vector tags on the mesh.
-    hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBTET)
+    hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
 
     for tag in vec_tags_exp:
         length = tag.get_length()
