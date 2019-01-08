@@ -111,7 +111,7 @@ def tag_expansion(mesh_file, mb, hexes, scal_tags, vec_tag, reference_length, ta
     index = 0
     while index < reference_length:
         scalar_data = []
-        data = mb.tag_get_data(tag, hexes)
+        data = mb.tag_get_data(vec_tag, hexes)
         scalar_data = np.copy(data[:,index])
         data_type = tag.get_data_type()
         scalar_tag = mb.tag_get_handle(name, 1, data_type, types.MB_TAG_SPARSE,
