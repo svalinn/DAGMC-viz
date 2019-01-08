@@ -76,7 +76,7 @@ def get_tag_lists(mb, element):
     return element_list, scalar_tags, vector_tags
 
 
-def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, name):
+def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, name):
     """
     Expand the vector tag on each element in the given mesh data file. Write a
     file to disk for each index with the corresponding scalar tag value.
@@ -141,7 +141,7 @@ def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, 
     print(str(index) + " files have been written to disk.")
 
 
-def load_mesh(mesh_file):
+def expand_vector_tags(mesh_file):
     """
     Load the mesh file and extract the lists of scalar and vector tags, then
     expand each vector tag.
@@ -182,7 +182,7 @@ def load_mesh(mesh_file):
     for tag in vec_tags_exp:
         length = tag.get_length()
         name = tag.get_name()
-        tag_expansion(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, length, name)
+        create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, length, name)
 
 
 def main():
@@ -191,7 +191,7 @@ def main():
     args = parse_arguments()
 
     # Expand the vector tags from the mesh file.
-    load_mesh(args.meshfile)
+    expand_vector_tags(args.meshfile)
 
 
 if __name__ == "__main__":
