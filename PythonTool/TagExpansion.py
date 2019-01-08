@@ -159,6 +159,10 @@ def expand_vector_tags(mesh_file):
     Returns:
     ________
        none
+
+    Raises:
+    _______
+       LookupError: If the file does not contain any vector tags.
     """
 
     # Load the mesh file to create a reference mesh.
@@ -172,10 +176,9 @@ def expand_vector_tags(mesh_file):
         print("WARNING: No hex elements were found in the mesh.")
         exit()
 
-    # Make sure the mesh file contains at least one vector tag.
+    # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
-        print("WARNING: This mesh file did not contain any vector tags.")
-        exit()
+        raise LookupError("WARNING: This mesh file did not contain any vector tags.")
 
     # Delete each vector tag from the reference mesh.
     for tag in vec_tags_ref:
@@ -206,7 +209,11 @@ def main():
     args = parse_arguments()
 
     # Expand the vector tags from the mesh file.
-    expand_vector_tags(args.meshfile)
+    try:
+        expand_vector_tags(args.meshfile)
+    except LookupError as e:
+        print(str(e))
+        exit()
 
 
 if __name__ == "__main__":
