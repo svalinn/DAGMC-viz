@@ -40,7 +40,8 @@ def get_tag_lists(mb, element):
        mb: Core
            A PyMOAB core instance with a loaded data file.
        element: int
-           The type of MOAB element from which to extract the tag list.
+           The type of MOAB element from which to extract the tag list,
+           represented by an integer.
 
     Returns:
     ________
@@ -51,16 +52,19 @@ def get_tag_lists(mb, element):
            A list of all scalar tags in the mesh.
        vector_tags: List of PyMOAB tags
            A list of all vector tags in the mesh.
+
+    Raises:
+    _______
+       LookupError: If no element of the user specified type is found.
     """
 
     # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
     root = mb.get_root_set()
     element_list = mb.get_entities_by_type(root, element)
 
-    # If there are none of the specified mesh elements, print a warning and exit.
+    # Warn the user if there are none of the specified mesh elements.
     if len(element_list) == 0:
-        print("WARNING: No elements of this type were found in the data file.")
-        exit()
+        raise LookupError()
 
     tag_list = mb.tag_get_tags_on_entity(element_list[0])
 
@@ -162,7 +166,11 @@ def expand_vector_tags(mesh_file):
     mb_ref.load_file(mesh_file)
 
     # Retrieve the lists of scalar and vector tags on the mesh.
-    hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
+    try:
+        hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
+    except LookupError:
+        print("WARNING: No hex elements were found in the mesh.")
+        exit()
 
     # Make sure the mesh file contains at least one vector tag.
     if len(vec_tags_ref) < 1:
@@ -177,13 +185,19 @@ def expand_vector_tags(mesh_file):
     mb_exp = core.Core()
     mb_exp.load_file(mesh_file)
 
-    # Retrieve the list of vector tags on the mesh.
-    hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
+    # Retrieve the lists of scalar and vector tags on the mesh.
+    try:
+        hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
+    except LookupError:
+        print("WARNING: No hex elements were found in the mesh.")
+        exit()
 
+    """
     for tag in vec_tags_exp:
         length = tag.get_length()
         name = tag.get_name()
         create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, length, name)
+    """
 
 
 def main():
