@@ -44,11 +44,12 @@ def get_tag_lists(mb, element):
 
     Returns:
     ________
-       element_list: List
-           A list of all specific elements in the mesh.
-       scalar_tags: List
+       element_list: List of integers
+           A list of all specific elements in the mesh, in which the type is
+           represented by an integer.
+       scalar_tags: List of PyMOAB tags
            A list of all scalar tags in the mesh.
-       vector_tags: List
+       vector_tags: List of PyMOAB tags
            A list of all vector tags in the mesh.
     """
 
