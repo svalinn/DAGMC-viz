@@ -84,6 +84,18 @@ def tag_expansion(mesh_file, mb, hexes, scal_tags, vec_tag, reference_length, ta
     ______
        mesh_file: str
            User supplied mesh file location.
+       mb: Core
+           A PyMOAB core instance with a loaded data file.
+       hexes: List
+           The list of all hex elements in the mesh.
+       scal_tags: List
+           A list of all scalar tags in the mesh.
+       vec_tags: List
+           A list of all vector tags in the mesh.
+       reference_length: int
+           The length of the vector tag.
+       tag_name: str
+           The handle of the vector tag.
 
     Returns:
     ________
@@ -114,7 +126,6 @@ def tag_expansion(mesh_file, mb, hexes, scal_tags, vec_tag, reference_length, ta
         data = mb.tag_get_data(vec_tag, hexes)
         scalar_data = np.copy(data[:,index])
         data_type = vec_tag.get_data_type()
-        print(str(data_type))
         scalar_tag = mb.tag_get_handle(tag_name, 1, data_type, types.MB_TAG_SPARSE,
                                        create_if_missing = True)
         mb.tag_set_data(scalar_tag, hexes, scalar_data)
