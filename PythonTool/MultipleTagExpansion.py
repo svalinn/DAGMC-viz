@@ -170,7 +170,7 @@ def load_mesh(mesh_file):
     hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
 
     # Make sure the mesh file contains at least one vector tag.
-    if len(vec_tags) < 1:
+    if len(vec_tags_ref) < 1:
         print("WARNING: This mesh file did not contain any vector tags.")
         exit()
 
