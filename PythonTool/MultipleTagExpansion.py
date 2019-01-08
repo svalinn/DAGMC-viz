@@ -24,6 +24,7 @@ def parse_arguments():
                         type=str,
                         help="Provide a path to the mesh file."
                         )
+
     args = parser.parse_args()
 
     return args
@@ -44,7 +45,7 @@ def get_tag_lists(mb, element):
     Returns:
     ________
        element_list: List
-           The list of all specific elements in the mesh.
+           A list of all specific elements in the mesh.
        scalar_tags: List
            A list of all scalar tags in the mesh.
        vector_tags: List
@@ -57,7 +58,7 @@ def get_tag_lists(mb, element):
 
     # If there are none of the specified mesh elements, print a warning and exit.
     if len(element_list) == 0:
-        print("WARNING: No hex elements were found in this data file.")
+        print("WARNING: No elements of this type were found in the data file.")
         exit()
 
     tag_list = mb.tag_get_tags_on_entity(element_list[0])
@@ -75,26 +76,28 @@ def get_tag_lists(mb, element):
     return element_list, scalar_tags, vector_tags
 
 
-def tag_expansion(mesh_file, mb, hexes, scal_tags, vec_tag, reference_length, tag_name):
+def tag_expansion(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length, name):
     """
     Expand the vector tag on each element in the given mesh data file. Write a
-    file to disk for each index with the corresponding scalar tag values.
+    file to disk for each index with the corresponding scalar tag value.
 
     Input:
     ______
        mesh_file: str
            User supplied mesh file location.
-       mb: Core
-           A PyMOAB core instance with a loaded data file.
+       mb_ref: Core
+           A PyMOAB core instance with a loaded data file for reference.
+       mb_exp: Core
+           A PyMOAB core instance with a loaded data file for expanding vector tags.
        hexes: List
-           The list of all hex elements in the mesh.
+           A list of all hex elements in the mesh.
        scal_tags: List
            A list of all scalar tags in the mesh.
        vec_tags: List
            A list of all vector tags in the mesh.
-       reference_length: int
+       length: int
            The length of the vector tag.
-       tag_name: str
+       name: str
            The handle of the vector tag.
 
     Returns:
@@ -116,19 +119,19 @@ def tag_expansion(mesh_file, mb, hexes, scal_tags, vec_tag, reference_length, ta
 
     """
     For the vector tag on each element, retrieve the scalar value at a specific
-    index and create a scalar tag. For each index, write the scalar tag values
+    index and create a scalar tag. For each index, write the scalar tag value
     to disk in a vtk file in the specified database.
     """
 
     index = 0
-    while index < reference_length:
+    while index < length:
         scalar_data = []
-        data = mb.tag_get_data(vec_tag, hexes)
+        data = mb_exp.tag_get_data(vec_tag, hexes)
         scalar_data = np.copy(data[:,index])
         data_type = vec_tag.get_data_type()
-        scalar_tag = mb.tag_get_handle(tag_name, 1, data_type, types.MB_TAG_SPARSE,
-                                       create_if_missing = True)
-        mb.tag_set_data(scalar_tag, hexes, scalar_data)
+        scalar_tag = mb_ref.tag_get_handle(tag_name, 1, data_type, types.MB_TAG_SPARSE,
+                                           create_if_missing = True)
+        mb_ref.tag_set_data(scalar_tag, hexes, scalar_data)
 
         # Append the new scalar tag onto the original list of scalar tags.
         scal_tags.append(scalar_tag)
@@ -159,22 +162,33 @@ def load_mesh(mesh_file):
        none
     """
 
-    # Load the mesh file.
-    mb = core.Core()
-    mb.load_file(mesh_file)
+    # Load the mesh file to create a reference mesh.
+    mb_ref = core.Core()
+    mb_ref.load_file(mesh_file)
 
     # Retrieve the lists of scalar and vector tags on the mesh.
-    hexes, scal_tags, vec_tags = get_tag_lists(mb, types.MBHEX)
+    hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
 
     # Make sure the mesh file contains at least one vector tag.
     if len(vec_tags) < 1:
         print("WARNING: This mesh file did not contain any vector tags.")
         exit()
 
-    for tag in vec_tags:
+    # Delete each vector tag from the reference mesh.
+    for tag in vec_tags_ref:
+        mb_ref.tag_delete(tag)
+
+    # Load the mesh file for extracting vector tag data.
+    mb_exp = core.Core()
+    mb_exp.load_file(mesh_file)
+
+    # Retrieve the list of vector tags on the mesh.
+    hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
+
+    for tag in vec_tags_exp:
         length = tag.get_length()
         name = tag.get_name()
-        tag_expansion(mesh_file, mb, hexes, scal_tags, tag, length, name)
+        tag_expansion(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, length, name)
 
 
 def main():
