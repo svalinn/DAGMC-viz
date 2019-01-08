@@ -45,12 +45,12 @@ def get_tag_lists(mb, element):
 
     Returns:
     ________
-       element_list: List of integers
+       element_list: List of Integers
            A list of all specific elements in the mesh, in which the type is
            represented by an integer.
-       scalar_tags: List of PyMOAB tags
+       scalar_tags: List of PyMOAB Tags
            A list of all scalar tags in the mesh.
-       vector_tags: List of PyMOAB tags
+       vector_tags: List of PyMOAB Tags
            A list of all vector tags in the mesh.
 
     Raises:
@@ -94,12 +94,12 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, length
            A PyMOAB core instance with a loaded data file for reference.
        mb_exp: Core
            A PyMOAB core instance with a loaded data file for expanding vector tags.
-       hexes: List
+       hexes: List of Integers
            A list of all hex elements in the mesh.
-       scal_tags: List
+       scal_tags: List of PyMOAB Tags
            A list of all scalar tags in the mesh.
-       vec_tags: List
-           A list of all vector tags in the mesh.
+       vec_tag: PyMOAB Tag
+           The vector tag to be expanded.
        length: int
            The length of the vector tag.
        name: str
