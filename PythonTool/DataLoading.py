@@ -41,7 +41,7 @@ def parse_arguments():
                         )
 
     parser.add_argument("-s", "--sessionfile",
-                        action="store_false",
+                        action="store_true",
                         help="Indicate whether or not to save the VisIt session file."
                         )
 
@@ -72,10 +72,9 @@ def py_mb_convert(file_location, file_extension):
    mb.load_file(file_location)
 
    # Isolate file name from string containing the file location.
-   input_array = file_location.split("/")
-   input_file = input_array[-1]
-   base_file_name = input_file[:-4]
-   new_file_name = base_file_name + file_extension
+   input_file = file_location.split("/")
+   file_name = '.'.join(input_file[-1].split(".")[:-1])
+   new_file_name = file_name + file_extension
 
    # Write the new file with the user supplied extension.
    mb.write_file(new_file_name)
@@ -149,7 +148,8 @@ def data_loading(geometry_file, data_file, images, session_file):
        4) YZ plane slice through the centroid.
    Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot
    with the "TALLY_TAG" variable, and the second, third, and fourth windows have
-   Contour plots with the "ERROR_TAG" variable.
+   Contour plots with the "ERROR_TAG" variable. Delete the session file after
+   loading the data into VisIt unless the user has specified not to.
 
    Input:
    ______
@@ -233,7 +233,7 @@ def data_loading(geometry_file, data_file, images, session_file):
    Vi.SetWindowLayout(4)
 
    # Save the session file with the default VisIt output to the current directory.
-   visit_output = "visitDefaultOutput.session"
+   visit_output = "VisitDefaultOutput.session"
    Vi.SaveSession(visit_output)
    Vi.Close()
 
@@ -242,7 +242,7 @@ def data_loading(geometry_file, data_file, images, session_file):
    os.system("visit -sessionfile {} &".format(session_file_path))
 
    # If the user would like to remove the session file, do so after VisIt has opened.
-   if session_file:
+   if not session_file:
        os.system("sleep 10; rm {}".format(session_file_path))
 
 
