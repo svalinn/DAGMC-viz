@@ -116,7 +116,7 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
 
     # Create a directory to store the vector tag expansion files.
     vec_dir_name = name + "_database"
-    os.mkdir(dir_name/vec_dir_name)
+    os.mkdir(dir_name + "/" + vec_dir_name)
 
     """
     For the vector tag on each element, retrieve the scalar value at a specific
