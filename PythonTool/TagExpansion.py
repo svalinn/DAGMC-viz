@@ -45,7 +45,7 @@ def get_tag_lists(mb, element):
 
     Returns:
     ________
-       element_list: List of Integers
+       element_list: List of MOAB Entity Handles
            A list of all specific elements in the mesh, in which the type is
            represented by an integer.
        scalar_tags: List of PyMOAB Tags
@@ -95,7 +95,7 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
        mb_exp: Core
            A PyMOAB core instance with a loaded data file for expanding
            vector tags.
-       hexes: List of Integers
+       hexes: List of MOAB Entity Handles
            A list of all hex elements in the mesh.
        scal_tags: List of PyMOAB Tags
            A list of all scalar tags in the mesh.
