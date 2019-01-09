@@ -206,7 +206,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None):
     else:
         dir_name = main_dir_name + "_database"
 
-    # Ensure an existing dictionary is not written over.
+    # Ensure an existing directory is not written over.
     dict_number = 1
     while os.path.isdir(dir_name):
         if main_dir_name is None:
