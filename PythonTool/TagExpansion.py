@@ -81,7 +81,7 @@ def get_tag_lists(mb, element):
     return element_list, scalar_tags, vector_tags
 
 
-def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag):
+def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_name):
     """
     Expand the vector tag on each element in the given mesh data file. Write a
     file to disk for each index with the corresponding scalar tag value.
@@ -93,40 +93,36 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag):
        mb_ref: Core
            A PyMOAB core instance with a loaded data file for reference.
        mb_exp: Core
-           A PyMOAB core instance with a loaded data file for expanding vector tags.
+           A PyMOAB core instance with a loaded data file for expanding
+           vector tags.
        hexes: List of Integers
            A list of all hex elements in the mesh.
        scal_tags: List of PyMOAB Tags
            A list of all scalar tags in the mesh.
        vec_tag: PyMOAB Tag
            The vector tag to be expanded.
+       dir_name: str
+           The name of the directory in which to create and populate each
+           vector tag directory.
 
     Returns:
     ________
        none
     """
 
-    # Create a directory for the vector tag expansion files.
-    input_list = mesh_file.split("/")
-    file_name = '.'.join(input_list[-1].split(".")[:-1])
-    dir_name = file_name + "_database"
+    # Get the length and tag name of the vector tag.
+    length = vec_tag.get_length()
+    name = vec_tag.get_name()
 
-    # Ensure an existing dictionary is not written over.
-    dict_number = 1
-    while os.path.isdir(dir_name):
-        dir_name = file_name + "_database" + str(dict_number)
-        dict_number += 1
-    os.mkdir(dir_name)
+    # Create a directory to store the vector tag expansion files.
+    vec_dir_name = name + "_database"
+    os.mkdir(dir_name/vec_dir_name)
 
     """
     For the vector tag on each element, retrieve the scalar value at a specific
     index and create a scalar tag. For each index, write the scalar tag value
     to disk in a vtk file in the specified database.
     """
-
-    # Get the length and tag name of the vector tag.
-    length = vec_tag.get_length()
-    name = vec_tag.get_name()
 
     index = 0
     while index < length:
@@ -139,7 +135,7 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag):
         mb_ref.tag_set_data(scalar_tag, hexes, scalar_data)
 
         # Write the mesh file with the new scalar tag.
-        file_location = os.getcwd() + "/" + dir_name + "/" + name + str(index) + ".vtk"
+        file_location = os.getcwd() + "/" + dir_name + "/" + vec_dir_name + "/" + name + str(index) + ".vtk"
         mb_ref.write_file(file_location)
         index += 1
 
@@ -195,8 +191,21 @@ def expand_vector_tags(mesh_file):
         print("WARNING: No hex elements were found in the mesh.")
         exit()
 
+    # Create a directory for the vector tag expansion files.
+    input_list = mesh_file.split("/")
+    file_name = '.'.join(input_list[-1].split(".")[:-1])
+    dir_name = file_name + "_database"
+
+    # Ensure an existing dictionary is not written over.
+    dict_number = 1
+    while os.path.isdir(dir_name):
+        dir_name = file_name + "_database" + str(dict_number)
+        dict_number += 1
+    os.mkdir(dir_name)
+
+    # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
-        create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag)
+        create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, dir_name)
 
 
 def main():
