@@ -38,7 +38,7 @@ def parse_arguments():
 def get_tag_lists(mb, element):
     """
     Create separate lists of each scalar and vector tag in the mesh file by
-    identifying each tag on a specific mesh element and determining the type.
+    identifying each tag on a representative mesh element and determining the type.
 
     Input:
     ______
