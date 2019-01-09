@@ -64,7 +64,7 @@ def get_tag_lists(mb, element):
 
     # Warn the user if there are none of the specified mesh elements.
     if len(element_list) == 0:
-        raise LookupError()
+        raise LookupError("WARNING: No hex elements were found in the mesh.")
 
     tag_list = mb.tag_get_tags_on_entity(element_list[0])
 
@@ -168,8 +168,8 @@ def expand_vector_tags(mesh_file):
     # Retrieve the lists of scalar and vector tags on the mesh.
     try:
         hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
-    except LookupError:
-        print("WARNING: No hex elements were found in the mesh.")
+    except LookupError as e:
+        print(str(e))
         exit()
 
     # Warn the user if the mesh file does not contain at least one vector tag.
@@ -187,8 +187,8 @@ def expand_vector_tags(mesh_file):
     # Retrieve the lists of scalar and vector tags on the mesh.
     try:
         hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
-    except LookupError:
-        print("WARNING: No hex elements were found in the mesh.")
+    except LookupError as e:
+        print(str(e))
         exit()
 
     # Create a directory for the vector tag expansion files.
@@ -218,7 +218,6 @@ def main():
         expand_vector_tags(args.meshfile)
     except LookupError as e:
         print(str(e))
-        exit()
 
 
 if __name__ == "__main__":
