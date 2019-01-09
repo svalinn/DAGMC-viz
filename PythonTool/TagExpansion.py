@@ -6,7 +6,8 @@ from pymoab import core, tag, types
 
 def parse_arguments():
     """
-    Parse the argument list and return a mesh file location.
+    Parse the argument list and return a mesh file location and optional main
+    directory name.
 
     Input:
     ______
@@ -15,7 +16,7 @@ def parse_arguments():
     Returns:
     ________
        args: Namespace
-           User supplied mesh file location.
+           User supplied mesh file location and optional main directory name.
     """
 
     parser = argparse.ArgumentParser(description="Expand vector tags to scalar tags.")
@@ -23,6 +24,10 @@ def parse_arguments():
     parser.add_argument("meshfile",
                         type=str,
                         help="Provide a path to the mesh file."
+                        )
+    parser.add_argument("-d", "--dirname",
+                        type=str,
+                        help="Provide a name for the main directory."
                         )
 
     args = parser.parse_args()
@@ -142,7 +147,7 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
     print(str(index) + " files have been written to disk.")
 
 
-def expand_vector_tags(mesh_file):
+def expand_vector_tags(mesh_file, main_dir_name = None):
     """
     Load the mesh file and extract the lists of scalar and vector tags, then
     expand each vector tag.
@@ -151,6 +156,8 @@ def expand_vector_tags(mesh_file):
     ______
        mesh_file: str
            User supplied mesh file location.
+       main_dir_name: str
+           Optional user supplied name for main directory.
 
     Returns:
     ________
@@ -192,14 +199,20 @@ def expand_vector_tags(mesh_file):
         exit()
 
     # Create a directory for the vector tag expansion files.
-    input_list = mesh_file.split("/")
-    file_name = '.'.join(input_list[-1].split(".")[:-1])
-    dir_name = file_name + "_database"
+    if main_dir_name is None:
+        input_list = mesh_file.split("/")
+        file_name = '.'.join(input_list[-1].split(".")[:-1])
+        dir_name = file_name + "_database"
+    else:
+        dir_name = main_dir_name + "_database"
 
     # Ensure an existing dictionary is not written over.
     dict_number = 1
     while os.path.isdir(dir_name):
-        dir_name = file_name + "_database" + str(dict_number)
+        if main_dir_name is None:
+            dir_name = file_name + "_database" + str(dict_number)
+        else:
+            dir_name = main_dir_name + "_database" + str(dict_number)
         dict_number += 1
     os.mkdir(dir_name)
 
@@ -215,7 +228,7 @@ def main():
 
     # Expand the vector tags from the mesh file.
     try:
-        expand_vector_tags(args.meshfile)
+        expand_vector_tags(args.meshfile, args.dirname)
     except LookupError as e:
         print(str(e))
 
