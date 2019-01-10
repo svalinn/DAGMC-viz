@@ -263,11 +263,9 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
         dict_number += 1
     os.mkdir(dir_name)
 
-    """
     # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
         create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, dir_name)
-    """
 
 
 def main():
