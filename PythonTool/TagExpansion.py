@@ -6,8 +6,9 @@ from pymoab import core, tag, types
 
 def parse_arguments():
     """
-    Parse the argument list and return a mesh file location and optional main
-    directory name.
+    Parse the argument list and return a mesh file location, optional main
+    directory name, and optional MB element type if the mesh file does not contain
+    any hex elements.
 
     Input:
     ______
@@ -16,7 +17,8 @@ def parse_arguments():
     Returns:
     ________
        args: Namespace
-           User supplied mesh file location and optional main directory name.
+           User supplied mesh file location, optional main directory name, and
+           optional MB element type.
     """
 
     parser = argparse.ArgumentParser(description="Expand vector tags to scalar tags.")
@@ -29,13 +31,17 @@ def parse_arguments():
                         type=str,
                         help="Provide a name for the main directory."
                         )
+    parser.add_argument("-e", "--element",
+                        type=str,
+                        help="Provide a type of MB element other than hex."
+                        )
 
     args = parser.parse_args()
 
     return args
 
 
-def get_tag_lists(mb, element):
+def get_tag_lists(mb, element_type, element_id):
     """
     Create separate lists of each scalar and vector tag in the mesh file by
     identifying each tag on a representative mesh element and determining the type.
@@ -44,7 +50,9 @@ def get_tag_lists(mb, element):
     ______
        mb: Core
            A PyMOAB core instance with a loaded data file.
-       element: int
+       element_type: str
+           The type of MOAB element from which to extract the tag list.
+       element_id: int
            The type of MOAB element from which to extract the tag list,
            represented by an integer.
 
@@ -65,11 +73,11 @@ def get_tag_lists(mb, element):
 
     # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
     root = mb.get_root_set()
-    element_list = mb.get_entities_by_type(root, element)
+    element_list = mb.get_entities_by_type(root, element_id)
 
     # Warn the user if there are none of the specified mesh elements.
     if len(element_list) == 0:
-        raise LookupError("WARNING: No hex elements were found in the mesh.")
+        raise LookupError("WARNING: No " + element_type + " elements were found in the mesh.")
 
     tag_list = mb.tag_get_tags_on_entity(element_list[0])
 
@@ -147,7 +155,7 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
     print(str(index) + " files have been written to disk.")
 
 
-def expand_vector_tags(mesh_file, main_dir_name = None):
+def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
     """
     Load the mesh file and extract the lists of scalar and vector tags, then
     expand each vector tag.
@@ -158,6 +166,8 @@ def expand_vector_tags(mesh_file, main_dir_name = None):
            User supplied mesh file location.
        main_dir_name: str
            Optional user supplied name for main directory.
+       element_type: str
+           Optional user supplied MB element type other than hex.
 
     Returns:
     ________
@@ -168,16 +178,38 @@ def expand_vector_tags(mesh_file, main_dir_name = None):
        LookupError: If the file does not contain any vector tags.
     """
 
+    # Create a dictionary with the MB element types and their integer values.
+    elements = {
+        "vertex" : 0, "edge" : 1, "tri" : 2, "quad" : 3, "polygon" : 4,
+        "tet" : 5, "pyramid" : 6, "prism" : 7, "knife" : 8, "hex" : 9,
+        "polyhedron" : 10, "entityset" : 11, "maxtype" : 12
+        }
+
     # Load the mesh file to create a reference mesh.
     mb_ref = core.Core()
     mb_ref.load_file(mesh_file)
 
-    # Retrieve the lists of scalar and vector tags on the mesh.
-    try:
-        hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, types.MBHEX)
-    except LookupError as e:
-        print(str(e))
-        exit()
+    # Retrieve the lists of scalar and vector tags on the reference mesh.
+    if element_type is None:
+        # Search for hex elements in the mesh.
+        element_type = "hex"
+        try:
+            hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, types.MBHEX)
+        except LookupError as e:
+            print(str(e))
+            exit()
+    else:
+        # Ensure the user entered a valid MB element type.
+        type_int = elements.get(element_type.lower())
+        if type_int is None:
+            print("WARNING: Please choose a valid MB element type.")
+            exit()
+        else:
+            try:
+                hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
+            except LookupError as e:
+                print(str(e))
+                exit()
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
@@ -191,12 +223,27 @@ def expand_vector_tags(mesh_file, main_dir_name = None):
     mb_exp = core.Core()
     mb_exp.load_file(mesh_file)
 
-    # Retrieve the lists of scalar and vector tags on the mesh.
-    try:
-        hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, types.MBHEX)
-    except LookupError as e:
-        print(str(e))
-        exit()
+    # Retrieve the lists of scalar and vector tags on the expansion mesh.
+    if element_type is None:
+        # Search for hex elements in the mesh.
+        element_type = "hex"
+        try:
+            hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, types.MBHEX)
+        except LookupError as e:
+            print(str(e))
+            exit()
+    else:
+        # Ensure the user entered a valid MB element type.
+        type_int = elements.get(element_type.lower())
+        if type_int is None:
+            print("WARNING: Please choose a valid MB element type.")
+            exit()
+        else:
+            try:
+                hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
+            except LookupError as e:
+                print(str(e))
+                exit()
 
     # Create a directory for the vector tag expansion files.
     if main_dir_name is None:
@@ -216,9 +263,11 @@ def expand_vector_tags(mesh_file, main_dir_name = None):
         dict_number += 1
     os.mkdir(dir_name)
 
+    """
     # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
         create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, dir_name)
+    """
 
 
 def main():
@@ -228,7 +277,7 @@ def main():
 
     # Expand the vector tags from the mesh file.
     try:
-        expand_vector_tags(args.meshfile, args.dirname)
+        expand_vector_tags(args.meshfile, args.dirname, args.element)
     except LookupError as e:
         print(str(e))
 
