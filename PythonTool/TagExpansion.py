@@ -213,7 +213,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
-        raise LookupError("WARNING: This mesh file did not contain any vector tags.")
+        raise LookupError("WARNING: This mesh file did not contain any vector tags on " + element_type + " elements.")
 
     # Delete each vector tag from the reference mesh.
     for tag in vec_tags_ref:
