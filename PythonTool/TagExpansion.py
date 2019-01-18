@@ -80,7 +80,7 @@ def get_tag_lists(mb, element_type, element_id):
 
     # Warn the user if there are none of the specified mesh elements.
     if len(element_list) == 0:
-        raise LookupError("WARNING: No " + element_type + " elements were found in the mesh.")
+        raise LookupError("WARNING: No {} elements were found in the mesh.".format(element_type))
 
     tag_list = mb.tag_get_tags_on_entity(element_list[0])
 
@@ -216,7 +216,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
-        raise LookupError("WARNING: This mesh file did not contain any vector tags on " + element_type + " elements.")
+        raise LookupError("WARNING: This mesh file did not contain any vector tags on {} elements.".format(element_type))
 
     # Delete each vector tag from the reference mesh.
     for tag in vec_tags_ref:
@@ -266,9 +266,11 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
         dict_number += 1
     os.mkdir(dir_name)
 
+    """
     # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
         create_database(mesh_file, mb_ref, mb_exp, elements_ref, scal_tags_ref, tag, dir_name)
+    """
 
 
 def main():
