@@ -33,7 +33,10 @@ def parse_arguments():
                         )
     parser.add_argument("-e", "--element",
                         type=str,
-                        help="Provide a type of MB element other than hex."
+                        help="""Provide a type of MB element other than hex. Valid
+                             element types include vertex, edge, tri, quad, polygon,
+                             tet, pyramid, prism, knife, polyhedron, entityset,
+                             and maxtype."""
                         )
 
     args = parser.parse_args()
