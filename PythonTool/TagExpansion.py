@@ -71,7 +71,7 @@ def get_tag_lists(mb, element_type, element_id):
        LookupError: If no element of the user specified type is found.
     """
 
-    # Retrieve an arbitrary MBHEX element in the mesh and extract the tag list.
+    # Retrieve an arbitrary element of the specified type in the mesh and extract the tag list.
     root = mb.get_root_set()
     element_list = mb.get_entities_by_type(root, element_id)
 
@@ -94,7 +94,7 @@ def get_tag_lists(mb, element_type, element_id):
     return element_list, scalar_tags, vector_tags
 
 
-def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_name):
+def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir_name):
     """
     Expand the vector tag on each element in the given mesh data file. Write a
     file to disk for each index with the corresponding scalar tag value.
@@ -108,8 +108,8 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
        mb_exp: Core
            A PyMOAB core instance with a loaded data file for expanding
            vector tags.
-       hexes: List of MOAB Entity Handles
-           A list of all hex elements in the mesh.
+       elements: List of MOAB Entity Handles
+           A list of all elements of a specific type in the mesh.
        scal_tags: List of PyMOAB Tags
            A list of all scalar tags in the mesh.
        vec_tag: PyMOAB Tag
@@ -140,12 +140,12 @@ def create_database(mesh_file, mb_ref, mb_exp, hexes, scal_tags, vec_tag, dir_na
     index = 0
     while index < length:
         scalar_data = []
-        data = mb_exp.tag_get_data(vec_tag, hexes)
+        data = mb_exp.tag_get_data(vec_tag, elements)
         scalar_data = np.copy(data[:,index])
         data_type = vec_tag.get_data_type()
         scalar_tag = mb_ref.tag_get_handle(name, 1, data_type, types.MB_TAG_SPARSE,
                                            create_if_missing = True)
-        mb_ref.tag_set_data(scalar_tag, hexes, scalar_data)
+        mb_ref.tag_set_data(scalar_tag, elements, scalar_data)
 
         # Write the mesh file with the new scalar tag.
         file_location = os.getcwd() + "/" + dir_name + "/" + vec_dir_name + "/" + name + str(index) + ".vtk"
@@ -194,7 +194,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
         # Search for hex elements in the mesh.
         element_type = "hex"
         try:
-            hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, types.MBHEX)
+            elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, types.MBHEX)
         except LookupError as e:
             print(str(e))
             exit()
@@ -206,7 +206,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
             exit()
         else:
             try:
-                hexes_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
+                elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
             except LookupError as e:
                 print(str(e))
                 exit()
@@ -228,7 +228,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
         # Search for hex elements in the mesh.
         element_type = "hex"
         try:
-            hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, types.MBHEX)
+            elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, types.MBHEX)
         except LookupError as e:
             print(str(e))
             exit()
@@ -240,7 +240,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
             exit()
         else:
             try:
-                hexes_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
+                elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
             except LookupError as e:
                 print(str(e))
                 exit()
@@ -265,7 +265,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
 
     # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
-        create_database(mesh_file, mb_ref, mb_exp, hexes_ref, scal_tags_ref, tag, dir_name)
+        create_database(mesh_file, mb_ref, mb_exp, elements_ref, scal_tags_ref, tag, dir_name)
 
 
 def main():
