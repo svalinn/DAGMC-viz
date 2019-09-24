@@ -7,8 +7,7 @@ from pymoab import core, tag, types
 def parse_arguments():
     """
     Parse the argument list and return a mesh file location, optional main
-    directory name, and optional MB element type if the mesh file does not contain
-    any hex elements.
+    directory name, and optional MB element type.
 
     Input:
     ______
@@ -131,8 +130,8 @@ def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir
     name = vec_tag.get_name()
 
     # Create a directory to store the vector tag expansion files.
-    vec_dir_name = name + "_database"
-    os.mkdir(dir_name + "/" + vec_dir_name)
+    vec_dir_name = dir_name + "/" + name + "_database"
+    os.mkdir(vec_dir_name)
 
     """
     For the vector tag on each element, retrieve the scalar value at a specific
@@ -151,7 +150,7 @@ def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir
         mb_ref.tag_set_data(scalar_tag, elements, scalar_data)
 
         # Write the mesh file with the new scalar tag.
-        file_location = os.getcwd() + "/" + dir_name + "/" + vec_dir_name + "/" + name + str(index) + ".vtk"
+        file_location = os.getcwd() + "/" + vec_dir_name + "/" + name + str(index) + ".vtk"
         mb_ref.write_file(file_location)
         index += 1
 
@@ -160,7 +159,7 @@ def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir
 
 def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
     """
-    Load the mesh file and extract the lists of scalar and vector tags, then
+    Load the mesh file, extract the lists of scalar and vector tags, and
     expand each vector tag.
 
     Input:
@@ -266,11 +265,9 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
         dict_number += 1
     os.mkdir(dir_name)
 
-    """
     # Expand each vector tag present in the mesh.
     for tag in vec_tags_exp:
         create_database(mesh_file, mb_ref, mb_exp, elements_ref, scal_tags_ref, tag, dir_name)
-    """
 
 
 def main():
