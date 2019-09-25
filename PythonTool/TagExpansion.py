@@ -56,8 +56,7 @@ def get_tag_lists(mb, element_type, element_id):
        element_type: str
            The type of MOAB element from which to extract the tag list.
        element_id: int
-           The type of MOAB element from which to extract the tag list,
-           represented by an integer.
+           The type of MOAB element from which to extract the tag list.
 
     Returns:
     ________
@@ -181,11 +180,13 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
        LookupError: If the file does not contain any vector tags.
     """
 
-    # Create a dictionary with the MB element types and their integer values.
+    # Create a dictionary with the MB element types.
     elements = {
-        "vertex" : 0, "edge" : 1, "tri" : 2, "quad" : 3, "polygon" : 4,
-        "tet" : 5, "pyramid" : 6, "prism" : 7, "knife" : 8, "hex" : 9,
-        "polyhedron" : 10, "entityset" : 11, "maxtype" : 12
+        "vertex" : types.MBVERTEX, "edge" : types.MBEDGE, "tri" : types.MBTRI,
+        "quad" : types.MBQUAD, "polygon" : types.MBPOLYGON, "tet" : types.MBTET,
+        "pyramid" : types.MBPYRAMID, "prism" : types.MBPRISM, "knife" : types.MBKNIFE,
+        "hex" : types.MBHEX, "polyhedron" : types.MBPOLYHEDRON, "maxtype" : types.MBMAXTYPE,
+        "entityset" : types.MBENTITYSET
         }
 
     # Load the mesh file to create a reference mesh.
@@ -193,15 +194,15 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     mb_ref.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
-    type_int = elements.get(element_type.lower())
+    mb_type = elements.get(element_type.lower())
 
-    if type_int is None:
+    if mb_type is None:
         print("WARNING: Please choose a valid MB element type.")
         exit()
 
     # Retrieve the lists of scalar and vector tags on the reference mesh.
     try:
-        elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
+        elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, mb_type)
     except LookupError as e:
         print(str(e))
         exit()
@@ -220,7 +221,7 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
 
     # Retrieve the lists of scalar and vector tags on the mesh.
     try:
-        elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
+        elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, mb_type)
     except LookupError as e:
         print(str(e))
         exit()
