@@ -4,6 +4,24 @@ import os
 from pymoab import core, tag, types
 
 
+# Create a dictionary with the MB element types and their integer values.
+elements = {
+    types.MBVERTEX : "vertex",
+    types.MBEDGE : "edge",
+    types.MBTRI : "tri",
+    types.MBQUAD : "quad",
+    types.MBPOLYGON : "polygon",
+    types.MBTET : "tet",
+    types.MBPYRAMID : "pyramid",
+    types.MBPRISM : "prism",
+    types.MBKNIFE : "knife",
+    types.MBHEX : "hex",
+    types.MBPOLYHEDRON : "polyhedron",
+    types.MBENTITYSET : "entityset",
+    types.MAXTYPE : "maxtype"
+}
+
+
 def parse_arguments():
     """
     Parse the argument list and return a mesh file location, optional main
@@ -33,6 +51,7 @@ def parse_arguments():
     parser.add_argument("-e", "--element",
                         type=str,
                         default="hex",
+                        choices=elements.values(),
                         help="""Provide a type of MB element other than hex. Valid
                              element types include vertex, edge, tri, quad, polygon,
                              tet, pyramid, prism, knife, polyhedron, entityset,
@@ -180,25 +199,12 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
        LookupError: If the file does not contain any vector tags.
     """
 
-    # Create a dictionary with the MB element types.
-    elements = {
-        "vertex" : types.MBVERTEX, "edge" : types.MBEDGE, "tri" : types.MBTRI,
-        "quad" : types.MBQUAD, "polygon" : types.MBPOLYGON, "tet" : types.MBTET,
-        "pyramid" : types.MBPYRAMID, "prism" : types.MBPRISM, "knife" : types.MBKNIFE,
-        "hex" : types.MBHEX, "polyhedron" : types.MBPOLYHEDRON, "maxtype" : types.MBMAXTYPE,
-        "entityset" : types.MBENTITYSET
-        }
-
     # Load the mesh file to create a reference mesh.
     mb_ref = core.Core()
     mb_ref.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
     mb_type = elements.get(element_type.lower())
-
-    if mb_type is None:
-        print("WARNING: Please choose a valid MB element type.")
-        exit()
 
     # Retrieve the lists of scalar and vector tags on the reference mesh.
     try:
