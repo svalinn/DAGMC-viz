@@ -32,6 +32,7 @@ def parse_arguments():
                         )
     parser.add_argument("-e", "--element",
                         type=str,
+                        default="hex",
                         help="""Provide a type of MB element other than hex. Valid
                              element types include vertex, edge, tri, quad, polygon,
                              tet, pyramid, prism, knife, polyhedron, entityset,
@@ -157,7 +158,7 @@ def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir
     print(str(index) + " files have been written to disk.")
 
 
-def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
+def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     """
     Load the mesh file, extract the lists of scalar and vector tags, and
     expand each vector tag.
@@ -191,27 +192,19 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
     mb_ref = core.Core()
     mb_ref.load_file(mesh_file)
 
+    # Ensure the MB element type is valid.
+    type_int = elements.get(element_type.lower())
+
+    if type_int is None:
+        print("WARNING: Please choose a valid MB element type.")
+        exit()
+
     # Retrieve the lists of scalar and vector tags on the reference mesh.
-    if element_type is None:
-        # Search for hex elements in the mesh.
-        element_type = "hex"
-        try:
-            elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, types.MBHEX)
-        except LookupError as e:
-            print(str(e))
-            exit()
-    else:
-        # Ensure the user entered a valid MB element type.
-        type_int = elements.get(element_type.lower())
-        if type_int is None:
-            print("WARNING: Please choose a valid MB element type.")
-            exit()
-        else:
-            try:
-                elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
-            except LookupError as e:
-                print(str(e))
-                exit()
+    try:
+        elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, type_int)
+    except LookupError as e:
+        print(str(e))
+        exit()
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
@@ -225,27 +218,12 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
     mb_exp = core.Core()
     mb_exp.load_file(mesh_file)
 
-    # Retrieve the lists of scalar and vector tags on the expansion mesh.
-    if element_type is None:
-        # Search for hex elements in the mesh.
-        element_type = "hex"
-        try:
-            elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, types.MBHEX)
-        except LookupError as e:
-            print(str(e))
-            exit()
-    else:
-        # Ensure the user entered a valid MB element type.
-        type_int = elements.get(element_type.lower())
-        if type_int is None:
-            print("WARNING: Please choose a valid MB element type.")
-            exit()
-        else:
-            try:
-                elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
-            except LookupError as e:
-                print(str(e))
-                exit()
+    # Retrieve the lists of scalar and vector tags on the mesh.
+    try:
+        elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, type_int)
+    except LookupError as e:
+        print(str(e))
+        exit()
 
     # Create a directory for the vector tag expansion files.
     if main_dir_name is None:
@@ -258,10 +236,7 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
     # Ensure an existing directory is not written over.
     dict_number = 1
     while os.path.isdir(dir_name):
-        if main_dir_name is None:
-            dir_name = file_name + "_database" + str(dict_number)
-        else:
-            dir_name = main_dir_name + "_database" + str(dict_number)
+        dir_name = dir_name + str(dict_number)
         dict_number += 1
     os.mkdir(dir_name)
 
@@ -272,12 +247,11 @@ def expand_vector_tags(mesh_file, main_dir_name = None, element_type = None):
 
 def main():
 
-    # Parse arguments.
     args = parse_arguments()
 
     # Expand the vector tags from the mesh file.
     try:
-        expand_vector_tags(args.meshfile, args.dirname, args.element)
+        expand_vector_tags(args.meshfile, args.element, args.dirname)
     except LookupError as e:
         print(str(e))
 
