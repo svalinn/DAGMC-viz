@@ -21,6 +21,7 @@ elements = {
     types.MAXTYPE : "maxtype"
 }
 
+reverse_elements = { v: k for k, v in elements.items() }
 
 def parse_arguments():
     """
@@ -204,7 +205,7 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     mb_ref.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
-    mb_type = elements[element_type.lower()]
+    mb_type = reverse_elements[element_type.lower()]
 
     # Retrieve the lists of scalar and vector tags on the reference mesh.
     try:
