@@ -74,7 +74,7 @@ def get_tag_lists(mb, element_type, element_id):
        LookupError: If no element of the user specified type is found.
     """
 
-    # Retrieve an arbitrary element of the specified type in the mesh and extract the tag list.
+    # Retrieve arbitrary element of specified type in the mesh and extract the tag list.
     root = mb.get_root_set()
     element_list = mb.get_entities_by_type(root, element_id)
 
@@ -249,7 +249,6 @@ def main():
 
     args = parse_arguments()
 
-    # Expand the vector tags from the mesh file.
     try:
         expand_vector_tags(args.meshfile, args.element, args.dirname)
     except LookupError as e:
