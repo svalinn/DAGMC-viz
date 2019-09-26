@@ -6,22 +6,21 @@ from pymoab import core, tag, types
 
 # Create a dictionary with the MB element types and their integer values.
 elements = {
-    types.MBVERTEX : "vertex",
-    types.MBEDGE : "edge",
-    types.MBTRI : "tri",
-    types.MBQUAD : "quad",
-    types.MBPOLYGON : "polygon",
-    types.MBTET : "tet",
-    types.MBPYRAMID : "pyramid",
-    types.MBPRISM : "prism",
-    types.MBKNIFE : "knife",
-    types.MBHEX : "hex",
-    types.MBPOLYHEDRON : "polyhedron",
-    types.MBENTITYSET : "entityset",
-    types.MAXTYPE : "maxtype"
+    "vertex" : types.MBVERTEX,
+    "edge" : types.MBEDGE,
+    "tri" : types.MBTRI,
+    "quad" : types.MBQUAD,
+    "polygon" : types.MBPOLYGON,
+    "tet" : types.MBTET,
+    "pyramid" : types.MBPYRAMID,
+    "prism" : types.MBPRISM,
+    "knife" : types.MBKNIFE,
+    "hex" : types.MBHEX,
+    "polyhedron" : types.MBPOLYHEDRON,
+    "entityset" : types.MBENTITYSET,
+    "maxtype" : types.MBMAXTYPE
 }
 
-reverse_elements = { v: k for k, v in elements.items() }
 
 def parse_arguments():
     """
@@ -52,11 +51,8 @@ def parse_arguments():
     parser.add_argument("-e", "--element",
                         type=str,
                         default="hex",
-                        choices=list(elements.values()),  # not sure if the cast to list() is necessary
-                        help="""Provide a type of MB element other than hex. Valid
-                             element types include vertex, edge, tri, quad, polygon,
-                             tet, pyramid, prism, knife, polyhedron, entityset,
-                             and maxtype."""
+                        choices=elements.keys(),
+                        help="Provide a type of MB element other than hex."
                         )
 
     args = parser.parse_args()
@@ -205,14 +201,10 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     mb_ref.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
-    mb_type = reverse_elements[element_type.lower()]
+    mb_type = elements[element_type.lower()]
 
     # Retrieve the lists of scalar and vector tags on the reference mesh.
-    try:
-        elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, mb_type)
-    except LookupError as e:
-        print(str(e))
-        exit()
+    elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, mb_type)
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags_ref) < 1:
@@ -227,11 +219,7 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     mb_exp.load_file(mesh_file)
 
     # Retrieve the lists of scalar and vector tags on the mesh.
-    try:
-        elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, mb_type)
-    except LookupError as e:
-        print(str(e))
-        exit()
+    elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, mb_type)
 
     # Create a directory for the vector tag expansion files.
     if main_dir_name is None:
