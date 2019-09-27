@@ -49,10 +49,10 @@ def parse_arguments():
                         help="Provide a name for the main directory."
                         )
     parser.add_argument("-e", "--element",
-                        type=str,
+                        type=str.lower,
                         default="hex",
                         choices=elements.keys(),
-                        help="Provide a type of MB element other than hex."
+                        help="Provide the type of MOAB element on which to expand tags."
                         )
 
     args = parser.parse_args()
@@ -70,9 +70,11 @@ def get_tag_lists(mb, element_type, element_id):
        mb: Core
            A PyMOAB core instance with a loaded data file.
        element_type: str
-           The type of MOAB element from which to extract the tag list.
+           The type of MOAB element from which to extract the tag list
+           represented by a string.
        element_id: int
-           The type of MOAB element from which to extract the tag list.
+           The type of MOAB element from which to extract the tag list
+           represented by an integer.
 
     Returns:
     ________
@@ -201,7 +203,7 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     mb_ref.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
-    mb_type = elements[element_type.lower()]
+    mb_type = elements[element_type]
 
     # Retrieve the lists of scalar and vector tags on the reference mesh.
     elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, mb_type)
