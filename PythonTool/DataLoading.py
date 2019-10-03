@@ -1,7 +1,7 @@
 import argparse
 import os
 import visit as Vi
-from GraveIdentifyAndRemove import remove_graveyard
+from GraveyardRemoval import remove_graveyard
 from pymoab import core, tag, types
 
 
