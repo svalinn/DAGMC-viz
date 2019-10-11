@@ -12,7 +12,7 @@ def test_data_loading():
 
 	# Launch the script and wait for it to finish.
 	process = subprocess.Popen(["python", "../../PythonTool/DataLoading.py",
-                                    "../SampleData/fng_zip.h5m", "../SampleData/meshtal.vtk", "-s"])
+                                    "../SampleData/fng_zip.h5m", "../SampleData/meshtal.vtk", "-v", "-s"])
 	time.sleep(20)
 
 	# Check if the VisIt session file was generated correctly.
