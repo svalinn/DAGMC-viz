@@ -45,7 +45,7 @@ def parse_arguments():
                         help="Indicate whether to save the VisIt session file."
                         )
     parser.add_argument("-v", "--openvisit",
-                        action="store_true",
+                        action="store_false",
                         help="Indicate whether to open the session file in VisIt."
                         )
 
@@ -243,9 +243,11 @@ def data_loading(geometry_file, data_file, images, session_file, open_visit):
    Vi.SaveSession(visit_output)
    Vi.Close()
 
+   # Retrieve the path to the VisIt session file.
+   session_file_path = os.getcwd() + "/" + visit_output
+
    # If the user has indicated to, open the session file with the VisIt GUI.
    if open_visit:
-       session_file_path = os.getcwd() + "/" + visit_output
        os.system("visit -sessionfile {} &".format(session_file_path))
 
    # If the user has indicated to, remove the session file after VisIt has opened.
