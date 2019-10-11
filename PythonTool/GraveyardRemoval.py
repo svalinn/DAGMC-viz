@@ -136,8 +136,7 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
 
     """
     Check if the user specified an output file name. If so, write the file
-    with that name. If not, append onto the original input file name to
-    indicate the graveyard has been removed.
+    with that name. If not, append onto the original input file name.
     """
 
     if output_file is not None:

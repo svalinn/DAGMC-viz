@@ -8,9 +8,9 @@ from pymoab import core, tag, types
 def parse_arguments():
     """
     Parse the argument list and return the location of a geometry file, the
-    location of a data file, and indication if the user wants images of the
-    four default plot windows and the VisIt session file saved or not in the
-    current directory.
+    location of a data file, whether or not to save images of the four default
+    plot windows and the VisIt session file in the current directory, and
+    whether or not to open the session file in VisIt.
 
     Input:
     ______
@@ -21,7 +21,7 @@ def parse_arguments():
        args: Namespace
            User supplied geometry file location, data file location, and
            indication if the user wants images of the plot windows and the
-           session file saved.
+           session file saved and opened in VisIt.
     """
 
     parser = argparse.ArgumentParser(description="Create default VisIt output.")
@@ -37,12 +37,16 @@ def parse_arguments():
 
     parser.add_argument("-i", "--images",
                         action="store_true",
-                        help="Indicate whether or not to save images of plot windows."
+                        help="Indicate whether to save images of plot windows."
                         )
 
     parser.add_argument("-s", "--sessionfile",
                         action="store_true",
-                        help="Indicate whether or not to save the VisIt session file."
+                        help="Indicate whether to save the VisIt session file."
+                        )
+    parser.add_argument("-v", "--openvisit",
+                        action="store_true",
+                        help="Indicate whether to open the session file in VisIt."
                         )
 
     args = parser.parse_args()
@@ -138,11 +142,11 @@ def plane_slice_plotting(window_number, axis_number, label, images):
         Vi.SaveWindow()
 
 
-def data_loading(geometry_file, data_file, images, session_file):
+def data_loading(geometry_file, data_file, images, session_file, open_visit):
    """
    Convert geometry file to stl, convert data file to vtk, load each file
    into VisIt, and create and load a session file containing the four plot windows.
-       1) A cube with a slice through an octant in order to see the center.
+       1) A cube with a slice through an octant.
        2) XY plane slice through the centroid.
        3) XZ plane slice through the centroid.
        4) YZ plane slice through the centroid.
@@ -154,13 +158,15 @@ def data_loading(geometry_file, data_file, images, session_file):
    Input:
    ______
       geometry_file: h5m file
-          User supplied file containing geometry of interest.
+          User supplied geometry file.
       data_file: h5m or vtk file
-          User supplied file containing data of interest.
+          User supplied data file.
       images: boolean
           Whether or not to save images of the plot windows.
       session_file: boolean
           Whether or not to save VisIt session file.
+      open_visit: boolean
+          Whether or not to open the session file in VisIt.
 
    Returns:
    ________
@@ -180,9 +186,9 @@ def data_loading(geometry_file, data_file, images, session_file):
 
    # Create a list of dictionaries indicating the data, plot, and variable in VisIt.
    Files = [
-       {"file_name" : geometry_file, "plot_type" : "Mesh", "data_tag" : "STL_mesh"},
        {"file_name" : data_file, "plot_type" : "Pseudocolor", "data_tag" : "TALLY_TAG"},
-       {"file_name" : data_file, "plot_type" : "Contour", "data_tag" : "ERROR_TAG"}
+       {"file_name" : data_file, "plot_type" : "Contour", "data_tag" : "ERROR_TAG"},
+       {"file_name" : geometry_file, "plot_type" : "Mesh", "data_tag" : "STL_mesh"}
        ]
 
    Vi.LaunchNowin()
@@ -191,11 +197,11 @@ def data_loading(geometry_file, data_file, images, session_file):
        Vi.AddPlot(file["plot_type"],file["data_tag"])
 
    # Hide the contour plot in the first plot window.
-   Vi.SetActivePlots(2)
+   Vi.SetActivePlots(1)
    Vi.HideActivePlots()
 
    # Create the plot of the cube by activating the mesh and pseudocolor plots.
-   Vi.SetActivePlots((0,1))
+   Vi.SetActivePlots((0,2))
 
    # Set the view normal to the first octant.
    v = Vi.GetView3D()
@@ -237,22 +243,21 @@ def data_loading(geometry_file, data_file, images, session_file):
    Vi.SaveSession(visit_output)
    Vi.Close()
 
-   # Determine the absolute path to the session file and open it with the VisIt GUI.
-   session_file_path = os.getcwd() + "/" + visit_output
-   os.system("visit -sessionfile {} &".format(session_file_path))
+   # If the user has indicated to, open the session file with the VisIt GUI.
+   if open_visit:
+       session_file_path = os.getcwd() + "/" + visit_output
+       os.system("visit -sessionfile {} &".format(session_file_path))
 
-   # If the user would like to remove the session file, do so after VisIt has opened.
+   # If the user has indicated to, remove the session file after VisIt has opened.
    if not session_file:
        os.system("sleep 10; rm {}".format(session_file_path))
 
 
 def main():
 
-  # Parse arguments.
   args = parse_arguments()
 
-  # Create the default VisIt output.
-  data_loading(args.geofile, args.datafile, args.images, args.sessionfile)
+  data_loading(args.geofile, args.datafile, args.images, args.sessionfile, args.openvisit)
 
 
 if __name__ == "__main__":
