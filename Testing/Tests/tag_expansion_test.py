@@ -12,7 +12,7 @@ def test_tag_expansion():
 	# Launch the script and wait for it to finish.
 	subprocess.Popen(["python", "../../PythonTool/TagExpansion.py",
                           "../SampleData/nflux_mesh.h5m", "-e", "tet"])
-	time.sleep(54)
+	time.sleep(60)
 
 	# Check that the database has the appropriate number of files.
 	path, dirs, files = next(os.walk("nflux_mesh_database/TALLY_TAG_database"))
