@@ -67,36 +67,26 @@ def get_sets_by_category(mb_core, category_name):
     # Retrieve all EntitySets with a category tag of the user input value.
     group_categories = mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
                                                             tag_category, group_tag_values)
-    group_categories = list(group_categories)
 
-    return group_categories
+    return list(group_categories)
 
 
-def remove_graveyard(input_file, output_file = None, print_handle = None):
+def locate_graveyard(input_file, print_handle = None):
     """
-    Remove the graveyard volume from the data file and write the result
-    out to disk with a default input name or specified output name.
-
-    If the user has specified an output file name and extension, use this to
-    write the file. If they haven't, append "_no_grave" onto the name of the
-    input file and add the .h5m extension.
-
-    If the user has indicated to, print the entity handle of the EntitySet with
-    the "graveyard" name tag value.
+    Locate and remove the graveyard volume from the data file. If the user has
+    indicated to, print the handle of the EntitySet with the "graveyard" name tag value.
 
     Input:
     ______
        input_file: str
            User supplied data file location.
-       output_file: str
-           Optional user supplied output file name and extension.
        print_handle: boolean
            Indicates whether or not to print the graveyard entity handle.
 
     Returns:
     ________
-       output_file: str
-           The name of the file written to disk.
+       groups_to_write: List
+           The list of EntitySets with the graveyard volume omitted.
 
     Raises:
     _______
@@ -134,10 +124,34 @@ def remove_graveyard(input_file, output_file = None, print_handle = None):
     groups_to_write = [group_set for group_set in group_categories
                        if group_set not in graveyard_sets]
 
+    return groups_to_write
+
+
+def write_file(groups_to_write, input_file, output_file = None):
     """
-    Check if the user specified an output file name. If so, write the file
-    with that name. If not, append onto the original input file name.
+    Write the new file to disk with a default input name or specific output name.
+
+    If the user has specified an output file name and extension, use this to
+    write the file. If they haven't, append "_no_grave" onto the name of the
+    input file and add the .h5m extension.
+
+    Input:
+    ______
+       groups_to_write: List
+           The list of EntitySets with the graveyard volume omitted.
+       input_file: str
+           User supplied data file location.
+       output_file: str
+           Optional user supplied output file name and extension.
+
+    Returns:
+    ________
+       output_file: str
+           The name of the file written to disk.
     """
+
+    mb = core.Core()
+    mb.load_file(input_file)
 
     if output_file is not None:
         mb.write_file(output_file, output_sets=groups_to_write)
@@ -154,10 +168,13 @@ def main():
 
     args = parse_arguments()
 
+    # Remove the graveyard volume from the data and write the updated file to disk.
     try:
-        output_file = remove_graveyard(args.h5mfile, args.outputfile, args.printhandle)
+        groups_to_write = locate_graveyard(args.h5mfile, args.printhandle)
     except LookupError, e:
         print(e.message)
+
+    output_file = write_file(groups_to_write, args.h5mfile, args.outputfile)
 
 
 if __name__ == "__main__":
