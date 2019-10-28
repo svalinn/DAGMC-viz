@@ -2,7 +2,6 @@
 This class ensures that GraveyardRemoval.py correctly removes the graveyard from an h5m file.
 """
 
-import os
 import pymoab
 import sys
 
@@ -42,13 +41,11 @@ def test_print_locate_graveyard(capsys):
 
 def test_default_format_file_name():
     # Ensure this function returns the correct default output file name.
-    output_name = format_file_name('fng_zip.h5m', 'test_output.h5m')
-    assert (output_name == 'test_output.h5m') == True
-    os.system('rm test_output.h5m')
+    output_name = format_file_name('fng_zip.h5m')
+    assert (output_name == 'fng_zip_no_grave.h5m') == True
 
 
 def test_option_format_file_name():
     # Ensure this function returns the correct user input file name.
     output_name = format_file_name('fng_zip.h5m', 'test_output.h5m')
     assert (output_name == 'test_output.h5m') == True
-    os.system('rm test_output.h5m')
