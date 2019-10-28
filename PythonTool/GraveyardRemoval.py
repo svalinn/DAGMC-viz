@@ -41,45 +41,45 @@ def parse_arguments():
     return args
 
 
-def get_sets_by_category(mb_core, category_name):
+def get_sets_by_category(mb, category_name):
     """
     Identify EntitySets in the given geometry based on a category tag value.
 
     Input:
     ______
-       mb_core: Core
+       mb: Core
            A PyMOAB core instance with a loaded data file.
        category_name: str
            The category tag value of the EntitySets to identify.
 
     Returns:
     ________
-       entity_set_ids: List
+       group_categories: List
            The ID list of the EntitySets specific to the chosen category tag value.
     """
 
-    tag_category = mb_core.tag_get_handle(str(types.CATEGORY_TAG_NAME))
-    root = mb_core.get_root_set()
+    tag_category = mb.tag_get_handle(str(types.CATEGORY_TAG_NAME))
+    root = mb.get_root_set()
 
     # An array of tag values to be matched for entities returned by the following call.
     group_tag_values = np.array([category_name])
 
     # Retrieve all EntitySets with a category tag of the user input value.
-    group_categories = mb_core.get_entities_by_type_and_tag(root, MBENTITYSET,
-                                                            tag_category, group_tag_values)
+    group_categories = mb.get_entities_by_type_and_tag(root, MBENTITYSET,
+                                                       tag_category, group_tag_values)
 
     return list(group_categories)
 
 
-def locate_graveyard(input_file, print_handle = None):
+def locate_graveyard(mb, print_handle = None):
     """
     Locate and remove the graveyard volume from the data file. If the user has
     indicated to, print the handle of the EntitySet with the "graveyard" name tag value.
 
     Input:
     ______
-       input_file: str
-           User supplied data file location.
+       mb: Core
+           A PyMOAB core instance with a loaded data file.
        print_handle: boolean
            Indicates whether or not to print the graveyard entity handle.
 
@@ -93,8 +93,6 @@ def locate_graveyard(input_file, print_handle = None):
        LookupError: If no graveyard EntitySet is found.
     """
 
-    mb = core.Core()
-    mb.load_file(input_file)
     tag_name = mb.tag_get_handle(str(types.NAME_TAG_NAME))
 
     # Gather all entities with a category tag value of "Group".
@@ -117,8 +115,7 @@ def locate_graveyard(input_file, print_handle = None):
 
     # If the user would like, print the graveyard entity handle.
     if print_handle:
-        print("The entity handle(s) of the graveyard EntitySet(s): ")
-        print(graveyard_sets)
+        print("The entity handle(s) of the graveyard EntitySet(s): " + str(graveyard_sets))
 
     # Remove the graveyard EntitySet from the data.
     groups_to_write = [group_set for group_set in group_categories
@@ -127,9 +124,9 @@ def locate_graveyard(input_file, print_handle = None):
     return groups_to_write
 
 
-def write_file(groups_to_write, input_file, output_file = None):
+def format_file_name(input_file, output_file = None):
     """
-    Write the new file to disk with a default input name or specific output name.
+    Determine the name of the file to write to disk.
 
     If the user has specified an output file name and extension, use this to
     write the file. If they haven't, append "_no_grave" onto the name of the
@@ -137,8 +134,6 @@ def write_file(groups_to_write, input_file, output_file = None):
 
     Input:
     ______
-       groups_to_write: List
-           The list of EntitySets with the graveyard volume omitted.
        input_file: str
            User supplied data file location.
        output_file: str
@@ -146,35 +141,37 @@ def write_file(groups_to_write, input_file, output_file = None):
 
     Returns:
     ________
-       output_file: str
-           The name of the file written to disk.
+       file_name: str
+           The name of the file to write to disk.
     """
 
-    mb = core.Core()
-    mb.load_file(input_file)
-
     if output_file is not None:
-        mb.write_file(output_file, output_sets=groups_to_write)
+        file_name = output_file
     else:
         input_list = input_file.split("/")
         file_name = '.'.join(input_list[-1].split(".")[:-1])
-        output_file = file_name + "_no_grave.h5m"
-        mb.write_file(output_file, output_sets=groups_to_write)
+        file_name = file_name + "_no_grave.h5m"
 
-    return output_file
+    return file_name
 
 
 def main():
 
     args = parse_arguments()
 
-    # Remove the graveyard volume from the data and write the updated file to disk.
+    # Load the data file into MOAB.
+    mb = core.Core()
+    mb.load_file(args.h5mfile)
+
+    # Remove the graveyard volume from the data.
     try:
-        groups_to_write = locate_graveyard(args.h5mfile, args.printhandle)
+        groups_to_write = locate_graveyard(mb, args.printhandle)
     except LookupError, e:
         print(e.message)
 
-    output_file = write_file(groups_to_write, args.h5mfile, args.outputfile)
+    # Write the file out to disk.
+    output_file = format_file_name(args.h5mfile, args.outputfile)
+    mb.write_file(output_file, output_sets=groups_to_write)
 
 
 if __name__ == "__main__":
