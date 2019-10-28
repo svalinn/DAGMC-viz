@@ -5,12 +5,11 @@ This class ensures that GraveyardRemoval.py correctly removes the graveyard from
 import pymoab
 import sys
 
-sys.path.insert(1,"/home/piperlincoln/CNERG/DAGMC-viz/PythonTool")
+sys.path.insert(1,"../../PythonTool")
 
 from GraveyardRemoval import get_sets_by_category
 from GraveyardRemoval import locate_graveyard
 from GraveyardRemoval import format_file_name
-
 
 "Initialize a PyMOAB core instance and load in the h5m data file."
 mb = pymoab.core.Core()
