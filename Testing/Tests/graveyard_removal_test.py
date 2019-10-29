@@ -2,6 +2,7 @@
 This class ensures that GraveyardRemoval.py correctly removes the graveyard from an h5m file.
 """
 
+import os
 import pymoab
 import sys
 
@@ -10,6 +11,7 @@ sys.path.insert(1,"../../PythonTool")
 from GraveyardRemoval import get_sets_by_category
 from GraveyardRemoval import locate_graveyard
 from GraveyardRemoval import format_file_name
+
 
 "Initialize a PyMOAB core instance and load in the h5m data file."
 mb = pymoab.core.Core()
@@ -48,3 +50,11 @@ def test_option_format_file_name():
 	# Ensure this function returns the correct user input file name.
 	output_name = format_file_name('fng_zip.h5m', 'test_output.h5m')
 	assert (output_name == 'test_output.h5m') == True
+
+
+def test_graveyard_removal():
+	# Ensure that GraveyardRemoval correctly removes the graveyard from an h5m file.
+	os.system("python ../../PythonTool/GraveyardRemoval.py ../SampleData/fng_zip.h5m")
+	size = os.path.getsize("fng_zip_no_grave.h5m")
+	assert size == 53390316
+	os.system("rm fng_zip_no_grave.h5m")
