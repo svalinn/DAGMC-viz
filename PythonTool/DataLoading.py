@@ -151,7 +151,7 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
         Vi.SaveWindow()
 
 
-def visit_config(geometry_file, data_file, images, timestamp, session_file, open_visit):
+def visit_config(geometry_file, data_file, images, timestamp):
     """
     Convert geometry file to stl, convert data file to vtk, load each file
     into VisIt, and create and load a session file containing four plot windows.
@@ -171,10 +171,8 @@ def visit_config(geometry_file, data_file, images, timestamp, session_file, open
            User supplied data file.
        images: boolean
            Whether or not to save images of the plot windows.
-       session_file: boolean
-           Whether or not to save VisIt session file.
-       open_visit: boolean
-           Whether or not to open the session file in VisIt.
+       timestamp: boolean
+          Whether or not to keep the timestamp on plot window images.
 
     Returns:
     ________
@@ -261,14 +259,14 @@ def main():
     data_file = py_mb_convert(args.datafile, ".vtk")
 
     # Create the VisIt session file.
-    session_file_path = visit_config(geometry_file, data_file, args.images, args.timestamp, args.sessionfile, args.openvisit)
+    session_file_path = visit_config(geometry_file, data_file, args.images, args.timestamp)
 
     # If the user has indicated to, open the session file with the VisIt GUI.
-    if open_visit:
+    if args.openvisit:
         os.system("visit -sessionfile {} &".format(session_file_path))
 
     # If the user has indicated to, remove the session file after VisIt has opened.
-    if not session_file:
+    if not args.sessionfile:
         os.system("sleep 10; rm {}".format(session_file_path))
 
 
