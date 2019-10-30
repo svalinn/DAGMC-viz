@@ -1037,7 +1037,7 @@
                 <Field name="rangeScale" type="int">0</Field>
             </Object>
             <Object name="View2DAttributes">
-                <Field name="windowCoords" type="doubleArray" length="4">-49.2000007629395 49.2000007629395 -14.1000003814697 77.4300003051758 </Field>
+                <Field name="windowCoords" type="doubleArray" length="4">-275 275 -550 550 </Field>
                 <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
                 <Field name="fullFrameActivationMode" type="string">Auto</Field>
                 <Field name="fullFrameAutoThreshold" type="double">100</Field>
@@ -4556,12 +4556,12 @@
         </Object>
         <Object name="ViewerSubject">
             <Object name="SourceMap">
-                <Field name="SOURCE00" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/PythonTool/fng_zip_no_grave.stl</Field>
-                <Field name="SOURCE01" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/PythonTool/meshtal.vtk</Field>
+                <Field name="SOURCE00" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/Testing/Tests/donut.stl</Field>
+                <Field name="SOURCE01" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/Testing/Tests/meshtal.vtk</Field>
             </Object>
             <Object name="SourcePlugins">
-                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/PythonTool/fng_zip_no_grave.stl" type="string">STL_1.0</Field>
-                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/PythonTool/meshtal.vtk" type="string">VTK_1.0</Field>
+                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/Testing/Tests/donut.stl" type="string">STL_1.0</Field>
+                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/Testing/Tests/meshtal.vtk" type="string">VTK_1.0</Field>
             </Object>
             <Object name="DatabaseCorrelationList">
                 <Field name="needPermission" type="bool">true</Field>
@@ -5190,18 +5190,18 @@
                         </Object>
                         <Object name="View3DAttributes">
                             <Field name="viewNormal" type="doubleArray" length="3">1 1 1 </Field>
-                            <Field name="focus" type="doubleArray" length="3">0 31.664999961853 0 </Field>
+                            <Field name="focus" type="doubleArray" length="3">0 0 0 </Field>
                             <Field name="viewUp" type="doubleArray" length="3">0 1 0 </Field>
                             <Field name="viewAngle" type="double">30</Field>
-                            <Field name="parallelScale" type="double">83.4585246185048</Field>
-                            <Field name="nearPlane" type="double">-166.91704923701</Field>
-                            <Field name="farPlane" type="double">166.91704923701</Field>
+                            <Field name="parallelScale" type="double">825</Field>
+                            <Field name="nearPlane" type="double">-1650</Field>
+                            <Field name="farPlane" type="double">1650</Field>
                             <Field name="imagePan" type="doubleArray" length="2">0 0 </Field>
                             <Field name="imageZoom" type="double">1</Field>
                             <Field name="perspective" type="bool">true</Field>
                             <Field name="eyeAngle" type="double">2</Field>
                             <Field name="centerOfRotationSet" type="bool">false</Field>
-                            <Field name="centerOfRotation" type="doubleArray" length="3">0 31.664999961853 0 </Field>
+                            <Field name="centerOfRotation" type="doubleArray" length="3">0 0 0 </Field>
                             <Field name="axis3DScaleFlag" type="bool">false</Field>
                             <Field name="axis3DScales" type="doubleArray" length="3">1 1 1 </Field>
                             <Field name="shear" type="doubleArray" length="3">0 0 1 </Field>
@@ -6394,7 +6394,7 @@
                             <Field name="rangeScale" type="int">0</Field>
                         </Object>
                         <Object name="View2DAttributes">
-                            <Field name="windowCoords" type="doubleArray" length="4">-49.5 49.5 -14.1000003814697 77.4300003051758 </Field>
+                            <Field name="windowCoords" type="doubleArray" length="4">-550 550 -550 550 </Field>
                             <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
                             <Field name="fullFrameActivationMode" type="string">Auto</Field>
                             <Field name="fullFrameAutoThreshold" type="double">100</Field>
@@ -7673,7 +7673,7 @@
                             <Field name="rangeScale" type="int">0</Field>
                         </Object>
                         <Object name="View2DAttributes">
-                            <Field name="windowCoords" type="doubleArray" length="4">-49.5 49.5 -49.2000007629395 49.2000007629395 </Field>
+                            <Field name="windowCoords" type="doubleArray" length="4">-550 550 -275 275 </Field>
                             <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
                             <Field name="fullFrameActivationMode" type="string">Auto</Field>
                             <Field name="fullFrameAutoThreshold" type="double">100</Field>
@@ -8952,7 +8952,7 @@
                             <Field name="rangeScale" type="int">0</Field>
                         </Object>
                         <Object name="View2DAttributes">
-                            <Field name="windowCoords" type="doubleArray" length="4">-49.2000007629395 49.2000007629395 -14.1000003814697 77.4300003051758 </Field>
+                            <Field name="windowCoords" type="doubleArray" length="4">-275 275 -550 550 </Field>
                             <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
                             <Field name="fullFrameActivationMode" type="string">Auto</Field>
                             <Field name="fullFrameAutoThreshold" type="double">100</Field>

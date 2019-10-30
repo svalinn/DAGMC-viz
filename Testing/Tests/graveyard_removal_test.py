@@ -53,4 +53,4 @@ def test_graveyard_removal():
 	os.system("python ../../PythonTool/GraveyardRemoval.py ../SampleData/donut.h5m")
 	size = os.path.getsize("donut_no_grave.h5m")
 	assert size == 5748780
-	os.system("rm donut_no_grave.h5m")
+	os.remove("donut_no_grave.h5m")
