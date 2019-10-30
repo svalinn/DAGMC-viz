@@ -7,9 +7,9 @@ from pymoab import core, tag, types
 def parse_arguments():
     """
     Parse the argument list and return the location of a geometry file, the
-    location of a data file, whether or not to save images of the four default
-    plot windows and the VisIt session file in the current directory, and
-    whether or not to open the session file in VisIt.
+    location of a data file, whether or not to save images with a timestamp of
+    the four default plot windows and the VisIt session file in the current
+    directory, and whether or not to open the session file in VisIt.
 
     Input:
     ______
@@ -19,8 +19,8 @@ def parse_arguments():
     ________
        args: Namespace
            User supplied geometry file location, data file location, and
-           indication if the user wants images of the plot windows and the
-           session file saved and opened in VisIt.
+           indication if the user wants images of the plot windows with a
+           timestamp and the session file saved and opened in VisIt.
     """
 
     parser = argparse.ArgumentParser(description="Create default VisIt output.")
@@ -40,7 +40,7 @@ def parse_arguments():
                         )
     parser.add_argument("-t", "--timestamp",
                         action="store_true",
-                        help="Indicate whether to remove the time stamp from images."
+                        help="Indicate whether to remove the timestamp from images."
                         )
 
     parser.add_argument("-s", "--sessionfile",
@@ -78,7 +78,7 @@ def py_mb_convert(file_location, file_extension):
     mb = core.Core()
     mb.load_file(file_location)
 
-    # Isolate file name from string containing the file location.
+    # Isolate the file name from string containing the file location.
     input_file = file_location.split("/")
     file_name = '.'.join(input_file[-1].split(".")[:-1])
     new_file_name = file_name + file_extension
@@ -104,6 +104,8 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
           The title of the plane slice.
       images: boolean
           Whether or not to save images of the plot windows.
+      timestamp: boolean
+          Whether or not to keep the timestamp on plot window images.
 
     Returns:
     ________
