@@ -151,7 +151,7 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
         Vi.SaveWindow()
 
 
-def visit_config(geometry_file, data_file, images, timestamp):
+def visit_config(geometry_file, data_file, args):
     """
     Convert geometry file to stl, convert data file to vtk, load each file
     into VisIt, and create and load a session file containing four plot windows.
@@ -161,7 +161,8 @@ def visit_config(geometry_file, data_file, images, timestamp):
         4) YZ plane slice through the centroid.
     Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot
     with the "TALLY_TAG" variable, and the second, third, and fourth windows have
-    Contour plots with the "ERROR_TAG" variable.
+    Contour plots with the "ERROR_TAG" variable. If the user has indicated to,
+    launch VisIt and load the session file.
 
     Input:
     ______
@@ -169,15 +170,14 @@ def visit_config(geometry_file, data_file, images, timestamp):
            User supplied geometry file.
        data_file: h5m or vtk file
            User supplied data file.
-       images: boolean
-           Whether or not to save images of the plot windows.
-       timestamp: boolean
-          Whether or not to keep the timestamp on plot window images.
+       args: Namespace
+           User supplied geometry file location, data file location, and
+           indication if the user wants images of the plot windows with a
+           timestamp and the session file saved and opened in VisIt.
 
     Returns:
     ________
-       session_file_path: str
-           A path to the VisIt session file.
+       None
     """
 
     # Create a list of dictionaries indicating the data, plot, and variable in VisIt.
@@ -220,21 +220,21 @@ def visit_config(geometry_file, data_file, images, timestamp):
     image.height = 10
 
     Vi.DrawPlots()
-    if images:
-        if timestamp:
+    if args.images:
+        if args.timestamp:
             attributes = Vi.GetAnnotationAttributes()
             attributes.userInfoFlag = 0
             Vi.SetAnnotationAttributes(attributes)
         Vi.SaveWindow()
 
     # Create the second plot of the XY plane slice.
-    plane_slice_plotting(2, 2, "XY Plane", images, timestamp)
+    plane_slice_plotting(2, 2, "XY Plane", args.images, args.timestamp)
 
     # Create the third plot of the XZ plane slice.
-    plane_slice_plotting(3, 1, "XZ Plane", images, timestamp)
+    plane_slice_plotting(3, 1, "XZ Plane", args.images, args.timestamp)
 
     # Create the fourth plot of the YZ plane slice.
-    plane_slice_plotting(4, 0, "ZY Plane", images, timestamp)
+    plane_slice_plotting(4, 0, "ZY Plane", args.images, args.timestamp)
 
     # Display the four windows in a 2x2 grid.
     Vi.SetWindowLayout(4)
@@ -247,7 +247,13 @@ def visit_config(geometry_file, data_file, images, timestamp):
     # Retrieve the path to the VisIt session file.
     session_file_path = os.path.join(os.getcwd(), visit_output)
 
-    return session_file_path
+    # If the user has indicated to, open the session file with the VisIt GUI.
+    if args.openvisit:
+        os.system("visit -sessionfile {} &".format(session_file_path))
+
+    # If the user has indicated to, remove the session file after VisIt has opened.
+    if not args.sessionfile:
+        os.system("sleep 10; rm {}".format(session_file_path))
 
 
 def main():
@@ -258,16 +264,8 @@ def main():
     geometry_file = py_mb_convert(args.geofile, ".stl")
     data_file = py_mb_convert(args.datafile, ".vtk")
 
-    # Create the VisIt session file.
-    session_file_path = visit_config(geometry_file, data_file, args.images, args.timestamp)
-
-    # If the user has indicated to, open the session file with the VisIt GUI.
-    if args.openvisit:
-        os.system("visit -sessionfile {} &".format(session_file_path))
-
-    # If the user has indicated to, remove the session file after VisIt has opened.
-    if not args.sessionfile:
-        os.system("sleep 10; rm {}".format(session_file_path))
+    # Create the VisIt session file and launch VisIt if the user has indicated to.
+    visit_config(geometry_file, data_file, args)
 
 
 if __name__ == "__main__":
