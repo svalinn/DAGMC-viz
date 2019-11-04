@@ -1,15 +1,16 @@
 import argparse
 import os
 import visit as Vi
+from GraveIdentifyAndRemove import remove_graveyard
 from pymoab import core, tag, types
 
 
 def parse_arguments():
     """
     Parse the argument list and return the location of a geometry file, the
-    location of a data file, whether or not to save images with a timestamp of
-    the four default plot windows and the VisIt session file in the current
-    directory, and whether or not to open the session file in VisIt.
+    location of a data file, and indication if the user wants images of the
+    four default plot windows and the VisIt session file saved or not in the
+    current directory.
 
     Input:
     ______
@@ -19,8 +20,8 @@ def parse_arguments():
     ________
        args: Namespace
            User supplied geometry file location, data file location, and
-           indication if the user wants images of the plot windows with a
-           timestamp and the session file saved and opened in VisIt.
+           indication if the user wants images of the plot windows and the
+           session file saved.
     """
 
     parser = argparse.ArgumentParser(description="Create default VisIt output.")
@@ -36,20 +37,12 @@ def parse_arguments():
 
     parser.add_argument("-i", "--images",
                         action="store_true",
-                        help="Indicate whether to save images of plot windows."
-                        )
-    parser.add_argument("-t", "--timestamp",
-                        action="store_true",
-                        help="Indicate whether to remove the timestamp from images."
+                        help="Indicate whether or not to save images of plot windows."
                         )
 
     parser.add_argument("-s", "--sessionfile",
                         action="store_true",
-                        help="Indicate whether to save the VisIt session file."
-                        )
-    parser.add_argument("-v", "--openvisit",
-                        action="store_false",
-                        help="Indicate whether to open the session file in VisIt."
+                        help="Indicate whether or not to save the VisIt session file."
                         )
 
     args = parser.parse_args()
@@ -58,38 +51,38 @@ def parse_arguments():
 
 
 def py_mb_convert(file_location, file_extension):
-    """
-    Convert files from one format to another with PyMOAB.
+   """
+   Convert files from one format to another with PyMOAB.
 
-    Input:
-    ______
-       file_location: str
-           User supplied file location.
-       file_extension: str
-           User supplied file format to convert to, including '.'
+   Input:
+   ______
+      file_location: str
+          User supplied file location.
+      file_extension: str
+          User supplied file format to convert to, including '.'
 
-    Returns:
-    ________
-       new_file_name: str
-           The new file name with the specified extension.
-    """
+   Returns:
+   ________
+      new_file_name: str
+          The new file name with the specified extension.
+   """
 
-    # Load the file to be converted.
-    mb = core.Core()
-    mb.load_file(file_location)
+   # Load the file to be converted.
+   mb = core.Core()
+   mb.load_file(file_location)
 
-    # Isolate the file name from string containing the file location.
-    input_file = file_location.split("/")
-    file_name = '.'.join(input_file[-1].split(".")[:-1])
-    new_file_name = file_name + file_extension
+   # Isolate file name from string containing the file location.
+   input_file = file_location.split("/")
+   file_name = '.'.join(input_file[-1].split(".")[:-1])
+   new_file_name = file_name + file_extension
 
-    # Write the new file with the user supplied extension.
-    mb.write_file(new_file_name)
+   # Write the new file with the user supplied extension.
+   mb.write_file(new_file_name)
 
-    return new_file_name
+   return new_file_name
 
 
-def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
+def plane_slice_plotting(window_number, axis_number, label, images):
     """
     Copy the Mesh, Pseudocolor, and Contour plots into a new VisIt window and
     slice through the proper axis.
@@ -104,8 +97,6 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
           The title of the plane slice.
       images: boolean
           Whether or not to save images of the plot windows.
-      timestamp: boolean
-          Whether or not to keep the timestamp on plot window images.
 
     Returns:
     ________
@@ -144,129 +135,125 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
 
     Vi.DrawPlots()
     if images:
-        if timestamp:
-            attributes = Vi.GetAnnotationAttributes()
-            attributes.userInfoFlag = 0
-            Vi.SetAnnotationAttributes(attributes)
         Vi.SaveWindow()
 
 
-def visit_config(geometry_file, data_file, args):
-    """
-    Convert geometry file to stl, convert data file to vtk, load each file
-    into VisIt, and create and load a session file containing four plot windows.
-        1) A cube with a slice through an octant.
-        2) XY plane slice through the centroid.
-        3) XZ plane slice through the centroid.
-        4) YZ plane slice through the centroid.
-    Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot
-    with the "TALLY_TAG" variable, and the second, third, and fourth windows have
-    Contour plots with the "ERROR_TAG" variable. If the user has indicated to,
-    launch VisIt and load the session file.
+def data_loading(geometry_file, data_file, images, session_file):
+   """
+   Convert geometry file to stl, convert data file to vtk, load each file
+   into VisIt, and create and load a session file containing the four plot windows.
+       1) A cube with a slice through an octant in order to see the center.
+       2) XY plane slice through the centroid.
+       3) XZ plane slice through the centroid.
+       4) YZ plane slice through the centroid.
+   Each window has a mesh plot with the "STL_mesh" variable, a Pseudocolor plot
+   with the "TALLY_TAG" variable, and the second, third, and fourth windows have
+   Contour plots with the "ERROR_TAG" variable. Delete the session file after
+   loading the data into VisIt unless the user has specified not to.
 
-    Input:
-    ______
-       geometry_file: h5m file
-           User supplied geometry file.
-       data_file: h5m or vtk file
-           User supplied data file.
-       args: Namespace
-           User supplied geometry file location, data file location, and
-           indication if the user wants images of the plot windows with a
-           timestamp and the session file saved and opened in VisIt.
+   Input:
+   ______
+      geometry_file: h5m file
+          User supplied file containing geometry of interest.
+      data_file: h5m or vtk file
+          User supplied file containing data of interest.
+      images: boolean
+          Whether or not to save images of the plot windows.
+      session_file: boolean
+          Whether or not to save VisIt session file.
 
-    Returns:
-    ________
-       None
-    """
+   Returns:
+   ________
+      none
+   """
 
-    # Create a list of dictionaries indicating the data, plot, and variable in VisIt.
-    Files = [
-        {"file_name" : data_file, "plot_type" : "Pseudocolor", "data_tag" : "TALLY_TAG"},
-        {"file_name" : data_file, "plot_type" : "Contour", "data_tag" : "ERROR_TAG"},
-        {"file_name" : geometry_file, "plot_type" : "Mesh", "data_tag" : "STL_mesh"}
-    ]
+   # Remove the graveyard from the geometry file.
+   try:
+       geometry_file = remove_graveyard(geometry_file)
+   except LookupError, e:
+       print(e.message)
+       pass
 
-    # Launch VisIt and add appropriate plots.
-    Vi.LaunchNowin()
-    for file in Files:
-        Vi.OpenDatabase(file["file_name"])
-        Vi.AddPlot(file["plot_type"],file["data_tag"])
+   # Convert the geometry file and data file to the proper format.
+   geometry_file = py_mb_convert(geometry_file, ".stl")
+   data_file = py_mb_convert(data_file, ".vtk")
 
-    # Hide the contour plot in the first plot window.
-    Vi.SetActivePlots(1)
-    Vi.HideActivePlots()
+   # Create a list of dictionaries indicating the data, plot, and variable in VisIt.
+   Files = [
+       {"file_name" : geometry_file, "plot_type" : "Mesh", "data_tag" : "STL_mesh"},
+       {"file_name" : data_file, "plot_type" : "Pseudocolor", "data_tag" : "TALLY_TAG"},
+       {"file_name" : data_file, "plot_type" : "Contour", "data_tag" : "ERROR_TAG"}
+       ]
 
-    # Create the plot of the cube by activating the mesh and pseudocolor plots.
-    Vi.SetActivePlots((0,2))
+   Vi.LaunchNowin()
+   for file in Files:
+       Vi.OpenDatabase(file["file_name"])
+       Vi.AddPlot(file["plot_type"],file["data_tag"])
 
-    # Set the view normal to the first octant.
-    v = Vi.GetView3D()
-    v.viewNormal = (1,1,1)
-    Vi.SetView3D(v)
+   # Hide the contour plot in the first plot window.
+   Vi.SetActivePlots(2)
+   Vi.HideActivePlots()
 
-    # Apply a clip through the first octant.
-    Vi.AddOperator("Clip")
-    c = Vi.ClipAttributes()
-    c.plane1Origin = (40,40,40)
-    c.plane1Normal = (1,1,1)
-    Vi.SetOperatorOptions(c)
+   # Create the plot of the cube by activating the mesh and pseudocolor plots.
+   Vi.SetActivePlots((0,1))
 
-    # Include the CNERG logo in the bottom left corner of the plot.
-    image = Vi.CreateAnnotationObject("Image")
-    image.image = os.path.dirname(os.path.abspath(__file__)) + "/cnerg.jpg"
-    image.position = (0.02, 0.02)
-    image.width = 10
-    image.height = 10
+   # Set the view normal to the first octant.
+   v = Vi.GetView3D()
+   v.viewNormal = (1,1,1)
+   Vi.SetView3D(v)
 
-    Vi.DrawPlots()
-    if args.images:
-        if args.timestamp:
-            attributes = Vi.GetAnnotationAttributes()
-            attributes.userInfoFlag = 0
-            Vi.SetAnnotationAttributes(attributes)
-        Vi.SaveWindow()
+   # Apply a clip through the first octant.
+   Vi.AddOperator("Clip")
+   c = Vi.ClipAttributes()
+   c.plane1Origin = (40,40,40)
+   c.plane1Normal = (1,1,1)
+   Vi.SetOperatorOptions(c)
 
-    # Create the second plot of the XY plane slice.
-    plane_slice_plotting(2, 2, "XY Plane", args.images, args.timestamp)
+   # Include the CNERG logo in the bottom left corner of the plot.
+   image = Vi.CreateAnnotationObject("Image")
+   image.image = os.path.dirname(os.path.abspath(__file__)) + "/cnerg.jpg"
+   image.position = (0.02, 0.02)
+   image.width = 10
+   image.height = 10
 
-    # Create the third plot of the XZ plane slice.
-    plane_slice_plotting(3, 1, "XZ Plane", args.images, args.timestamp)
+   Vi.DrawPlots()
+   if images:
+       Vi.SaveWindow()
 
-    # Create the fourth plot of the YZ plane slice.
-    plane_slice_plotting(4, 0, "ZY Plane", args.images, args.timestamp)
+   # Create the second plot of the XY plane slice.
+   plane_slice_plotting(2, 2, "XY Plane", images)
 
-    # Display the four windows in a 2x2 grid.
-    Vi.SetWindowLayout(4)
+   # Create the third plot of the XZ plane slice.
+   plane_slice_plotting(3, 1, "XZ Plane", images)
 
-    # Save the session file with the default VisIt output to the current directory.
-    visit_output = "VisitDefaultOutput.session"
-    Vi.SaveSession(visit_output)
-    Vi.Close()
+   # Create the fourth plot of the YZ plane slice.
+   plane_slice_plotting(4, 0, "ZY Plane", images)
 
-    # Retrieve the path to the VisIt session file.
-    session_file_path = os.path.join(os.getcwd(), visit_output)
+   # Display the four windows in a 2x2 grid.
+   Vi.SetWindowLayout(4)
 
-    # If the user has indicated to, open the session file with the VisIt GUI.
-    if args.openvisit:
-        os.system("visit -sessionfile {} &".format(session_file_path))
+   # Save the session file with the default VisIt output to the current directory.
+   visit_output = "VisitDefaultOutput.session"
+   Vi.SaveSession(visit_output)
+   Vi.Close()
 
-    # If the user has indicated to, remove the session file after VisIt has opened.
-    if not args.sessionfile:
-        os.system("sleep 10; rm {}".format(session_file_path))
+   # Determine the absolute path to the session file and open it with the VisIt GUI.
+   session_file_path = os.getcwd() + "/" + visit_output
+   os.system("visit -sessionfile {} &".format(session_file_path))
+
+   # If the user would like to remove the session file, do so after VisIt has opened.
+   if not session_file:
+       os.system("sleep 10; rm {}".format(session_file_path))
 
 
 def main():
 
-    args = parse_arguments()
+  # Parse arguments.
+  args = parse_arguments()
 
-    # Convert the geometry file and data file to the proper format.
-    geometry_file = py_mb_convert(args.geofile, ".stl")
-    data_file = py_mb_convert(args.datafile, ".vtk")
-
-    # Create the VisIt session file and launch VisIt if the user has indicated to.
-    visit_config(geometry_file, data_file, args)
+  # Create the default VisIt output.
+  data_loading(args.geofile, args.datafile, args.images, args.sessionfile)
 
 
 if __name__ == "__main__":
-    main()
+  main()
