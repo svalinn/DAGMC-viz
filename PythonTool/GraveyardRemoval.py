@@ -71,22 +71,21 @@ def get_sets_by_category(mb, category_name):
     return list(group_categories)
 
 
-def locate_graveyard(mb, print_handle = None):
+def locate_graveyard(mb):
     """
-    Locate and remove the graveyard volume from the data file. If the user has
-    indicated to, print the handle of the EntitySet with the "graveyard" name tag value.
+    Locate the graveyard volume in the data file.
 
     Input:
     ______
        mb: Core
            A PyMOAB core instance with a loaded data file.
-       print_handle: boolean
-           Indicates whether or not to print the graveyard entity handle.
 
     Returns:
     ________
        groups_to_write: List
            The list of EntitySets with the graveyard volume omitted.
+       graveyard_sets: List
+           The list of graveyard EntitySets.
 
     Raises:
     _______
@@ -113,15 +112,11 @@ def locate_graveyard(mb, print_handle = None):
     if len(graveyard_sets) < 1:
         raise LookupError("WARNING: The geometry file did not contain a graveyard.")
 
-    # If the user would like, print the graveyard entity handle.
-    if print_handle:
-        print("The entity handle(s) of the graveyard EntitySet(s): " + str(graveyard_sets))
-
     # Remove the graveyard EntitySet from the data.
     groups_to_write = [group_set for group_set in group_categories
                        if group_set not in graveyard_sets]
 
-    return groups_to_write
+    return groups_to_write, graveyard_sets
 
 
 def format_file_name(input_file, output_file = None):
@@ -165,9 +160,13 @@ def main():
 
     # Remove the graveyard volume from the data.
     try:
-        groups_to_write = locate_graveyard(mb, args.printhandle)
+        groups_to_write, graveyard_sets = locate_graveyard(mb)
     except LookupError, e:
         print(e.message)
+
+    # If the user would like, print the graveyard entity handle.
+    if args.printhandle:
+        print("The entity handle(s) of the graveyard EntitySet(s): " + str(graveyard_sets))
 
     # Write the file out to disk.
     output_file = format_file_name(args.h5mfile, args.outputfile)
