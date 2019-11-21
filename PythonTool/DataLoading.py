@@ -33,7 +33,6 @@ def parse_arguments():
                         type=str,
                         help="Provide a path to the data file."
                         )
-
     parser.add_argument("-i", "--images",
                         action="store_true",
                         help="Indicate whether to save images of plot windows."
