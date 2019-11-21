@@ -42,7 +42,6 @@ def parse_arguments():
                         action="store_true",
                         help="Indicate whether to remove the timestamp from images."
                         )
-
     parser.add_argument("-s", "--sessionfile",
                         action="store_true",
                         help="Indicate whether to save the VisIt session file."

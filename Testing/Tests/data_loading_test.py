@@ -6,6 +6,7 @@ import filecmp
 import os
 import visit
 from xmldiff import main
+
 from PythonTool.DataLoading import py_mb_convert, plane_slice_plotting, visit_config
 
 # Choose the data files to be used during testing.
@@ -43,4 +44,10 @@ def test_visit_config():
     os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
     assert len(diff) == 4
+
+
+def test_cleanup():
+    """
+    Remove the files written to disk by this class of tests.
+    """
     os.system('rm visit* *.stl *.vtk *.session')
