@@ -183,10 +183,10 @@ def expand_vector_tags(mb, element_type, main_dir_name = None):
     ______
        mb: Core
            A PyMOAB core instance with a loaded data file.
-       main_dir_name: str
-           Optional user supplied name for main directory.
        element_type: str
            Optional user supplied MB element type other than hex.
+       main_dir_name: str
+           Optional user supplied name for main directory.
 
     Returns:
     ________
@@ -236,6 +236,7 @@ def main():
     mb = core.Core()
     mb.load_file(args.meshfile)
 
+    # Expand each vector tag on the mesh.
     try:
         expand_vector_tags(mb, args.element, args.dirname)
     except LookupError as e:
