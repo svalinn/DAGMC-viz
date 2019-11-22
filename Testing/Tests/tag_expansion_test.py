@@ -42,7 +42,7 @@ def test_expand_vector_tags():
     Ensure this function correctly indicates when there are no vector tags on an element.
     """
     with pytest.raises(LookupError) as e:
-        expand_vector_tags(mb, "tet")
+        expand_vector_tags(data_file, mb, "tet")
 
 
 def test_tag_expansion():
