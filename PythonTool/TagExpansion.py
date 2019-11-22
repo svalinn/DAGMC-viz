@@ -174,15 +174,15 @@ def create_database(mb, elements, scal_tags, vec_tag, dir_name):
     print(str(index) + " files have been written to disk.")
 
 
-def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
+def expand_vector_tags(mb, element_type, main_dir_name = None):
     """
     Load the mesh file, extract the lists of scalar and vector tags, and
     expand each vector tag.
 
     Input:
     ______
-       mesh_file: str
-           User supplied mesh file location.
+       mb: Core
+           A PyMOAB core instance with a loaded data file.
        main_dir_name: str
            Optional user supplied name for main directory.
        element_type: str
@@ -196,10 +196,6 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     _______
        LookupError: If the file does not contain any vector tags.
     """
-
-    # Load the mesh file.
-    mb = core.Core()
-    mb.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
     global elements
@@ -236,8 +232,12 @@ def main():
 
     args = parse_arguments()
 
+    # Load the mesh file.
+    mb = core.Core()
+    mb.load_file(args.meshfile)
+
     try:
-        expand_vector_tags(args.meshfile, args.element, args.dirname)
+        expand_vector_tags(mb, args.element, args.dirname)
     except LookupError as e:
         print(str(e))
 
