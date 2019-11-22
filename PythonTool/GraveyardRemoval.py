@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+import sys
 from pymoab import core, tag, types
 from pymoab.types import MBENTITYSET
 
@@ -101,8 +102,9 @@ def locate_graveyard(mb):
     group_names = mb.tag_get_data(tag_name, group_categories, flat=True)
 
     # Find the EntitySet whose name tag value contains "graveyard".
+    substring = "graveyard"
     graveyard_sets = [group_set for group_set, name in zip(group_categories, group_names)
-                      if "graveyard" in str(name.lower())]
+                      if substring in str(name.lower())]
 
     # Warn the user if there was more than one EntitySet with the "graveyard" name tag value.
     if len(graveyard_sets) > 1:
@@ -140,14 +142,12 @@ def format_file_name(input_file, output_file = None):
            The name of the file to write to disk.
     """
 
-    if output_file is not None:
-        file_name = output_file
-    else:
+    if output_file is None:
         input_list = input_file.split("/")
         file_name = '.'.join(input_list[-1].split(".")[:-1])
-        file_name = file_name + "_no_grave.h5m"
+        output_file = file_name + "_no_grave.h5m"
 
-    return file_name
+    return output_file
 
 
 def main():
@@ -162,7 +162,7 @@ def main():
     try:
         groups_to_write, graveyard_sets = locate_graveyard(mb)
     except LookupError, e:
-        print(e.message)
+        sys.exit(e.message)
 
     # If the user would like, print the graveyard entity handle.
     if args.printhandle:
