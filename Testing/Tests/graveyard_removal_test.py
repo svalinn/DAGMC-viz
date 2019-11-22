@@ -4,6 +4,7 @@ This class ensures that GraveyardRemoval.py correctly removes the graveyard from
 
 import os
 import pymoab
+
 from PythonTool.GraveyardRemoval import get_sets_by_category, locate_graveyard, format_file_name
 
 # Initialize a PyMOAB core instance and load in the h5m file.
@@ -52,7 +53,6 @@ def test_default_graveyard_removal():
 	os.system("python PythonTool/GraveyardRemoval.py Testing/SampleData/" + test_file)
 	size = os.path.getsize(test_file[:-4] + "_no_grave.h5m")
 	assert size == 5748780
-	os.remove(test_file[:-4] + "_no_grave.h5m")
 
 
 def test_print_graveyard_removal(capfd):
@@ -62,4 +62,10 @@ def test_print_graveyard_removal(capfd):
     os.system("python PythonTool/GraveyardRemoval.py Testing/SampleData/" + test_file + " -p")
     out, err = capfd.readouterr()
     assert ("12682136550675318127" in out) == True
+
+
+def test_cleanup():
+    """
+    Remove the files written to disk by this class of tests.
+    """
     os.remove(test_file[:-4] + "_no_grave.h5m")
