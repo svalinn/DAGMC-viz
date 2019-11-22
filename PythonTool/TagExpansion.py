@@ -114,20 +114,15 @@ def get_tag_lists(mb, element_type, element_id):
     return element_list, scalar_tags, vector_tags
 
 
-def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir_name):
+def create_database(mb, elements, scal_tags, vec_tag, dir_name):
     """
     Expand the vector tag on each element in the given mesh data file. Write a
     file to disk for each index with the corresponding scalar tag value.
 
     Input:
     ______
-       mesh_file: str
-           User supplied mesh file location.
-       mb_ref: Core
-           A PyMOAB core instance with a loaded data file for reference.
-       mb_exp: Core
-           A PyMOAB core instance with a loaded data file for expanding
-           vector tags.
+       mb: Core
+           A PyMOAB core instance with a loaded data file.
        elements: List of MOAB Entity Handles
            A list of all elements of a specific type in the mesh.
        scal_tags: List of PyMOAB Tags
@@ -160,16 +155,20 @@ def create_database(mesh_file, mb_ref, mb_exp, elements, scal_tags, vec_tag, dir
     index = 0
     while index < length:
         scalar_data = []
-        data = mb_exp.tag_get_data(vec_tag, elements)
+        data = mb.tag_get_data(vec_tag, elements)
         scalar_data = np.copy(data[:,index])
         data_type = vec_tag.get_data_type()
-        scalar_tag = mb_ref.tag_get_handle(name, 1, data_type, types.MB_TAG_SPARSE,
-                                           create_if_missing = True)
-        mb_ref.tag_set_data(scalar_tag, elements, scalar_data)
+        scalar_tag = mb.tag_get_handle(str(name + "_exp"), 1, data_type, types.MB_TAG_SPARSE,
+                                       create_if_missing = True)
+        mb.tag_set_data(scalar_tag, elements, scalar_data)
 
         # Write the mesh file with the new scalar tag.
         file_location = os.getcwd() + "/" + vec_dir_name + "/" + name + str(index) + ".vtk"
-        mb_ref.write_file(file_location)
+        scal_tags.append(scalar_tag)
+        mb.write_file(file_location, output_tags = scal_tags)
+
+        # Remove the new scalar tag from the list to prepare to write the next file.
+        scal_tags = scal_tags[:-1]
         index += 1
 
     print(str(index) + " files have been written to disk.")
@@ -198,30 +197,20 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
        LookupError: If the file does not contain any vector tags.
     """
 
-    # Load the mesh file to create a reference mesh.
-    mb_ref = core.Core()
-    mb_ref.load_file(mesh_file)
+    # Load the mesh file.
+    mb = core.Core()
+    mb.load_file(mesh_file)
 
     # Ensure the MB element type is valid.
+    global elements
     mb_type = elements[element_type]
 
-    # Retrieve the lists of scalar and vector tags on the reference mesh.
-    elements_ref, scal_tags_ref, vec_tags_ref = get_tag_lists(mb_ref, element_type, mb_type)
+    # Retrieve the lists of scalar and vector tags on the mesh.
+    elements, scal_tags, vec_tags = get_tag_lists(mb, element_type, mb_type)
 
     # Warn the user if the mesh file does not contain at least one vector tag.
-    if len(vec_tags_ref) < 1:
+    if len(vec_tags) < 1:
         raise LookupError("WARNING: This mesh file did not contain any vector tags on {} elements.".format(element_type))
-
-    # Delete each vector tag from the reference mesh.
-    for tag in vec_tags_ref:
-        mb_ref.tag_delete(tag)
-
-    # Load the mesh file for extracting vector tag data.
-    mb_exp = core.Core()
-    mb_exp.load_file(mesh_file)
-
-    # Retrieve the lists of scalar and vector tags on the mesh.
-    elements_exp, scal_tags_exp, vec_tags_exp = get_tag_lists(mb_exp, element_type, mb_type)
 
     # Create a directory for the vector tag expansion files.
     if main_dir_name is None:
@@ -239,8 +228,8 @@ def expand_vector_tags(mesh_file, element_type, main_dir_name = None):
     os.mkdir(dir_name)
 
     # Expand each vector tag present in the mesh.
-    for tag in vec_tags_exp:
-        create_database(mesh_file, mb_ref, mb_exp, elements_ref, scal_tags_ref, tag, dir_name)
+    for tag in vec_tags:
+        create_database(mb, elements, scal_tags, tag, dir_name)
 
 
 def main():
