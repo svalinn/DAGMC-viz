@@ -48,6 +48,10 @@ def parse_arguments():
                         type=str,
                         help="Provide a name for the main directory."
                         )
+    parser.add_argument("-o", "--overwrite",
+                        action="store_true",
+                        help="Indicate whether to overwrite a directory from a previous expansion."
+                        )
     parser.add_argument("-e", "--element",
                         type=str.lower,
                         default="hex",
@@ -57,10 +61,14 @@ def parse_arguments():
 
     args = parser.parse_args()
 
+    # Determine the default name of the directory if none was supplied by the user.
+    if args.dirname is None:
+        args.dirname = '.'.join(args.meshfile.split("/")[-1].split(".")[:-1])
+
     return args
 
 
-def get_tag_lists(mb, element_type, element_id):
+def get_tag_lists(mb, element_type):
     """
     Create separate lists of each scalar and vector tag in the mesh file by
     identifying each tag on a representative mesh element and determining the type.
@@ -72,9 +80,6 @@ def get_tag_lists(mb, element_type, element_id):
        element_type: str
            The type of MOAB element from which to extract the tag list
            represented by a string.
-       element_id: int
-           The type of MOAB element from which to extract the tag list
-           represented by an integer.
 
     Returns:
     ________
@@ -92,8 +97,9 @@ def get_tag_lists(mb, element_type, element_id):
     """
 
     # Retrieve arbitrary element of specified type in the mesh and extract the tag list.
+    global elements
     root = mb.get_root_set()
-    element_list = mb.get_entities_by_type(root, element_id)
+    element_list = mb.get_entities_by_type(root, elements[element_type])
 
     # Warn the user if there are none of the specified mesh elements.
     if len(element_list) == 0:
@@ -114,16 +120,16 @@ def get_tag_lists(mb, element_type, element_id):
     return element_list, scalar_tags, vector_tags
 
 
-def create_directory(mesh_file, main_dir_name = None):
+def create_directory(dir_name, overwrite):
     """
-    Create a directory for the vector tag expansion.
+    Create a directory name for the vector tag expansion.
 
     Input:
     ______
-       mesh_file: str
-           User supplied mesh file location.
-       main_dir_name: str
-           Optional user supplied name for main directory.
+       dir_name: str
+           Name for main directory.
+       overwrite: boolean
+           Whether or not to overwrite a directory from a previous expansion.
 
     Returns:
     ________
@@ -132,20 +138,14 @@ def create_directory(mesh_file, main_dir_name = None):
            vector tag directory.
     """
 
-    # Create a directory for the vector tag expansion files.
-    if main_dir_name is None:
-        input_list = mesh_file.split("/")
-        file_name = '.'.join(input_list[-1].split(".")[:-1])
-        dir_name = file_name + "_database"
-    else:
-        dir_name = main_dir_name + "_database"
+    # If indicated by the user, ensure an existing directory is not written over.
+    dict_number = 0
+    if not overwrite:
+        while os.path.isdir(dir_name + str(dict_number)):
+            dict_number += 1
 
-    # Ensure an existing directory is not written over.
-    dict_number = 1
-    while os.path.isdir(dir_name):
-        dir_name = dir_name + str(dict_number)
-        dict_number += 1
-    os.mkdir(dir_name)
+    # Create the directory name.
+    dir_name = dir_name + str(dict_number)
 
     return dir_name
 
@@ -174,13 +174,22 @@ def expand_vec_tag(mb, elements, scal_tags, vec_tag, dir_name):
        none
     """
 
-    # Get the length and tag name of the vector tag.
+    # Get the length, tag name, and data type of the vector tag.
     length = vec_tag.get_length()
     name = vec_tag.get_name()
+    data_type = vec_tag.get_data_type()
+    data = mb.tag_get_data(vec_tag, elements)
 
     # Create a directory to store the vector tag expansion files.
-    vec_dir_name = dir_name + "/" + name + "_database"
-    os.mkdir(vec_dir_name)
+    try:
+        vec_dir_name = dir_name + "/" + name + "_database"
+        os.mkdir(vec_dir_name)
+    except OSError:
+        pass
+
+    # Create the scalar tag template for the vector tag.
+    scalar_tag = mb.tag_get_handle(str(name + "_exp"), 1, data_type, types.MB_TAG_SPARSE,
+                                   create_if_missing = True)
 
     """
     For the vector tag on each element, retrieve the scalar value at a specific
@@ -188,14 +197,9 @@ def expand_vec_tag(mb, elements, scal_tags, vec_tag, dir_name):
     to disk in a vtk file in the specified database.
     """
 
-    index = 0
-    while index < length:
+    for index in range(0,length):
         scalar_data = []
-        data = mb.tag_get_data(vec_tag, elements)
         scalar_data = np.copy(data[:,index])
-        data_type = vec_tag.get_data_type()
-        scalar_tag = mb.tag_get_handle(str(name + "_exp"), 1, data_type, types.MB_TAG_SPARSE,
-                                       create_if_missing = True)
         mb.tag_set_data(scalar_tag, elements, scalar_data)
 
         # Write the mesh file with the new scalar tag.
@@ -218,25 +222,22 @@ def main():
     mb = core.Core()
     mb.load_file(args.meshfile)
 
-    # Warn the user if the MB element type is not valid.
-    try:
-        global elements
-        mb_type = elements[args.element]
-    except KeyError as e:
-        sys.exit("WARNING: The mesh file did not contain any {} elements.".format(args.element))
-
     # Retrieve the lists of scalar and vector tags on the mesh.
     try:
-        elements, scal_tags, vec_tags = get_tag_lists(mb, args.element, mb_type)
+        elements, scal_tags, vec_tags = get_tag_lists(mb, args.element)
     except LookupError as e:
         sys.exit(str(e))
 
     # Warn the user if the mesh file does not contain at least one vector tag.
     if len(vec_tags) < 1:
-        sys.exit("WARNING: This mesh file did not contain any vector tags on {} elements.".format(element_type))
+        raise ValueError("WARNING: This mesh file did not contain any vector tags on {} elements.".format(args.element))
 
     # Create a directory to store vector tag expansion files.
-    dir_name = create_directory(args.meshfile, args.dirname)
+    try:
+        dir_name = create_directory(args.dirname, args.overwrite)
+        os.mkdir(dir_name)
+    except OSError:
+        pass
 
     # Expand each vector tag present in the mesh.
     for tag in vec_tags:
