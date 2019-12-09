@@ -6,6 +6,7 @@ jobs:
             - image: pyne/pyne_ubuntu_16.04
         steps:
             - checkout
+            - run: apt-get install python-pip
             - run: pip install pytest
             - run: pytest
 
