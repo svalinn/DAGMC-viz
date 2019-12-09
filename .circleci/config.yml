@@ -2,7 +2,7 @@ version: 2.1
 
 
 executors:
-    snippets:
+    testing:
         docker:
             - image: pyne/pyne_ubuntu_18.04
 
