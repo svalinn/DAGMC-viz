@@ -1,34 +1,14 @@
 version: 2.1
 
 
-# Executors define environment where jobs will be run.
 executors:
     snippets:
         docker:
-            - image: pyne/pyne_ubuntu_16.04
-        environment:
-            #PYTHONPATH: ~/project/
+            - image: pyne/pyne_ubuntu_18.04
 
 jobs:
-    python2_inputs:
+    testing:
         executor:
-            name: snippets
+            name: testing
         steps:
-            - checkout
-            - run: pwd
-            - run:
-                name: List Files
-                command: ls
-    piper_job:
-        executor:
-            name: snippets
-        steps:
-            - run: ls -a
-
-workflows:
-    build_and_test:
-        jobs:
-            - python2_inputs
-            - piper_job:
-                requires:
-                    - python2_inputs
+            - run: pytest
