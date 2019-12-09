@@ -12,3 +12,8 @@ jobs:
             name: testing
         steps:
             - run: pytest
+
+workflows:
+    build_and_test:
+        jobs:
+            - testing
