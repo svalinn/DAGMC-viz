@@ -1,20 +1,15 @@
 version: 2.1
 
-
-executors:
-    testing:
-        docker:
-            - image: pyne/pyne_ubuntu_16.04
-
 jobs:
-    testing:
-        executor:
-            name: testing
+    Python_2.7:
+        docker:
+            image: circleci/python:2.7
         steps:
-            - run:
-                command: pytest
+            - checkout
+            - run: sudo pip install pytest
+            - run: pytest
 
 workflows:
-    build_and_test:
+    build:
         jobs:
-            - testing
+            - Python_2.7
