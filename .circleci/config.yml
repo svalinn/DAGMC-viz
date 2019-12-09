@@ -3,7 +3,7 @@ version: 2.1
 jobs:
     Test:
         docker:
-            - image: circleci/python:2.7
+            - image: pyne/pyne_ubuntu_16.04
         steps:
             - checkout
             - run: sudo pip install pytest
