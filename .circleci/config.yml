@@ -4,7 +4,7 @@ version: 2.1
 executors:
     testing:
         docker:
-            - image: pyne/pyne_ubuntu_18.04
+            - image: pyne/pyne_ubuntu_16.04
 
 jobs:
     testing:
