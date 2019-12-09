@@ -11,7 +11,8 @@ jobs:
         executor:
             name: testing
         steps:
-            - run: pytest
+            - run:
+                command: pytest
 
 workflows:
     build_and_test:
