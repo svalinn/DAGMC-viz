@@ -3,7 +3,7 @@ version: 2.1
 jobs:
     Test:
         docker:
-            - image: pyne/pyne_ubuntu_16.04
+            - image: pyne/ubuntu_18.04_py2_dagmc_pymoab_pyne-deps
         steps:
             - checkout
             - run: apt-get install -y python-pip
