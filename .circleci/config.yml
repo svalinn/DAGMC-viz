@@ -8,7 +8,7 @@ jobs:
             - checkout
             - run: apt-get install -y python-pip
             - run: pip install pytest
-            - run: pytest Testing/Tests
+            - run: pytest
 
 workflows:
     build:
