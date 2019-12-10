@@ -6,9 +6,9 @@ jobs:
             - image: pyne/ubuntu_18.04_py2_dagmc_pymoab_pyne-deps
         steps:
             - checkout
-            - run: sudo apt-get install -y python-pip
+            - run: apt-get install -y python-pip
             - run: pip install pytest
-            - run: pytest
+            - run: pytest Testing/Tests
 
 workflows:
     build:
