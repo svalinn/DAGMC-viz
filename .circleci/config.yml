@@ -6,6 +6,11 @@ jobs:
             - image: pyne/ubuntu_18.04_py2_dagmc_pymoab_pyne-deps
         steps:
             - checkout
+            - run cd $HOME/opt
+            - run: wget http://portal.nersc.gov/project/visit/releases/2.13.2/visit2_13_2.linux-x86_64-ubuntu14.tar.gz
+            - run: wget http://portal.nersc.gov/project/visit/releases/2.13.2/visit-install2_13_2
+            - run: echo 1 > input
+            - run: bash visit-install2_13_2 2.13.2 linux-x86_64-ubuntu14 /usr/local/visit < input
             - run: apt-get install -y python-pip
             - run: pip install pytest
             - run: pytest Testing/Tests/graveyard_removal_test.py
