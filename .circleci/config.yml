@@ -13,8 +13,7 @@ jobs:
             - run: bash visit-install2_13_2 2.13.2 linux-x86_64-ubuntu14 /usr/local/visit < input
             - run: apt-get install -y python-pip
             - run: pip install pytest
-            - run: pytest Testing/Tests/graveyard_removal_test.py
-            - run: pytest Testing/Tests/tag_expansion_test.py
+            - run: pytest
 
 workflows:
     build:
