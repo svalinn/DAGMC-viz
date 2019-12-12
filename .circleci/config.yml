@@ -6,7 +6,7 @@ jobs:
             - image: pyne/ubuntu_18.04_py2_dagmc_pymoab_pyne-deps
         steps:
             - checkout
-            - run cd $HOME/opt
+            - run: cd $HOME/opt
             - run: wget http://portal.nersc.gov/project/visit/releases/2.13.2/visit2_13_2.linux-x86_64-ubuntu14.tar.gz
             - run: wget http://portal.nersc.gov/project/visit/releases/2.13.2/visit-install2_13_2
             - run: echo 1 > input
