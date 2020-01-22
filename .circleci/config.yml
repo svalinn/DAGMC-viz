@@ -16,7 +16,7 @@ jobs:
             - run: echo 'export PYTHONPATH=/usr/local/visit/2.13.2/linux-x86_64/lib/site-packages:$PYTHONPATH' >> $HOME/.bashrc
             - run: apt-get install -y python-pip
             - run: pip install pytest
-            - run: ls /usr/local/visit/
+            - run: ls /usr/local/visit/2.13.2
             #- run: pytest Testing/Tests/data_loading_test.py
             #- run: pytest Testing/Tests/graveyard_removal_test.py
             #- run: pytest Testing/Tests/tag_expansion_test.py
