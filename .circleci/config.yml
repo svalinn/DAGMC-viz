@@ -7,7 +7,7 @@ jobs:
         steps:
             - checkout
             - run: pip install pytest
-            - run: cat .bashrc
+            - run: visit
 
 workflows:
     build:
