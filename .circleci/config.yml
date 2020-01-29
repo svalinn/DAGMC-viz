@@ -3,7 +3,7 @@ version: 2.1
 jobs:
     Test:
         docker:
-            - image: piperlincoln/pytest-ubuntu18.04
+            - image: piperlincoln/pytest-ubuntu18.04:v01
         steps:
             - checkout
             - run: pip install pytest
