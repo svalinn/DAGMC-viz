@@ -7,7 +7,7 @@ jobs:
         steps:
             - checkout
             - run: pip install pytest
-            - run: ls /usr/local/visit
+            - run: pytest
 
 workflows:
     build:
