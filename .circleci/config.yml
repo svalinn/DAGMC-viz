@@ -7,8 +7,8 @@ jobs:
         steps:
             - checkout
             - run: pip install pytest
+            - run: pip install xmldiff
             - run: pytest
-            - run: ls
 
 workflows:
     build:
