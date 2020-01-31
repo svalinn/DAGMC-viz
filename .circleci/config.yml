@@ -6,8 +6,8 @@ jobs:
             - image: piperlincoln/pytest-ubuntu18.04:v0.2
         steps:
             - checkout
-            - run: pip install pytest
             - run: pip install xmldiff
+            - run: pip install pytest
             - run: pytest
 
 workflows:
