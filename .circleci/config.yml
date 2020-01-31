@@ -6,7 +6,6 @@ jobs:
             - image: piperlincoln/pytest-ubuntu18.04:v0.3
         steps:
             - checkout
-            - run: apt-get install python-pip
             - run: pip install pytest
             - run: pytest
 
