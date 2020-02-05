@@ -3,13 +3,13 @@ This class ensures that GraveyardRemoval.py correctly removes the graveyard from
 """
 
 import os
-import pymoab
+from pymoab import core
 
 from PythonTool.GraveyardRemoval import get_sets_by_category, locate_graveyard, format_file_name
 
 # Initialize a PyMOAB core instance and load in the h5m file.
 test_file = "donut.h5m"
-mb = pymoab.core.Core()
+mb = core.Core()
 mb.load_file("Testing/SampleData/" + test_file)
 
 
