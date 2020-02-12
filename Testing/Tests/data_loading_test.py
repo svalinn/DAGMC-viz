@@ -45,10 +45,9 @@ def test_visit_config():
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
     assert len(diff) == 4
 
-"""
+
 def test_cleanup():
-
+    """
     Remove the files written to disk by this class of tests.
-
+    """
     os.system('rm visit* *.stl *.vtk *.session')
-"""
