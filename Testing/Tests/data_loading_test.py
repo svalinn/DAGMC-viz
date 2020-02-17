@@ -42,7 +42,7 @@ def test_visit_config():
     Ensure that DataLoading.py correctly produces a VisIt session file.
     """
     os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
-    diff = main.diff_files("VisitDefaultOutput.session", session_file)
+    diff = main.diff_files(session_file, "VisitDefaultOutput.session")
     assert len(diff) == 4
 
 
