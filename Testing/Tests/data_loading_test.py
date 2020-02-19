@@ -43,15 +43,11 @@ def test_visit_config():
     """
     os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = subprocess.Popen(['diff', session_file, 'VisitDefaultOutput.session'], stdout=subprocess.PIPE)
-    stdout = diff.communicate()
-    print len(stdout)
-    assert len(stdout) <= 4
+    assert len(diff.communicate()) <= 4
 
 
-"""
 def test_cleanup():
 
     Remove the files written to disk by this class of tests.
 
     os.system('rm visit* *.stl *.vtk *.session')
-"""
