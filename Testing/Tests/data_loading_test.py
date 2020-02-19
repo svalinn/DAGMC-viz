@@ -4,8 +4,8 @@ This class ensures that DataLoading.py correctly produces a VisIt session file.
 
 import filecmp
 import os
+import subprocess
 import visit
-from xmldiff import main
 
 from PythonTool.DataLoading import py_mb_convert, plane_slice_plotting, visit_config
 
@@ -42,8 +42,10 @@ def test_visit_config():
     Ensure that DataLoading.py correctly produces a VisIt session file.
     """
     os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
-    diff = main.diff_files(session_file, "VisitDefaultOutput.session")
-    assert len(diff) == 4
+    diff = subprocess.Popen(['diff', session_file, 'VisitDefaultOutput.session'], stdout=subprocess.PIPE)
+    stdout = diff.communicate()
+    print len(stdout)
+    assert len(stdout) <= 4
 
 
 """
