@@ -1,0 +1,3 @@
+include README.md
+include PythonTool/cnerg.jpg
+recursive-include Testing *
