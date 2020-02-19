@@ -47,7 +47,7 @@ def test_visit_config():
 
 
 def test_cleanup():
-
+    """
     Remove the files written to disk by this class of tests.
-
+    """
     os.system('rm visit* *.stl *.vtk *.session')
