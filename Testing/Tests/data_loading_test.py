@@ -4,6 +4,7 @@ This class ensures that DataLoading.py correctly produces a VisIt session file.
 
 import filecmp
 import os
+import pytest
 import subprocess
 import visit
 
@@ -25,6 +26,7 @@ def test_py_mb_convert():
     assert file_name == "donut.stl"
 
 
+@pytest.mark.skip(reason="Unable to Test with Current VisIt Configuration")
 def test_plane_slice_plotting():
     """
     Ensure this function correctly generates a plane slice plot.
