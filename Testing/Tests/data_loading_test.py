@@ -35,7 +35,7 @@ def test_plane_slice_plotting():
     visit.SetWindowLayout(4)
     visit.SaveSession("PlaneSlice.session")
     diff = main.diff_files("PlaneSlice.session", session_file)
-    assert len(diff) <= 78
+    assert len(diff) <= 108 # Accounts for bare minimum differences due to sources, hosts, etc.
     visit.Close()
 
 
@@ -45,12 +45,11 @@ def test_visit_config():
     """
     os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
-    assert len(diff) <= 8
+    assert len(diff) <= 28 # Accounts for bare minimum differences due to sources, hosts, etc.
 
-"""
+
 def test_cleanup():
-
+    """
     Remove the files written to disk by this class of tests.
-
+    """
     os.system('rm visit* *.stl *.vtk *.session')
-"""
