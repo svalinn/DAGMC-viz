@@ -10,7 +10,7 @@ VERSION = '0.1'
 def main():
 
     packages = ['dagmc-viz']
-    pack_dir = {'dagmc-viz': 'PythonTool'}
+    pack_dir = {'dagmc-viz': 'scripts'}
     setup_kwargs = {
         "name": "dagmc-viz",
         "version": VERSION,
