@@ -6,13 +6,13 @@ import os
 import visit
 from xmldiff import main
 
-from PythonTool.DataLoading import py_mb_convert, plane_slice_plotting, visit_config
+from scripts.data_loading import py_mb_convert, plane_slice_plotting, visit_config
 
 # Choose the data files to be used during testing.
-geom_file = "Testing/SampleData/donut.h5m"
-mesh_file = "Testing/SampleData/meshtal.vtk"
-plane_slice_session_file = "Testing/SampleData/VisitPlotData.session"
-session_file = "Testing/SampleData/VisitDefaultOutput.session"
+geom_file = "tests/files_graveyard_removal/donut.h5m"
+mesh_file = "tests/files_data_loading/meshtal.vtk"
+plane_slice_session_file = "tests/files_data_loading/VisitPlotData.session"
+session_file = "tests/files_data_loading/VisitDefaultOutput.session"
 
 
 def test_py_mb_convert():
@@ -35,7 +35,7 @@ def test_plane_slice_plotting():
     visit.SetWindowLayout(4)
     visit.SaveSession("PlaneSlice.session")
     diff = main.diff_files("PlaneSlice.session", session_file)
-    assert len(diff) <= 108 # Accounts for bare minimum differences due to sources, hosts, etc.
+    assert len(diff) <= 87 # Accounts for bare minimum differences due to sources, hosts, etc.
     visit.Close()
 
 
@@ -43,9 +43,9 @@ def test_visit_config():
     """
     Ensure that DataLoading.py correctly produces a VisIt session file.
     """
-    os.system("python PythonTool/DataLoading.py %s %s -s -v" % (geom_file, mesh_file))
+    os.system("python scripts/data_loading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
-    assert len(diff) <= 28 # Accounts for bare minimum differences due to sources, hosts, etc.
+    assert len(diff) <= 8 # Accounts for bare minimum differences due to sources, hosts, etc.
 
 
 def test_cleanup():
