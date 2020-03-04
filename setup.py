@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-VERSION = '1.0'
+VERSION = '0.1.0'
 
 from io import open
 from os import path
