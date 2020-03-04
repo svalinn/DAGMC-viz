@@ -1,0 +1,14 @@
+version: 2.1
+
+jobs:
+    Test:
+        docker:
+            - image: piperlincoln/pytest-ubuntu18.04:v0.3
+        steps:
+            - checkout
+            - run: pytest
+
+workflows:
+    build:
+        jobs:
+            - Test

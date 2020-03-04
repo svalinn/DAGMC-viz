@@ -4,14 +4,14 @@ This class ensures that TagExpansion.py correctly expands all vector tags in a m
 
 import filecmp
 import os
-import pymoab
 import pytest
+from pymoab import core, types
 
 from PythonTool.TagExpansion import get_tag_lists, create_directory, expand_vec_tag
 
 # Initialize a PyMOAB core instance and load in the h5m file.
 data_file = "Testing/SampleData/simple_mesh.h5m"
-mb = pymoab.core.Core()
+mb = core.Core()
 mb.load_file(data_file)
 
 
@@ -53,7 +53,7 @@ def test_expand_vec_tag():
     """
     Ensure this function correctly creates a scalar tag database for a given vector tag.
     """
-    elements = mb.get_entities_by_type(mb.get_root_set(), pymoab.types.MBHEX)
+    elements = mb.get_entities_by_type(mb.get_root_set(), types.MBHEX)
     tag_list = mb.tag_get_tags_on_entity(elements[0])
     scal_tags = [tag_list[0], tag_list[3], tag_list[4]]
     vec_tag = tag_list[1], tag_list[2]
