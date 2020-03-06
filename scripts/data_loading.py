@@ -135,7 +135,7 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
 
     # Include the CNERG logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = "img/cnerg.jpg"
+    image.image = "img/cnerg.png"
     image.position = (0.02, 0.02)
     image.width = 10
     image.height = 10
@@ -212,7 +212,7 @@ def visit_config(geometry_file, data_file, args):
 
     # Include the CNERG logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = "img/cnerg.jpg"
+    image.image = "img/cnerg.png"
     image.position = (0.02, 0.02)
     image.width = 10
     image.height = 10

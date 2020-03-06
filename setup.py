@@ -11,8 +11,9 @@ here = path.abspath(path.dirname(__file__))
 
 def main():
 
-    packages = ['dagmc-viz']
-    pack_dir = {'dagmc-viz': 'scripts'}
+    packages = ['scripts', 'tests', 'images']
+    pack_dir = {'scripts': 'scripts', 'tests': 'tests', 'images': 'img'}
+    package_data = {'': ['*', '*/*', '*/**/**/*']}
     setup_kwargs = {
         "name": "dagmc-viz",
         "version": VERSION,
@@ -24,6 +25,7 @@ def main():
         "install_requires": ['numpy', 'pytest', 'xmldiff'],
         "packages": packages,
         "package_dir": pack_dir,
+        "package_data": package_data
         }
     rtn = setup(**setup_kwargs)
 
