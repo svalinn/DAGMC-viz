@@ -30,9 +30,7 @@ python data_loading.py [geometryfile] [datafile] -s -v
 
 A sample output from an h5m geometry file and a vtk data file can be seen below.
 
-<p align="center">
-<img src="https://i.postimg.cc/FRxFpL3S/Screenshot-from-2018-11-14-18-39-16.png" width="400" height="400"/>
-</p>
+![alt text](https://github.com/piperlincoln/DAGMC-viz/blob/add-setup-script/img/README_example.png)
 
 ----------------------------------------
 
