@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-VERSION = '0.1.0'
+VERSION = '1.0'
 
 from io import open
 from os import path
@@ -18,7 +18,8 @@ def main():
         "name": "dagmc-viz",
         "version": VERSION,
         "description": 'DAGMC Visualization Tools',
-        "long_description": open(path.join(here,'README.md'), encoding = 'utf-8').read(),
+        "long_description": open(path.join(here,'README.md')).read(),
+        "long_description_content_type": 'text/markdown',
         "author": 'Svalinn Development Team',
         "url": 'https://github.com/svalinn/DAGMC-viz',
         "classifiers": ['Programming Language :: Python :: 2.7'],
