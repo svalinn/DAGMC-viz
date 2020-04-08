@@ -9,33 +9,25 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
 RUN apt-get install -y --fix-missing \
     software-properties-common \
-    wget \
     build-essential \
-    python-setuptools \
-    python-numpy \
-    python-pip \
-    python-tables \
-    python-matplotlib \
     git \
+    wget \
     cmake \
-    vim \
-    emacs \
-    nano \
     gfortran \
     autoconf \
     libtool \
-    cpio \
     libblas-dev \
     liblapack-dev \
     libhdf5-dev \
+    libpcre3-dev \
+    libpython-dev \
     libgl1-mesa-glx \
     libgl1-mesa-dev \
     libsm6 \
     libxt6 \
     libglu1-mesa \
-    libpcre3-dev \
-    libpython-dev
-RUN pip install Cython xmldiff pytest
+    python-pip
+RUN pip install Cython numpy pytest xmldiff
 
 # build MOAB
 RUN cd $HOME \
@@ -56,7 +48,7 @@ RUN cd $HOME \
     && cd .. \
     && rm -rf build moab
 
-# get VisIt files and install in container
+# install VisIt
 RUN cd $HOME/opt \
     && wget http://portal.nersc.gov/project/visit/releases/2.13.3/visit2_13_3.linux-x86_64-ubuntu18.tar.gz \
     && wget http://portal.nersc.gov/project/visit/releases/2.13.3/visit-install2_13_3 \
