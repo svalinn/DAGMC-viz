@@ -11,9 +11,9 @@ here = path.abspath(path.dirname(__file__))
 
 def main():
 
-    packages = ['scripts', 'tests', 'images']
-    pack_dir = {'scripts': 'scripts', 'tests': 'tests', 'images': 'img'}
-    package_data = {'': ['*', '*/*', '*/**/**/*']}
+    packages = ['scripts', 'images']
+    pack_dir = {'scripts': 'scripts', 'images': 'img'}
+    package_data = {'': ['*']}
     setup_kwargs = {
         "name": "dagmc-viz",
         "version": VERSION,
@@ -23,10 +23,13 @@ def main():
         "author": 'Svalinn Development Team',
         "url": 'https://github.com/svalinn/DAGMC-viz',
         "classifiers": ['Programming Language :: Python :: 2.7'],
-        "install_requires": ['numpy', 'pytest', 'xmldiff'],
+        "install_requires": ['numpy'],
         "packages": packages,
         "package_dir": pack_dir,
-        "package_data": package_data
+        "package_data": package_data,
+        "scripts": ['scripts/graveyard_removal.py',
+                    'scripts/data_loading.py',
+                    'scripts/tag_expansion.py']
         }
     rtn = setup(**setup_kwargs)
 
