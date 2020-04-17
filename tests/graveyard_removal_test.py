@@ -51,7 +51,7 @@ def test_default_graveyard_removal():
 	"""
     Ensure that GraveyardRemoval correctly removes the graveyard from an h5m file.
     """
-	os.system("python scripts/graveyard_removal.py " + test_file_path + test_file)
+	os.system("python svalinn_tools/graveyard_removal.py " + test_file_path + test_file)
 	size = os.path.getsize(test_file[:-4] + "_no_grave.h5m")
 	assert size == 5748780
 
@@ -60,7 +60,7 @@ def test_print_graveyard_removal(capfd):
     """
     Ensure that GraveyardRemoval prints the correct entity handle for the graveyard volume.
     """
-    os.system("python scripts/graveyard_removal.py " + test_file_path + test_file + " -p")
+    os.system("python svalinn_tools/graveyard_removal.py " + test_file_path + test_file + " -p")
     out, err = capfd.readouterr()
     assert ("12682136550675318127" in out) == True
 
