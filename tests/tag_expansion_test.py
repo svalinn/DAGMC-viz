@@ -7,7 +7,7 @@ import os
 import pytest
 from pymoab import core, types
 
-from scripts.tag_expansion import get_tag_lists, create_directory, expand_vec_tag
+from svalinn_tools.tag_expansion import get_tag_lists, create_directory, expand_vec_tag
 
 # Initialize a PyMOAB core instance and load in the h5m file.
 data_file = "tests/files_tag_expansion/simple_mesh.h5m"

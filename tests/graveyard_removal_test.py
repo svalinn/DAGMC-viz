@@ -5,7 +5,7 @@ This class ensures that GraveyardRemoval.py correctly removes the graveyard from
 import os
 from pymoab import core
 
-from scripts.graveyard_removal import get_sets_by_category, locate_graveyard, format_file_name
+from svalinn_tools.graveyard_removal import get_sets_by_category, locate_graveyard, format_file_name
 
 # Initialize a PyMOAB core instance and load in the h5m file.
 test_file = "donut.h5m"

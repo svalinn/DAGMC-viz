@@ -6,7 +6,7 @@ import os
 import visit
 from xmldiff import main
 
-from scripts.data_loading import py_mb_convert, plane_slice_plotting, visit_config
+from svalinn_tools.data_loading import py_mb_convert, plane_slice_plotting, visit_config
 
 # Choose the data files to be used during testing.
 geom_file = "tests/files_graveyard_removal/donut.h5m"
