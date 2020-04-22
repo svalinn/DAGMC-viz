@@ -3,6 +3,7 @@ This class ensures that DataLoading.py correctly produces a VisIt session file.
 """
 
 import os
+import pytest
 import visit
 from xmldiff import main
 
