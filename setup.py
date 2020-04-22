@@ -11,8 +11,7 @@ here = path.abspath(path.dirname(__file__))
 
 def main():
 
-    packages = ['scripts', 'images']
-    pack_dir = {'scripts': 'svalinn_tools', 'images': 'img'}
+    packages = ['svalinn_tools', 'img']
     package_data = {'': ['*.png']}
     setup_kwargs = {
         "name": "dagmc-viz",
@@ -25,7 +24,6 @@ def main():
         "classifiers": ['Programming Language :: Python :: 2.7'],
         "install_requires": ['numpy'],
         "packages": packages,
-        "package_dir": pack_dir,
         "package_data": package_data,
         "entry_points": {
                         "console_scripts": ["graveyard_removal = svalinn_tools.graveyard_removal:main",
