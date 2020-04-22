@@ -23,6 +23,7 @@ def test_py_mb_convert():
     assert file_name == "donut.stl"
 
 
+@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
 def test_plane_slice_plotting():
     """
     Ensure this function correctly generates three plane slice plots.
@@ -39,6 +40,7 @@ def test_plane_slice_plotting():
     visit.Close()
 
 
+@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
 def test_visit_config():
     """
     Ensure that DataLoading.py correctly produces a VisIt session file.
