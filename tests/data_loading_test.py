@@ -24,7 +24,7 @@ def test_py_mb_convert():
     assert file_name == "donut.stl"
 
 
-@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
+#@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
 def test_plane_slice_plotting():
     """
     Ensure this function correctly generates three plane slice plots.
@@ -41,12 +41,12 @@ def test_plane_slice_plotting():
     visit.Close()
 
 
-@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
+#@pytest.mark.skip(reason="Have not updated VisIt session file yet.")
 def test_visit_config():
     """
     Ensure that DataLoading.py correctly produces a VisIt session file.
     """
-    os.system("python scripts/data_loading.py %s %s -s -v" % (geom_file, mesh_file))
+    os.system("python svalinn_tools/data_loading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
     assert len(diff) <= 28 # Accounts for bare minimum differences due to sources, hosts, etc.
 
