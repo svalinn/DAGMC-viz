@@ -4745,12 +4745,12 @@
         </Object>
         <Object name="ViewerSubject">
             <Object name="SourceMap">
-                <Field name="SOURCE00" type="string">localhost:/home/piperlincoln/CNERG/SampleData/donut.stl</Field>
-                <Field name="SOURCE01" type="string">localhost:/home/piperlincoln/CNERG/SampleData/meshtal.vtk</Field>
+                <Field name="SOURCE00" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/donut.stl</Field>
+                <Field name="SOURCE01" type="string">localhost:/home/piperlincoln/CNERG/DAGMC-viz/meshtal.vtk</Field>
             </Object>
             <Object name="SourcePlugins">
-                <Field name="localhost:/home/piperlincoln/CNERG/SampleData/donut.stl" type="string">STL_1.0</Field>
-                <Field name="localhost:/home/piperlincoln/CNERG/SampleData/meshtal.vtk" type="string">VTK_1.0</Field>
+                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/donut.stl" type="string">STL_1.0</Field>
+                <Field name="localhost:/home/piperlincoln/CNERG/DAGMC-viz/meshtal.vtk" type="string">VTK_1.0</Field>
             </Object>
             <Object name="DatabaseCorrelationList">
                 <Field name="needPermission" type="bool">true</Field>
