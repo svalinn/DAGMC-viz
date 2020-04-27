@@ -1,9 +1,15 @@
-DAGMC-viz Documentation
-=======================
-
-The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt 2.3.13, and MOAB 5.1.0. The inclusion of VisIt and MOAB in the PYTHONPATH and the VisIt and MOAB executables in the PATH are required.
-
+# DAGMC-viz Documentation
 ----------------------------------------
+
+## Installation
+
+The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt 2.3.13 or above, and MOAB 5.1.0. The inclusion of VisIt and MOAB in the PYTHONPATH and the VisIt and MOAB executables in the PATH are required.The toolkit can be installed on a linux platform with the following command.
+
+```
+pip install -i https://test.pypi.org/simple/dagmc-viz
+```
+
+## Description
 
 <span>1.</span> data_loading.py can be used to create a default interactive output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
 
