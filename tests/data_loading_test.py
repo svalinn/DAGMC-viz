@@ -46,7 +46,7 @@ def test_visit_config():
     """
     os.system("python svalinn_tools/data_loading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
-    assert len(diff) <= 28 # Accounts for bare minimum differences due to sources, hosts, etc.
+    assert len(diff) <= 32 # Accounts for bare minimum differences due to sources, hosts, etc.
 
 
 def test_cleanup():
