@@ -9,6 +9,12 @@ The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Pytho
 pip install -i https://test.pypi.org/simple/dagmc-viz
 ```
 
+If the user is in a Python environment, each of the three submodules can be accessed in the following way. 
+
+```
+import svalinn_tools.{SUBMODULE}
+```
+
 ## Description
 
 <span>1.</span> data_loading.py can be used to create a default interactive output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
