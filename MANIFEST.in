@@ -1,2 +1,2 @@
 include README.md
-recursive-include svalinn_tools/img *
+recursive-include svalinn_tools/img/ *

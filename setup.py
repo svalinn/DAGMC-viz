@@ -11,8 +11,8 @@ here = path.abspath(path.dirname(__file__))
 
 def main():
 
-    packages = ['svalinn_tools]
-    package_data = {'': ['*.png']}
+    packages = ['svalinn_tools']
+    package_data = {'': ['img/*.png']}
     setup_kwargs = {
         "name": "svalinn_tools",
         "version": VERSION,
