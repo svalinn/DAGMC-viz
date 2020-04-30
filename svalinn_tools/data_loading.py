@@ -137,8 +137,8 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
     image = Vi.CreateAnnotationObject("Image")
     image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
-    image.width = 10
-    image.height = 10
+    image.width = 8
+    image.height = 8
 
     Vi.DrawPlots()
     if images:
@@ -214,8 +214,8 @@ def visit_config(geometry_file, data_file, args):
     image = Vi.CreateAnnotationObject("Image")
     image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
-    image.width = 10
-    image.height = 10
+    image.width = 8
+    image.height = 8
 
     Vi.DrawPlots()
     if args.images:
