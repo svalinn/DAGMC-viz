@@ -9,7 +9,7 @@ The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Pytho
 pip install -i https://test.pypi.org/simple/dagmc-viz
 ```
 
-If the user is in a Python environment, each of the three submodules can be accessed in the following way. 
+If the user is in a Python environment, each of the three submodules can be accessed in the following way.
 
 ```
 import svalinn_tools.{SUBMODULE}
@@ -44,7 +44,7 @@ data_loading [geometryfile] [datafile] -s -v
 
 A sample output from an h5m geometry file and a vtk data file can be seen below.
 
-![alt text](https://raw.githubusercontent.com/piperlincoln/DAGMC-viz/add-setup-script/img/README_example.png)
+![alt text](https://raw.githubusercontent.com/piperlincoln/DAGMC-viz/add-setup-script/svalinn_tools/img/README_example.png)
 
 ----------------------------------------
 

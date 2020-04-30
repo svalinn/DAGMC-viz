@@ -133,9 +133,9 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
     banner.text = label
     banner.height = 0.05
 
-    # Include the CNERG logo in the bottom left corner of the plot.
+    # Include the Svalinn logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = path.abspath(path.dirname(__file__)) + "/../img/cnerg.png"
+    image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
     image.width = 10
     image.height = 10
@@ -210,9 +210,9 @@ def visit_config(geometry_file, data_file, args):
     c.plane1Normal = (1,1,1)
     Vi.SetOperatorOptions(c)
 
-    # Include the CNERG logo in the bottom left corner of the plot.
+    # Include the Svalinn logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = path.abspath(path.dirname(__file__)) + "/../img/cnerg.png"
+    image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
     image.width = 10
     image.height = 10

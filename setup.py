@@ -11,10 +11,10 @@ here = path.abspath(path.dirname(__file__))
 
 def main():
 
-    packages = ['svalinn_tools', 'img']
+    packages = ['svalinn_tools]
     package_data = {'': ['*.png']}
     setup_kwargs = {
-        "name": "dagmc-viz",
+        "name": "svalinn_tools",
         "version": VERSION,
         "description": 'DAGMC Visualization Tools',
         "long_description": open(path.join(here,'README.md')).read(),

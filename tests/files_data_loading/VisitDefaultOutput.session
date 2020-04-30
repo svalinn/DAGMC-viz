@@ -5540,7 +5540,7 @@
                                         <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
                                     </Object>
                                 </Object>
-                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/img/cnerg.png" </Field>
+                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/svalinn_tools/img/svalinn.png" </Field>
                                 <Field name="fontFamily" type="string">Arial</Field>
                                 <Field name="fontBold" type="bool">false</Field>
                                 <Field name="fontItalic" type="bool">false</Field>
@@ -6810,7 +6810,7 @@
                                         <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
                                     </Object>
                                 </Object>
-                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/img/cnerg.png" </Field>
+                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/svalinn_tools/img/svalinn.png" </Field>
                                 <Field name="fontFamily" type="string">Arial</Field>
                                 <Field name="fontBold" type="bool">false</Field>
                                 <Field name="fontItalic" type="bool">false</Field>
@@ -8109,7 +8109,7 @@
                                         <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
                                     </Object>
                                 </Object>
-                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/img/cnerg.png" </Field>
+                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/svalinn_tools/img/svalinn.png" </Field>
                                 <Field name="fontFamily" type="string">Arial</Field>
                                 <Field name="fontBold" type="bool">false</Field>
                                 <Field name="fontItalic" type="bool">false</Field>
@@ -9408,7 +9408,7 @@
                                         <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
                                     </Object>
                                 </Object>
-                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/img/cnerg.png" </Field>
+                                <Field name="text" type="stringVector">"/home/piperlincoln/CNERG/DAGMC-viz/svalinn_tools/img/svalinn.png" </Field>
                                 <Field name="fontFamily" type="string">Arial</Field>
                                 <Field name="fontBold" type="bool">false</Field>
                                 <Field name="fontItalic" type="bool">false</Field>
