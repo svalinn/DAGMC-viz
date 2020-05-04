@@ -1,5 +1,5 @@
 """
-This class ensures that GraveyardRemoval.py correctly removes the graveyard from an h5m file.
+This class ensures that graveyard_removal.py correctly removes the graveyard from an h5m file.
 """
 
 import os
@@ -49,7 +49,7 @@ def test_option_format_file_name():
 
 def test_default_graveyard_removal():
 	"""
-    Ensure that GraveyardRemoval correctly removes the graveyard from an h5m file.
+    Ensure that graveyard_removal.py correctly removes the graveyard from an h5m file.
     """
 	os.system("python svalinn_tools/graveyard_removal.py " + test_file_path + test_file)
 	size = os.path.getsize(test_file[:-4] + "_no_grave.h5m")
@@ -58,7 +58,7 @@ def test_default_graveyard_removal():
 
 def test_print_graveyard_removal(capfd):
     """
-    Ensure that GraveyardRemoval prints the correct entity handle for the graveyard volume.
+    Ensure that graveyard_removal.py prints the correct entity handle for the graveyard volume.
     """
     os.system("python svalinn_tools/graveyard_removal.py " + test_file_path + test_file + " -p")
     out, err = capfd.readouterr()

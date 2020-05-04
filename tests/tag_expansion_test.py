@@ -1,5 +1,5 @@
 """
-This class ensures that TagExpansion.py correctly expands all vector tags in a mesh.
+This class ensures that tag_expansion.py correctly expands all vector tags in a mesh.
 """
 
 import filecmp

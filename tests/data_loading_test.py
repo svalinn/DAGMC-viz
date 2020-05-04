@@ -1,5 +1,5 @@
 """
-This class ensures that DataLoading.py correctly produces a VisIt session file.
+This class ensures that data_loading.py correctly produces a VisIt session file.
 """
 
 import os
@@ -42,7 +42,7 @@ def test_plane_slice_plotting():
 
 def test_visit_config():
     """
-    Ensure that DataLoading.py correctly produces a VisIt session file.
+    Ensure that data_loading.py correctly produces a VisIt session file.
     """
     os.system("python svalinn_tools/data_loading.py %s %s -s -v" % (geom_file, mesh_file))
     diff = main.diff_files("VisitDefaultOutput.session", session_file)
