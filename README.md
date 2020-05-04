@@ -17,7 +17,7 @@ import svalinn_tools.{SUBMODULE}
 
 ## Description
 
-### data_loading.py 
+### Data Loading 
 This module can be used to create a default interactive output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
 
       1. A cube with a clip through the first octant.
@@ -49,7 +49,7 @@ A sample output from an h5m geometry file and a vtk data file can be seen below.
 
 ----------------------------------------
 
-### graveyad_removal.py 
+### Graveyard Removal
 This module can be used to remove the graveyard volume/group from an h5m geometry file. The new file will be written in the current directory with ```_no_grave.h5m``` appended to the original file name. It can also extract curve, surface, and volume EntitySets.
 
 ```
@@ -64,7 +64,7 @@ graveyard_removal [h5mfile] -o [outputfile] -p
 
 ----------------------------------------
 
-### tag_expansion.py 
+### Tag Expansion 
 This module can be used to expand vector tags on a mesh and generate a data file for each value in the vector tag. VisIt will recognize the collection of these data files as a database, and permit stepping through them in an animation.
 
 ```
