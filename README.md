@@ -1,5 +1,5 @@
 # DAGMC-viz Documentation
-----------------------------------------
+The purpose of this toolkit is to assist with the visualization of DAGMC geometries in VisIt. This can include creating a default interactive view in VisIt, removing the graveyard volume from a given geometry, and expanding vector tags on a given mesh to facilitate database animation.
 
 ## Installation
 
@@ -17,7 +17,8 @@ import svalinn_tools.{SUBMODULE}
 
 ## Description
 
-<span>1.</span> data_loading.py can be used to create a default interactive output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
+### data_loading.py 
+This module can be used to create a default interactive output in VisIt from an h5m geometry file and an h5m or vtk data file. The following four interactive plot windows are displayed in a 2x2 grid.
 
       1. A cube with a clip through the first octant.
       2. XY plane slice through the centroid.
@@ -48,7 +49,8 @@ A sample output from an h5m geometry file and a vtk data file can be seen below.
 
 ----------------------------------------
 
-<span>2.</span> graveyad_removal.py can be used to remove the graveyard volume/group from an h5m geometry file. The new file will be written in the current directory with ```_no_grave.h5m``` appended to the original file name. It can also extract curve, surface, and volume EntitySets.
+### graveyad_removal.py 
+This module can be used to remove the graveyard volume/group from an h5m geometry file. The new file will be written in the current directory with ```_no_grave.h5m``` appended to the original file name. It can also extract curve, surface, and volume EntitySets.
 
 ```
 graveyard_removal [h5mfile]
@@ -62,7 +64,8 @@ graveyard_removal [h5mfile] -o [outputfile] -p
 
 ----------------------------------------
 
-<span>3.</span> tag_expansion.py can be used to expand vector tags on a mesh and generate a data file for each value in the vector tag. VisIt will recognize the collection of these data files as a database, and permit stepping through them in an animation.
+### tag_expansion.py 
+This module can be used to expand vector tags on a mesh and generate a data file for each value in the vector tag. VisIt will recognize the collection of these data files as a database, and permit stepping through them in an animation.
 
 ```
 tag_expansion [meshfile]
