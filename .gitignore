@@ -1,2 +1,2 @@
-PythonTool/visitlog.py
-PythonTool/*.pyc
+*.pyc
+visitlog.py

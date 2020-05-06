@@ -1,5 +1,5 @@
 """
-This class ensures that TagExpansion.py correctly expands all vector tags in a mesh.
+This class ensures that tag_expansion.py correctly expands all vector tags in a mesh.
 """
 
 import filecmp
@@ -7,10 +7,10 @@ import os
 import pytest
 from pymoab import core, types
 
-from PythonTool.TagExpansion import get_tag_lists, create_directory, expand_vec_tag
+from svalinn_tools.tag_expansion import get_tag_lists, create_directory, expand_vec_tag
 
 # Initialize a PyMOAB core instance and load in the h5m file.
-data_file = "Testing/SampleData/simple_mesh.h5m"
+data_file = "tests/files_tag_expansion/simple_mesh.h5m"
 mb = core.Core()
 mb.load_file(data_file)
 
@@ -60,7 +60,7 @@ def test_expand_vec_tag():
     os.mkdir("simple_mesh")
     expand_vec_tag(mb, elements, scal_tags, vec_tag[0], "simple_mesh")
     expand_vec_tag(mb, elements, scal_tags, vec_tag[1], "simple_mesh")
-    diff = filecmp.dircmp("simple_mesh", "Testing/SampleData/simple_mesh_expansion")
+    diff = filecmp.dircmp("simple_mesh", "tests/files_tag_expansion/simple_mesh_expansion")
     assert len(diff.diff_files) == 0
 
 

@@ -3,7 +3,7 @@ version: 2.1
 jobs:
     Test:
         docker:
-            - image: piperlincoln/pytest-ubuntu18.04:v0.3
+            - image: svalinn/pymoab-visit-py2-18.04
         steps:
             - checkout
             - run: pytest

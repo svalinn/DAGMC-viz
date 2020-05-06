@@ -1,6 +1,6 @@
 import argparse
-import os
 import visit as Vi
+from os import getcwd, path, system
 from pymoab import core, tag, types
 
 
@@ -133,12 +133,12 @@ def plane_slice_plotting(window_number, axis_number, label, images, timestamp):
     banner.text = label
     banner.height = 0.05
 
-    # Include the CNERG logo in the bottom left corner of the plot.
+    # Include the Svalinn logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = os.path.dirname(os.path.abspath(__file__)) + "/cnerg.jpg"
+    image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
-    image.width = 10
-    image.height = 10
+    image.width = 8
+    image.height = 8
 
     Vi.DrawPlots()
     if images:
@@ -210,12 +210,12 @@ def visit_config(geometry_file, data_file, args):
     c.plane1Normal = (1,1,1)
     Vi.SetOperatorOptions(c)
 
-    # Include the CNERG logo in the bottom left corner of the plot.
+    # Include the Svalinn logo in the bottom left corner of the plot.
     image = Vi.CreateAnnotationObject("Image")
-    image.image = os.path.dirname(os.path.abspath(__file__)) + "/cnerg.jpg"
+    image.image = path.abspath(path.dirname(__file__)) + "/img/svalinn.png"
     image.position = (0.02, 0.02)
-    image.width = 10
-    image.height = 10
+    image.width = 8
+    image.height = 8
 
     Vi.DrawPlots()
     if args.images:
@@ -243,15 +243,15 @@ def visit_config(geometry_file, data_file, args):
     Vi.Close()
 
     # Retrieve the path to the VisIt session file.
-    session_file_path = os.path.join(os.getcwd(), visit_output)
+    session_file_path = path.join(getcwd(), visit_output)
 
     # If the user has indicated to, open the session file with the VisIt GUI.
     if args.openvisit:
-        os.system("visit -sessionfile {} &".format(session_file_path))
+        system("visit -sessionfile {} &".format(session_file_path))
 
     # If the user has indicated to, remove the session file after VisIt has opened.
     if not args.sessionfile:
-        os.system("sleep 10; rm {}".format(session_file_path))
+        system("sleep 10; rm {}".format(session_file_path))
 
 
 def main():
