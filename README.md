@@ -6,7 +6,7 @@ The purpose of this toolkit is to assist with the visualization of DAGMC geometr
 The Direct Accelerated Geometry Monte Carlo visualization toolkit requires Python 2.7, VisIt 2.3.13 or above, and MOAB 5.1.0. The inclusion of VisIt and MOAB in the PYTHONPATH and the VisIt and MOAB executables in the PATH are required.The toolkit can be installed on a linux platform with the following command.
 
 ```
-pip install -i https://test.pypi.org/simple/dagmc-viz
+pip install svalinn-tools
 ```
 
 If the user is in a Python environment, each of the three submodules can be accessed in the following way.
