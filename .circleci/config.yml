@@ -15,4 +15,4 @@ workflows:
     build:
         jobs:
             - Test:
-                context: Dockerhub
+                context: dockerhub
