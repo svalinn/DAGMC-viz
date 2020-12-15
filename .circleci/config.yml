@@ -4,6 +4,9 @@ jobs:
     Test:
         docker:
             - image: svalinn/pymoab-visit-py2-18.04
+              auth:
+                username: $DOCKERHUB_USER
+                password: $DOCKERHUB_PASS
         steps:
             - checkout
             - run: pytest
@@ -11,4 +14,5 @@ jobs:
 workflows:
     build:
         jobs:
-            - Test
+            - Test:
+                context: dockerhub
