@@ -161,7 +161,7 @@ def main():
     # Remove the graveyard volume from the data.
     try:
         groups_to_write, graveyard_sets = locate_graveyard(mb)
-    except LookupError, e:
+    except LookupError as e:
         sys.exit(e.message)
 
     # If the user would like, print the graveyard entity handle.
